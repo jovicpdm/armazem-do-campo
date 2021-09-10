@@ -12,7 +12,7 @@ const ButtonFacebookLogin = props => {
       iconStyle={styles.InButton}
       borderRadius={8}
       style={styles.button}>
-      <Text style={styles.textButton}>Google</Text>
+      <Text style={styles.textButton}>Facebook</Text>
     </Icon.Button>
   );
 };
