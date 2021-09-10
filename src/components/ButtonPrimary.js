@@ -7,10 +7,10 @@ const ButtonPrimary = props => {
   return (
     <Button
       style={[styles.button, props.styles]}
-      name={props.name}
       function={props.function}
-      textColor={theme.pallete.white}
-    />
+      textColor={theme.pallete.white}>
+      {props.children}
+    </Button>
   );
 };
 
