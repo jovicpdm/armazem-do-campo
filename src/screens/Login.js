@@ -6,6 +6,8 @@ import Input from '../components/Input';
 import ButtonPrimary from '../components/ButtonPrimary';
 import {theme} from '../global/styles/theme';
 import ButtonSecondary from '../components/ButtonSecondary';
+import ButtonGoogleLogin from '../components/ButtonGoogleLogin';
+import ButtonFacebookLogin from '../components/ButtonFacebookLogin';
 
 export function Login() {
   const [email, onChangeEmail] = useState();
@@ -28,9 +30,20 @@ export function Login() {
         />
         <Text>{email}</Text>
         <Text>{password}</Text>
-        <ButtonPrimary name={'ENTRAR'} />
-        <ButtonSecondary name={'CADASTRAR'} />
-        <Text style={styles.line}>ou</Text>
+        <ButtonPrimary>ENTRAR</ButtonPrimary>
+        <ButtonSecondary>CADASTRAR</ButtonSecondary>
+        <View style={{flexDirection: 'row', alignItems: 'center'}}>
+          <View style={styles.line} />
+          <View>
+            <Text style={{width: 25, textAlign: 'center', fontSize: 8}}>
+              ou
+            </Text>
+          </View>
+          <View style={styles.line} />
+        </View>
+        <Text style={styles.textEnterWith}>Entrar com</Text>
+        <ButtonGoogleLogin />
+        <ButtonFacebookLogin />
       </View>
     </View>
   );
@@ -43,9 +56,17 @@ const styles = StyleSheet.create({
     borderTopLeftRadius: 30,
     borderTopRightRadius: 30,
   },
-  line: {
+  textEnterWith: {
     textAlign: 'center',
-    color: theme.pallete.primary,
+    marginTop: 8,
+    fontSize: 16,
+    lineHeight: 25,
+    letterSpacing: 1.15,
+  },
+  line: {
+    flex: 1,
+    height: 1,
+    backgroundColor: theme.pallete.primary,
   },
 });
 

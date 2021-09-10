@@ -7,10 +7,10 @@ const ButtonSecondary = props => {
   return (
     <Button
       style={[styles.button, props.styles]}
-      name={props.name}
       function={props.function}
-      textColor={theme.pallete.primary}
-    />
+      textColor={theme.pallete.primary}>
+      {props.children}
+    </Button>
   );
 };
 
