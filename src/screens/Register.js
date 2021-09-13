@@ -1,12 +1,13 @@
 import React from 'react';
 import {View, Text} from 'react-native';
 
-const Registry = () => {
+
+const Register = ( ) => {
   return (
     <View>
-      <Text>Registry</Text>
+      <Text>Register</Text>
     </View>
   );
 };
 
-export default Registry;
+export default Register;
