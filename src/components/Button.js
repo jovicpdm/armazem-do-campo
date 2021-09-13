@@ -1,11 +1,10 @@
 import React from 'react';
 import {TouchableOpacity, Text, StyleSheet} from 'react-native';
-import Icon from 'react-native-vector-icons/FontAwesome';
 
 const Button = props => {
   return (
     <TouchableOpacity
-      onPress={props.function}
+      onPress={props.onPress}
       style={[styles.button, props.style]}>
       <Text style={[styles.textButton, {color: props.textColor}]}>
         {props.children}

@@ -1,19 +1,21 @@
 import React from 'react';
-import {StyleSheet, Text} from 'react-native';
+import {StyleSheet, Text, Touchable, TouchableOpacity} from 'react-native';
 import {theme} from './../global/styles/theme';
 import Icon from 'react-native-vector-icons/FontAwesome';
 
 const ButtonFacebookLogin = props => {
   return (
-    <Icon.Button
-      name="facebook"
-      backgroundColor={theme.pallete.white}
-      size={24}
-      iconStyle={styles.InButton}
-      borderRadius={8}
-      style={styles.button}>
-      <Text style={styles.textButton}>Facebook</Text>
-    </Icon.Button>
+    <TouchableOpacity>
+      <Icon.Button
+        name="facebook"
+        backgroundColor={theme.pallete.white}
+        size={24}
+        iconStyle={styles.InButton}
+        borderRadius={8}
+        style={styles.button}>
+        <Text style={styles.textButton}>Facebook</Text>
+      </Icon.Button>
+    </TouchableOpacity>
   );
 };
 
