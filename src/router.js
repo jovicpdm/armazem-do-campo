@@ -10,6 +10,7 @@ const Router = () => {
   return (
     <NavigationContainer>
       <Navigator
+      initialRouteName= "Register"
         headerMode="none"
         screenOptions={{
           cardStyle: {

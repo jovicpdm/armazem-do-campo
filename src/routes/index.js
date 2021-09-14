@@ -18,7 +18,7 @@ function App() {
     return (
         <NavigationContainer theme={MyTheme}>
             <Navigator
-            initialRouteName= "Login"
+            initialRouteName= "Register"
                 headerMode="none"
                 screenOptions={{
                     headerShown: false,
