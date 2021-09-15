@@ -6,9 +6,12 @@ const Input = props => {
   return (
     <View>
       <TextInput
+        {...props}
+        multiline
         onChangeText={props.onChangeText}
         placeholder={props.placeholder}
         style={[styles.input, props.style]}
+        keyboardType={props.type ? props.type : 'default'}
       />
     </View>
   );
@@ -28,6 +31,7 @@ const styles = StyleSheet.create({
     color: theme.pallete.primary,
     fontSize: 16,
     letterSpacing: 0.5,
+    marginTop: 8,
   },
 });
 
