@@ -1,17 +1,26 @@
 import * as React from 'react';
-import {NavigationContainer} from '@react-navigation/native';
+import {DefaultTheme, NavigationContainer} from '@react-navigation/native';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import Login from './screens/Login';
 import Register from './screens/Register';
+import {theme} from './global/styles/theme';
 
 const {Navigator, Screen} = createNativeStackNavigator();
 
+const MyTheme = {
+  dark: false,
+  colors: {
+    background: theme.pallete.primary,
+  },
+};
+
 const Router = () => {
   return (
-    <NavigationContainer>
+    <NavigationContainer theme={MyTheme}>
       <Navigator
         headerMode="none"
         screenOptions={{
+          headerShown: false,
           cardStyle: {
             backgroundColor: 'transparent',
           },

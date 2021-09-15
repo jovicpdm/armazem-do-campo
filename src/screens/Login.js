@@ -1,13 +1,13 @@
 /* eslint-disable react-native/no-inline-styles */
 import React, {useState} from 'react';
-import {View, Text, StyleSheet} from 'react-native';
+import {View, StyleSheet} from 'react-native';
 import Logo from '../components/Logo';
 import Input from '../components/Input';
 import ButtonPrimary from '../components/ButtonPrimary';
 import {theme} from '../global/styles/theme';
 import ButtonSecondary from '../components/ButtonSecondary';
-import ButtonGoogleLogin from '../components/ButtonGoogleLogin';
-import ButtonFacebookLogin from '../components/ButtonFacebookLogin';
+import WhiteArea from '../components/WhiteArea';
+import TitleSection from '../components/TitleSection';
 
 export function Login({navigation}) {
   const [email, onChangeEmail] = useState();
@@ -16,18 +16,15 @@ export function Login({navigation}) {
   return (
     <View>
       <Logo />
-      <View style={styles.inputArea}>
+      <WhiteArea>
+        <TitleSection>Entrar</TitleSection>
         <Input
           placeholder={'Email'}
           onChangeText={onChangeEmail}
           //react-native/no-inline-styles
-          style={{marginTop: 40}}
+          style={{marginTop: 16}}
         />
-        <Input
-          placeholder={'Senha'}
-          onChangeText={onChangePassword}
-          style={{marginTop: 8}}
-        />
+        <Input placeholder={'Senha'} onChangeText={onChangePassword} />
         <View style={{marginTop: 32}} />
         <ButtonPrimary>ENTRAR</ButtonPrimary>
         <ButtonSecondary
@@ -36,7 +33,7 @@ export function Login({navigation}) {
           }}>
           CADASTRAR
         </ButtonSecondary>
-      </View>
+      </WhiteArea>
     </View>
   );
 }
