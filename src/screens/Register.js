@@ -1,11 +1,19 @@
+/* eslint-disable react-native/no-inline-styles */
 import React, {useState} from 'react';
 import {ScrollView, Text, StyleSheet, View} from 'react-native';
+
 import Input from '../components/Input';
 import TitleSection from '../components/TitleSection';
 import WhiteArea from '../components/WhiteArea';
 import {theme} from '../global/styles/theme';
 
 export default function Register() {
+  const [name, setName] = useState();
+  const [phone, setPhone] = useState();
+  const [email, setEmail] = useState();
+  const [presentation, setPresentation] = useState();
+  const [password, setPassword] = useState();
+
   const [user, setUser] = useState({
     name: '',
     phone: Number,
@@ -13,6 +21,12 @@ export default function Register() {
     presentation: '',
     password: '',
   });
+
+  const inputName = event => setName(event.target.value);
+  const inputPhone = event => setPhone(event.target.value);
+  const inputEmail = event => setEmail(event.target.value);
+  const inputPresentation = event => setPresentation(event.target.value);
+  const inputPassword = event => setPassword(event.target.value);
 
   return (
     <ScrollView contentContainerStyle={{maxHeight: '100%'}}>
@@ -22,11 +36,24 @@ export default function Register() {
       </Text>
       <WhiteArea>
         <TitleSection>Cadastrar</TitleSection>
-        <Input placeholder="Nome" style={{marginTop: 16}} />
-        <Input placeholder="Telefone" type="phone-pad" />
-        <Input placeholder="E-mail" type="email-address" />
+        <Input
+          placeholder="Nome"
+          onChangeText={inputName}
+          style={{marginTop: 16}}
+        />
+        <Input
+          placeholder="Telefone"
+          onChangeText={inputPhone}
+          type="phone-pad"
+        />
+        <Input
+          placeholder="E-mail"
+          onChangeText={inputEmail}
+          type="email-address"
+        />
         <Input
           placeholder="Apresentação"
+          onChangeText={inputPresentation}
           type="ascii-capable"
           style={styles.inputPresentation}
         />
