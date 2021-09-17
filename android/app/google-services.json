@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "460505070295",
+    "project_id": "armazem-do-campo",
+    "storage_bucket": "armazem-do-campo.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:460505070295:android:489a2326a2b937804c4e92",
+        "android_client_info": {
+          "package_name": "com.armazemdocampo"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "460505070295-aq2118f66aiqee7d9dteojvup6gdb1vo.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCAQyzNgT6UMWteKvXt4eK9TUEx_e7bUvc"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "460505070295-aq2118f66aiqee7d9dteojvup6gdb1vo.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
