@@ -1,33 +1,33 @@
 {
   "project_info": {
-    "project_number": "460505070295",
-    "project_id": "armazem-do-campo",
-    "storage_bucket": "armazem-do-campo.appspot.com"
+    "project_number": "412145691200",
+    "project_id": "armazem-do-campo-b9794",
+    "storage_bucket": "armazem-do-campo-b9794.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:460505070295:android:489a2326a2b937804c4e92",
+        "mobilesdk_app_id": "1:412145691200:android:28a4220a9104f2173b8da5",
         "android_client_info": {
           "package_name": "com.armazemdocampo"
         }
       },
       "oauth_client": [
         {
-          "client_id": "460505070295-aq2118f66aiqee7d9dteojvup6gdb1vo.apps.googleusercontent.com",
+          "client_id": "412145691200-jg97me415n4c13ss3jniu7dh4ps3s18k.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyCAQyzNgT6UMWteKvXt4eK9TUEx_e7bUvc"
+          "current_key": "AIzaSyDKOEcwP4Pj8NGUBColLKMFSaX63aXF-0g"
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "460505070295-aq2118f66aiqee7d9dteojvup6gdb1vo.apps.googleusercontent.com",
+              "client_id": "412145691200-jg97me415n4c13ss3jniu7dh4ps3s18k.apps.googleusercontent.com",
               "client_type": 3
             }
           ]
