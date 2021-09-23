@@ -38,21 +38,25 @@ export default function Register() {
         <TitleSection>Cadastrar</TitleSection>
         <Input
           placeholder="Nome"
+          placeholderTextColor={theme.pallete.primary}
           onChangeText={inputName}
           style={{marginTop: 16}}
         />
         <Input
           placeholder="Telefone"
+          placeholderTextColor={theme.pallete.primary}
           onChangeText={inputPhone}
           type="phone-pad"
         />
         <Input
           placeholder="E-mail"
+          placeholderTextColor={theme.pallete.primary}
           onChangeText={inputEmail}
           type="email-address"
         />
         <Input
           placeholder="Apresentação"
+          placeholderTextColor={theme.pallete.primary}
           onChangeText={inputPresentation}
           type="ascii-capable"
           style={styles.inputPresentation}
