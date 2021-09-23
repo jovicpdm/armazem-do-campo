@@ -1,6 +1,6 @@
 /* eslint-disable react-native/no-inline-styles */
 import React, { useState, useEffect } from 'react';
-import { View, StyleSheet } from 'react-native';
+import { View, StyleSheet, Text } from 'react-native';
 import Logo from '../components/Logo';
 import Input from '../components/Input';
 import ButtonPrimary from '../components/ButtonPrimary';
@@ -8,7 +8,7 @@ import { theme } from '../global/styles/theme';
 import ButtonSecondary from '../components/ButtonSecondary';
 import WhiteArea from '../components/WhiteArea';
 import TitleSection from '../components/TitleSection';
-import firebase from "../config/firebase" ;
+import firebase from "../config/firebase";
 
 export function Login({ navigation }) {
   // const [email, onChangeEmail] = useState();
@@ -18,11 +18,14 @@ export function Login({ navigation }) {
   const [password, setPassword] = useState("");
   const [errorLogin, setErrorLogin] = useState("");
 
+
+
   const loginFirebase = () => {
     firebase.auth().signInWithEmailAndPassword(email, password)
       .then((userCredential) => {
         let user = userCredential.user;
         console.log(user)
+        setErrorLogin(user)
       })
       .catch((error) => {
         setErrorLogin(true)
@@ -59,18 +62,18 @@ export function Login({ navigation }) {
           value={password}
         // onChangeText={onChangePassword}
         />
-        {errorLogin === true
+        {/* {errorLogin === true
           ?
           <View style={styles.contentAlert}>
             <Text style={styles.warningAlert}>Email ou senha inválidos</Text>
           </View>
           :
           <View />
-        }
+        } */}
 
         <View style={{ marginTop: 32 }} />
         <ButtonPrimary
-          onPress={loginFirebase}
+          onPress={() => loginFirebase}
         >ENTRAR</ButtonPrimary>
         <ButtonSecondary
           onPress={() => {
@@ -78,6 +81,9 @@ export function Login({ navigation }) {
           }}>
           CADASTRAR
         </ButtonSecondary>
+        <Text>
+          {errorLogin}
+        </Text>
       </WhiteArea>
     </View>
   );
