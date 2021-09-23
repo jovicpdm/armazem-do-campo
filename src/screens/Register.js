@@ -55,7 +55,7 @@ export default function Register() {
           type="email-address"
         />
         <Input
-          placeholder="Apresentação"
+          placeholder="Apresentação (Fale sobre você)"
           placeholderTextColor={theme.pallete.primary}
           onChangeText={inputPresentation}
           type="ascii-capable"
