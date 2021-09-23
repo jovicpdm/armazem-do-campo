@@ -7,7 +7,7 @@ const ButtonPrimary = props => {
   return (
     <Button
       style={[styles.button, props.styles]}
-      function={props.function}
+      onPress={props.onPress}
       textColor={theme.pallete.white}>
       {props.children}
     </Button>
