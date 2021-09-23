@@ -9,7 +9,7 @@ import {theme} from '../global/styles/theme';
 import ButtonSecondary from '../components/ButtonSecondary';
 import WhiteArea from '../components/WhiteArea';
 import TitleSection from '../components/TitleSection';
-// import firebase from '../config/firebase';
+import firebase from '../config/firebase';
 
 export function Login({navigation}) {
   // const [email, onChangeEmail] = useState();
@@ -27,7 +27,7 @@ export function Login({navigation}) {
         setUser(userCredential.user.email);
       })
       .catch(error => {
-        alert('')
+        alert(error.message);
       });
 
   // const loginFirebase = () => {
