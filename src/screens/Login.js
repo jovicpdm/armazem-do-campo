@@ -27,7 +27,7 @@ export function Login({navigation}) {
         setUser(userCredential.user.email);
       })
       .catch(error => {
-        setUser(error.message);
+        alert('')
       });
 
   // const loginFirebase = () => {
