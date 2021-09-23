@@ -17,9 +17,10 @@ export default Button;
 
 const styles = StyleSheet.create({
   button: {
-    marginHorizontal: 8,
+    width: '85%',
     paddingVertical: 16,
     borderRadius: 8,
+    alignSelf: 'center',
   },
   textButton: {
     fontFamily: 'Roboto-Bold',

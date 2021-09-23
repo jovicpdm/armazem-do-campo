@@ -21,7 +21,7 @@ const styles = StyleSheet.create({
   input: {
     borderColor: theme.pallete.primary,
     borderWidth: 1,
-    borderRadius: 30,
+    borderRadius: 8,
     width: '85%',
     alignSelf: 'center',
     paddingHorizontal: 23,
