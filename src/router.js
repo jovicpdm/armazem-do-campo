@@ -1,11 +1,11 @@
 import * as React from 'react';
-import {NavigationContainer} from '@react-navigation/native';
-import {createNativeStackNavigator} from '@react-navigation/native-stack';
+import { NavigationContainer } from '@react-navigation/native';
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import Login from './screens/Login';
 import Register from './screens/Register';
-import {theme} from './global/styles/theme';
+import { theme } from './global/styles/theme';
 
-const {Navigator, Screen} = createNativeStackNavigator();
+const { Navigator, Screen } = createNativeStackNavigator();
 
 const MyTheme = {
   dark: false,
@@ -18,6 +18,7 @@ const Router = () => {
   return (
     <NavigationContainer theme={MyTheme}>
       <Navigator
+        initialRouteName="Login"
         headerMode="none"
         screenOptions={{
           headerShown: false,
