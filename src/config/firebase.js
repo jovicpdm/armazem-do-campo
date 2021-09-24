@@ -1,16 +1,16 @@
-import * as firebase from "firebase/app";
-import 'firebase/storage'
+import * as firebase from 'firebase/app';
+import 'firebase/storage';
 
 var firebaseConfig = {
-  apiKey: "AIzaSyDGmi-BvzCo5_kmJUIuSHdGwVykab87UHk",
-  authDomain: "armazem-do-campo-b9794.firebaseapp.com",
-  projectId: "armazem-do-campo-b9794",
-  storageBucket: "armazem-do-campo-b9794.appspot.com",
-  messagingSenderId: "412145691200",
-  appId: "1:412145691200:web:9f6e0f71a2006aae3b8da5"
+  apiKey: 'AIzaSyDGmi-BvzCo5_kmJUIuSHdGwVykab87UHk',
+  authDomain: 'armazem-do-campo-b9794.firebaseapp.com',
+  projectId: 'armazem-do-campo-b9794',
+  storageBucket: 'armazem-do-campo-b9794.appspot.com',
+  messagingSenderId: '412145691200',
+  appId: '1:412145691200:web:9f6e0f71a2006aae3b8da5',
 };
 
 // Initialize Firebase
 firebase.initializeApp(firebaseConfig);
 
-export default firebase
+export default firebase;
