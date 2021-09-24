@@ -2,6 +2,8 @@
 import React, {useState, useEffect} from 'react';
 import {View, StyleSheet, Text} from 'react-native';
 import {getAuth, signInWithEmailAndPassword} from 'firebase/auth';
+import {showMessage} from 'react-native-flash-message';
+
 import Logo from '../components/Logo';
 import Input from '../components/Input';
 import ButtonPrimary from '../components/ButtonPrimary';
@@ -17,7 +19,6 @@ export function Login({navigation}) {
 
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const [errorLogin, setErrorLogin] = useState('');
   const [user, setUser] = useState();
 
   const auth = getAuth();
@@ -27,32 +28,39 @@ export function Login({navigation}) {
         setUser(userCredential.user.email);
       })
       .catch(error => {
-        alert(error.message);
+        console.log(`message: ${error.message} code: ${error.code}`);
+        if (error.code === 'auth/invalid-email') {
+          showMessage({
+            message: 'Email inválido',
+            description: 'Por favor, insira um email válido',
+            type: 'danger',
+          });
+        } else if (error.code === 'auth/internal-error') {
+          showMessage({
+            message: 'Campo vazio',
+            description: 'Por favor, digite email e senha',
+            type: 'danger',
+          });
+        } else if (error.code === 'auth/user-not-found') {
+          showMessage({
+            message: 'Usuário não encontrado',
+            description: 'Não foi possível achar um usuário com esse email',
+            type: 'danger',
+          });
+        } else if (error.code === 'auth/wrong-password') {
+          showMessage({
+            message: 'Senha incorreta',
+            description: 'Por favor, verifique sua senha',
+            type: 'danger',
+          });
+        }
       });
-
-  // const loginFirebase = () => {
-  //   firebase
-  //     .auth()
-  //     .signInWithEmailAndPassword(email, password)
-  //     .then(userCredential => {
-  //       let user = userCredential.user;
-  //       console.log(user);
-  //       setErrorLogin(user);
-  //     })
-  //     .catch(error => {
-  //       setErrorLogin(true);
-  //       let errorCode = error.code;
-  //       let errorMessage = error.message;
-  //     });
-  // };
-
-  useEffect(() => {}, []);
 
   return (
     <View>
       <Logo />
       <WhiteArea>
-        <TitleSection>Entrar</TitleSection>
+        <TitleSection>Bem vindo</TitleSection>
         <Input
           placeholder={'Email'}
           placeholderTextColor={theme.pallete.primary}
@@ -70,16 +78,7 @@ export function Login({navigation}) {
           keyboardType="default"
           onChangeText={text => setPassword(text)}
           value={password}
-          // onChangeText={onChangePassword}
         />
-        {/* {errorLogin === true
-          ?
-          <View style={styles.contentAlert}>
-            <Text style={styles.warningAlert}>Email ou senha inválidos</Text>
-          </View>
-          :
-          <View />
-        } */}
 
         <View style={{marginTop: 32}} />
         <ButtonPrimary onPress={() => authentication()}>ENTRAR</ButtonPrimary>
