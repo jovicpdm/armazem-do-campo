@@ -19,13 +19,12 @@ export function Login({navigation}) {
 
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const [user, setUser] = useState();
 
   const auth = getAuth();
   const authentication = () =>
     signInWithEmailAndPassword(auth, email, password)
       .then(userCredential => {
-        setUser(userCredential.user.email);
+        navigation.navigate('Purchase');
       })
       .catch(error => {
         console.log(`message: ${error.message} code: ${error.code}`);
@@ -88,7 +87,6 @@ export function Login({navigation}) {
           }}>
           CADASTRAR
         </ButtonSecondary>
-        <Text>{user}</Text>
       </WhiteArea>
     </View>
   );
