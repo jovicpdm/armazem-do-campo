@@ -1,18 +1,16 @@
 /* eslint-disable react-native/no-inline-styles */
-import React, { useState } from 'react';
-import { ScrollView, Text, StyleSheet, View } from 'react-native';
+import React, {useState} from 'react';
+import {ScrollView, Text, StyleSheet, View} from 'react-native';
 
 import Input from '../components/Input';
 import TitleSection from '../components/TitleSection';
 import WhiteArea from '../components/WhiteArea';
-import { theme } from '../global/styles/theme';
+import {theme} from '../global/styles/theme';
 import ButtonSecondary from '../components/ButtonSecondary';
 import ButtonPrimary from '../components/ButtonPrimary';
-import { getDatabase, ref, set } from "firebase/database";
+import {getDatabase, ref, set} from 'firebase/database';
 
-
-
-export default function Register({ navigation }) {
+export default function Register({navigation}) {
   const [name, setName] = useState();
   const [phone, setPhone] = useState();
   const [email, setEmail] = useState();
@@ -28,8 +26,8 @@ export default function Register({ navigation }) {
   //   password: password,
   //   confirmPassword: confirmPassword
   // };
- 
-//  const uid = getDatabase().ref().child('users').push().key;
+
+  //  const uid = getDatabase().ref().child('users').push().key;
 
   function writeUserData() {
     const db = getDatabase();
@@ -38,13 +36,13 @@ export default function Register({ navigation }) {
       Email: email,
       Apresentacao: presentation,
       Senha: password,
-      Status: "aguardando",
-      SenhaConfir: confirmPassword
+      Status: 'aguardando',
+      SenhaConfir: confirmPassword,
     });
   }
 
   return (
-    <ScrollView contentContainerStyle={{ maxHeight: '100%' }}>
+    <ScrollView contentContainerStyle={{maxHeight: '100%'}}>
       <Text style={styles.presentation}>
         Faça parte da Rede de Comercialização de produtos da reforma agrária
         popular
@@ -57,7 +55,7 @@ export default function Register({ navigation }) {
           onChangeText={text => setName(text)}
           value={name}
           keyboardType="default"
-          style={{ marginTop: 16 }}
+          style={{marginTop: 16}}
         />
         <Input
           placeholder="Telefone"
@@ -97,7 +95,7 @@ export default function Register({ navigation }) {
           keyboardType="default"
           secureTextEntry={true}
         />
-        <View style={{ marginTop: 41 }} />
+        <View style={{marginTop: 41}} />
         <ButtonPrimary onPress={() => writeUserData()}>CADASTRAR</ButtonPrimary>
         <ButtonSecondary
           onPress={() => {

@@ -9,6 +9,7 @@ const Input = props => {
         {...props}
         // multiline
         onChangeText={props.onChangeText}
+        placeholderTextColor={theme.pallete.primary}
         placeholder={props.placeholder}
         style={[styles.input, props.style]}
         keyboardType={props.type ? props.type : 'default'}
@@ -22,7 +23,7 @@ const styles = StyleSheet.create({
     borderColor: theme.pallete.primary,
     borderWidth: 1,
     borderRadius: 8,
-    width: '85%',
+    width: '100%',
     alignSelf: 'center',
     paddingHorizontal: 23,
     paddingVertical: 12,

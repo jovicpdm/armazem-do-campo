@@ -4,10 +4,10 @@ import FlashMessage from 'react-native-flash-message';
 
 import {theme} from '../global/styles/theme';
 
-const WhiteArea = ({children}) => {
+const WhiteArea = ({children}, props) => {
   return (
     <ScrollView style={styles.container}>
-      <FlashMessage style={styles.message} duration={2000} />
+      <FlashMessage style={[styles.message, props.style]} duration={2000} />
       {children}
     </ScrollView>
   );
@@ -22,6 +22,7 @@ const styles = StyleSheet.create({
     height: '100%',
     borderTopLeftRadius: 30,
     borderTopRightRadius: 30,
+    paddingHorizontal: 20,
   },
   message: {
     alignItems: 'center',

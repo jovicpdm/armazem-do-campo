@@ -19,5 +19,13 @@ export default ButtonPrimary;
 const styles = StyleSheet.create({
   button: {
     backgroundColor: theme.pallete.primary,
+    shadowColor: theme.pallete.shadowColor,
+    shadowOffset: {
+      width: 2,
+      height: 2,
+    },
+    shadowOpacity: 0.1,
+    borderRadius: 8,
+    elevation: 2,
   },
 });

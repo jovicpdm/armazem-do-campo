@@ -1,6 +1,6 @@
 /* eslint-disable react-native/no-inline-styles */
-import React, {useState, useEffect} from 'react';
-import {View, StyleSheet, Text} from 'react-native';
+import React, {useState} from 'react';
+import {View, StyleSheet} from 'react-native';
 import {getAuth, signInWithEmailAndPassword} from 'firebase/auth';
 import {showMessage} from 'react-native-flash-message';
 
@@ -14,7 +14,6 @@ import TitleSection from '../components/TitleSection';
 import firebase from '../config/firebase';
 
 export function Login({navigation}) {
-
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
@@ -60,7 +59,6 @@ export function Login({navigation}) {
         <TitleSection>Bem vindo</TitleSection>
         <Input
           placeholder={'Email'}
-          placeholderTextColor={theme.pallete.primary}
           keyboardType="email-address"
           onChangeText={text => setEmail(text)}
           value={email}
@@ -71,7 +69,6 @@ export function Login({navigation}) {
         <Input
           secureTextEntry={true}
           placeholder={'Senha'}
-          placeholderTextColor={theme.pallete.primary}
           keyboardType="default"
           onChangeText={text => setPassword(text)}
           value={password}
