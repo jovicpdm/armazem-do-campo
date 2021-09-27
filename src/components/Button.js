@@ -17,7 +17,7 @@ export default Button;
 
 const styles = StyleSheet.create({
   button: {
-    width: '85%',
+    width: '100%',
     paddingVertical: 16,
     borderRadius: 8,
     alignSelf: 'center',
