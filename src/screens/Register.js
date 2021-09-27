@@ -8,6 +8,9 @@ import WhiteArea from '../components/WhiteArea';
 import { theme } from '../global/styles/theme';
 import ButtonSecondary from '../components/ButtonSecondary';
 import ButtonPrimary from '../components/ButtonPrimary';
+import { getDatabase, ref, set } from "firebase/database";
+
+
 
 export default function Register({ navigation }) {
   const [name, setName] = useState();
@@ -17,21 +20,28 @@ export default function Register({ navigation }) {
   const [password, setPassword] = useState();
   const [confirmPassword, setConfirmPassword] = useState();
 
-  const [user, setUser] = useState({
-    name: '',
-    phone: Number,
-    email: '',
-    presentation: '',
-    password: '',
-    confirmPassword: ''
-  });
+  // const user = {
+  //   name: name,
+  //   phone: phone,
+  //   email: email,
+  //   presentation: presentation,
+  //   password: password,
+  //   confirmPassword: confirmPassword
+  // };
+ 
+//  const uid = getDatabase().ref().child('users').push().key;
 
-  const inputName = event => setName(event.target.value);
-  const inputPhone = event => setPhone(event.target.value);
-  const inputEmail = event => setEmail(event.target.value);
-  const inputPresentation = event => setPresentation(event.target.value);
-  const inputPassword = event => setPassword(event.target.value);
-  const inputConfirmPassword = event => setConfirmPassword(event.target.value);
+  function writeUserData() {
+    const db = getDatabase();
+    set(ref(db, 'users/' + phone), {
+      Nome: name,
+      Email: email,
+      Apresentacao: presentation,
+      Senha: password,
+      Status: "aguardando",
+      SenhaConfir: confirmPassword
+    });
+  }
 
   return (
     <ScrollView contentContainerStyle={{ maxHeight: '100%' }}>
@@ -44,44 +54,51 @@ export default function Register({ navigation }) {
         <Input
           placeholder="Nome"
           placeholderTextColor={theme.pallete.primary}
-          onChangeText={inputName}
+          onChangeText={text => setName(text)}
+          value={name}
+          keyboardType="default"
           style={{ marginTop: 16 }}
         />
         <Input
           placeholder="Telefone"
           placeholderTextColor={theme.pallete.primary}
-          onChangeText={inputPhone}
+          onChangeText={text => setPhone(text)}
+          value={phone}
           type="phone-pad"
         />
         <Input
           placeholder="E-mail"
           placeholderTextColor={theme.pallete.primary}
-          onChangeText={inputEmail}
-          type="email-address"
+          onChangeText={text => setEmail(text)}
+          value={email}
+          keyboardType="email-address"
         />
         <Input
           placeholder="Apresentação (Fale sobre você)"
           placeholderTextColor={theme.pallete.primary}
-          onChangeText={inputPresentation}
-          type="ascii-capable"
+          onChangeText={text => setPresentation(text)}
+          value={presentation}
+          keyboardType="default"
           style={styles.inputPresentation}
         />
         <Input
           placeholder="Senha"
           placeholderTextColor={theme.pallete.primary}
-          onChangeText={inputPassword}
+          onChangeText={text => setPassword(text)}
+          value={password}
           secureTextEntry={true}
-          type="password"
+          keyboardType="default"
         />
         <Input
           placeholder="Confirmar senha"
           placeholderTextColor={theme.pallete.primary}
-          onChangeText={inputConfirmPassword}
-          type="password"
+          onChangeText={text => setConfirmPassword(text)}
+          value={confirmPassword}
+          keyboardType="default"
           secureTextEntry={true}
         />
         <View style={{ marginTop: 41 }} />
-        <ButtonPrimary onPress={() => { }}>CADASTRAR</ButtonPrimary>
+        <ButtonPrimary onPress={() => writeUserData()}>CADASTRAR</ButtonPrimary>
         <ButtonSecondary
           onPress={() => {
             navigation.navigate('Login');

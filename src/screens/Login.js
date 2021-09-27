@@ -14,8 +14,6 @@ import TitleSection from '../components/TitleSection';
 import firebase from '../config/firebase';
 
 export function Login({navigation}) {
-  // const [email, onChangeEmail] = useState();
-  // const [password, onChangePassword] = useState();
 
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
