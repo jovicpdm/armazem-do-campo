@@ -10,8 +10,8 @@ export default TitleSection;
 
 const styles = StyleSheet.create({
   text: {
-    fontSize: 28,
-    color: theme.pallete.black,
+    fontSize: 24,
+    color: theme.pallete.primary,
     fontFamily: 'Roboto-Medium',
     textAlign: 'center',
     marginTop: 8,
