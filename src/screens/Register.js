@@ -6,6 +6,7 @@ import {getDatabase, ref, set, push} from 'firebase/database';
 import {getAuth, createUserWithEmailAndPassword} from 'firebase/auth';
 
 import Input from '../components/Input';
+import InputPassword from '../components/InputPassword';
 import TitleSection from '../components/TitleSection';
 import WhiteArea from '../components/WhiteArea';
 import {theme} from '../global/styles/theme';
@@ -20,8 +21,6 @@ export default function Register({navigation}) {
   const [presentation, setPresentation] = useState();
   const [password, setPassword] = useState();
   const [confirmPassword, setConfirmPassword] = useState();
-
-  //  const uid = getDatabase().ref().child('users').push().key;
 
   const writeUserData = () => {
     const db = getDatabase();
@@ -97,21 +96,19 @@ export default function Register({navigation}) {
           keyboardType="default"
           style={styles.inputPresentation}
         />
-        <Input
+        <InputPassword
           placeholder="Senha"
           placeholderTextColor={theme.pallete.primary}
           onChangeText={text => setPassword(text)}
           value={password}
-          secureTextEntry={true}
           keyboardType="default"
         />
-        <Input
+        <InputPassword
           placeholder="Confirmar senha"
           placeholderTextColor={theme.pallete.primary}
           onChangeText={text => setConfirmPassword(text)}
           value={confirmPassword}
           keyboardType="default"
-          secureTextEntry={true}
         />
         <View style={{marginTop: 41}} />
         <ButtonPrimary onPress={() => writeUserData()}>CADASTRAR</ButtonPrimary>

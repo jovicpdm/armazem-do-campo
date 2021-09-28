@@ -1,21 +1,23 @@
 /* eslint-disable react-native/no-inline-styles */
-import React, {useState} from 'react';
-import {View, StyleSheet} from 'react-native';
-import {getAuth, signInWithEmailAndPassword} from 'firebase/auth';
-import {showMessage} from 'react-native-flash-message';
+import React, { useState } from 'react';
+import { View, TextInput, StyleSheet, TouchableOpacity } from 'react-native';
+import { getAuth, signInWithEmailAndPassword } from 'firebase/auth';
+import { showMessage } from 'react-native-flash-message';
+
 
 import Logo from '../components/Logo';
 import Input from '../components/Input';
+import InputPassword from '../components/InputPassword';
 import ButtonPrimary from '../components/ButtonPrimary';
-import {theme} from '../global/styles/theme';
+import { theme } from '../global/styles/theme';
 import ButtonSecondary from '../components/ButtonSecondary';
 import WhiteArea from '../components/WhiteArea';
 import TitleSection from '../components/TitleSection';
-import firebase from '../config/firebase';
 
-export function Login({navigation}) {
+export function Login({ navigation }) {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+
 
   const auth = getAuth();
   const authentication = () =>
@@ -64,17 +66,17 @@ export function Login({navigation}) {
           value={email}
           // onChangeText={onChangeEmail}
           //react-native/no-inline-styles
-          style={{marginTop: 16}}
+          style={{ marginTop: 16 }}
         />
-        <Input
-          secureTextEntry={true}
+        <InputPassword
+          placeholderTextColor={theme.pallete.primary}
           placeholder={'Senha'}
           keyboardType="default"
           onChangeText={text => setPassword(text)}
           value={password}
         />
 
-        <View style={{marginTop: 32}} />
+        <View style={{ marginTop: 32 }} />
         <ButtonPrimary onPress={() => authentication()}>ENTRAR</ButtonPrimary>
         <ButtonSecondary
           onPress={() => {
@@ -87,36 +89,5 @@ export function Login({navigation}) {
   );
 }
 
-const styles = StyleSheet.create({
-  inputArea: {
-    backgroundColor: theme.pallete.white,
-    height: '100%',
-    borderTopLeftRadius: 30,
-    borderTopRightRadius: 30,
-  },
-  textEnterWith: {
-    textAlign: 'center',
-    marginTop: 8,
-    fontSize: 16,
-    lineHeight: 25,
-    letterSpacing: 1.15,
-  },
-  line: {
-    flex: 1,
-    height: 1,
-    backgroundColor: theme.pallete.primary,
-  },
-  contentAlert: {
-    marginTop: 20,
-    flexDirection: 'row',
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  warningAlert: {
-    paddingLeft: 10,
-    color: '#000',
-    fontSize: 16,
-  },
-});
 
 export default Login;
