@@ -19,7 +19,11 @@ const Purchase = () => {
               Compre alimentos direto do produtor
             </Text>
           </View>
-          <Icon name="circle" size={48} color={theme.pallete.textTitleScreen} />
+          <Icon
+            name="user-circle"
+            size={48}
+            color={theme.pallete.textTitleScreen}
+          />
         </View>
         <MySearchBar placeholder="Pesquisar" />
       </View>

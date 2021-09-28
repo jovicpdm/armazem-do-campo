@@ -21,7 +21,7 @@ export function Login({navigation}) {
   const authentication = () =>
     signInWithEmailAndPassword(auth, email, password)
       .then(userCredential => {
-        navigation.navigate('Purchase');
+        navigation.navigate('RegisterProduct');
       })
       .catch(error => {
         console.log(`message: ${error.message} code: ${error.code}`);

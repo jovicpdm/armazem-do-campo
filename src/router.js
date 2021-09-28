@@ -1,10 +1,11 @@
 import * as React from 'react';
 import {NavigationContainer} from '@react-navigation/native';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
+import {theme} from './global/styles/theme';
 import Login from './screens/Login';
 import Register from './screens/Register';
 import Purchase from './screens/Purchase';
-import {theme} from './global/styles/theme';
+import RegisterProduct from './screens/RegisterProduct';
 
 const {Navigator, Screen} = createNativeStackNavigator();
 
@@ -30,6 +31,7 @@ const Router = () => {
         <Screen name="Login" component={Login} />
         <Screen name="Register" component={Register} />
         <Screen name="Purchase" component={Purchase} />
+        <Screen name="RegisterProduct" component={RegisterProduct} />
       </Navigator>
     </NavigationContainer>
   );

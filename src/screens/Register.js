@@ -1,18 +1,19 @@
 /* eslint-disable react-native/no-inline-styles */
-import React, { useState } from 'react';
-import { ScrollView, Text, StyleSheet, View } from 'react-native';
+import React, {useState} from 'react';
+import {ScrollView, Text, StyleSheet, View} from 'react-native';
+import {showMessage} from 'react-native-flash-message';
+import {getDatabase, ref, set, push} from 'firebase/database';
+import {getAuth, createUserWithEmailAndPassword} from 'firebase/auth';
 
 import Input from '../components/Input';
 import TitleSection from '../components/TitleSection';
 import WhiteArea from '../components/WhiteArea';
-import { theme } from '../global/styles/theme';
+import {theme} from '../global/styles/theme';
 import ButtonSecondary from '../components/ButtonSecondary';
 import ButtonPrimary from '../components/ButtonPrimary';
-import { getDatabase, ref, set } from 'firebase/database';
-import { getAuth, createUserWithEmailAndPassword } from "firebase/auth";
-import { showMessage } from 'react-native-flash-message'
+import firebase from '../config/firebase';
 
-export default function Register({ navigation }) {
+export default function Register({navigation}) {
   const [name, setName] = useState();
   const [phone, setPhone] = useState();
   const [email, setEmail] = useState();
@@ -22,16 +23,27 @@ export default function Register({ navigation }) {
 
   //  const uid = getDatabase().ref().child('users').push().key;
 
-  function writeUserData() {
+  const writeUserData = () => {
     const db = getDatabase();
     const auth = getAuth();
+    const userRef = ref(db, 'users');
+    const newUserRef = push(userRef);
     createUserWithEmailAndPassword(auth, email, password)
-      .then((userCredential) => {
-        // Signed in
+      .then(userCredential => {
+        // eslint-disable-next-line no-undef
+        set(newUserRef, {
+          name: name,
+          email: email,
+          phone: phone,
+          presentation: presentation,
+          password: password,
+          status: 'aguardando',
+          type: 'comprador',
+        });
       })
       .catch(error => {
         console.log(`message: ${error.message} code: ${error.code}`);
-        if (error.code === 'auth/email-already-exists') {
+        if (error.code === ' auth/email-already-in-use') {
           showMessage({
             message: 'Email já existente',
             description: 'Por favor, insira um novo email',
@@ -45,18 +57,10 @@ export default function Register({ navigation }) {
           });
         }
       });
-    set(ref(db, 'users/' + phone), {
-      Nome: name,
-      Email: email,
-      Apresentacao: presentation,
-      Senha: password,
-      Status: 'aguardando',
-      SenhaConfir: confirmPassword,
-    });
-  }
+  };
 
   return (
-    <ScrollView contentContainerStyle={{ maxHeight: '100%' }}>
+    <ScrollView contentContainerStyle={{maxHeight: '100%'}}>
       <Text style={styles.presentation}>
         Faça parte da Rede de Comercialização de produtos da reforma agrária
         popular
@@ -69,7 +73,7 @@ export default function Register({ navigation }) {
           onChangeText={text => setName(text)}
           value={name}
           keyboardType="default"
-          style={{ marginTop: 16 }}
+          style={{marginTop: 16}}
         />
         <Input
           placeholder="Telefone"
@@ -109,7 +113,7 @@ export default function Register({ navigation }) {
           keyboardType="default"
           secureTextEntry={true}
         />
-        <View style={{ marginTop: 41 }} />
+        <View style={{marginTop: 41}} />
         <ButtonPrimary onPress={() => writeUserData()}>CADASTRAR</ButtonPrimary>
         <ButtonSecondary
           onPress={() => {
