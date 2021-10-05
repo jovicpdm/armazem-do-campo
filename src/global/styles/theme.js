@@ -8,5 +8,6 @@ export const theme = {
     shadowColor: '#11281C',
     textTitleScreen: '#E0E5EB',
     primary004: '#208353',
+    primary005: '#1FB76E',
   },
 };

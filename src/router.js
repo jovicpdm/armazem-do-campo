@@ -20,7 +20,7 @@ const Router = () => {
   return (
     <NavigationContainer theme={MyTheme}>
       <Navigator
-        initialRouteName="Login"
+        initialRouteName="Purchase"
         headerMode="none"
         screenOptions={{
           headerShown: false,
