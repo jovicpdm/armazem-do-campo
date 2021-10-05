@@ -5,6 +5,7 @@ import Icon from 'react-native-vector-icons/FontAwesome';
 import {getDatabase, ref, onValue} from 'firebase/database';
 
 import {theme} from '../global/styles/theme';
+// eslint-disable-next-line no-unused-vars
 import firebase from '../config/firebase';
 import MySearchBar from '../components/MySearchBar';
 import WhiteAreaWithoutScrollView from '../components/WhiteAreaWithoutScrollView';
