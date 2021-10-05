@@ -1,14 +1,52 @@
 /* eslint-disable react-native/no-inline-styles */
-import React from 'react';
-import {View, Text, StyleSheet} from 'react-native';
-import {theme} from '../global/styles/theme';
+import React, {useEffect, useState} from 'react';
+import {View, Text, StyleSheet, FlatList} from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
+import {getDatabase, ref, onValue} from 'firebase/database';
 
+import {theme} from '../global/styles/theme';
+import firebase from '../config/firebase';
 import MySearchBar from '../components/MySearchBar';
-import WhiteArea from '../components/WhiteArea';
+import WhiteAreaWithoutScrollView from '../components/WhiteAreaWithoutScrollView';
 import HighlightedText from '../components/HighlightedText';
+import CategoryLabel from '../components/CategoryLabel';
 
-const Purchase = () => {
+export default function Purchase({navigation}) {
+  const [categories, setCategories] = useState([]);
+  const [selected, setSelected] = useState(0);
+  const db = getDatabase();
+  const dbRef = ref(db, 'categories');
+
+  const listCategories = async () => {
+    const dataArray = [];
+    await new Promise(resolve => {
+      onValue(dbRef, snapshot => {
+        snapshot.forEach(snap => {
+          dataArray.push(snap.val());
+        });
+        resolve();
+      });
+    });
+    setCategories(dataArray);
+  };
+
+  useEffect(() => {
+    listCategories();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  const renderItem = ({item}) => {
+    return (
+      <CategoryLabel
+        description={item.description}
+        onPress={() => setSelected(item.id)}
+        color={
+          item.id === selected ? theme.pallete.primary004 : theme.pallete.black
+        }
+      />
+    );
+  };
+
   return (
     <View>
       <View style={styles.headerContainer}>
@@ -27,13 +65,19 @@ const Purchase = () => {
         </View>
         <MySearchBar placeholder="Pesquisar" />
       </View>
-      <WhiteArea>
+      <WhiteAreaWithoutScrollView>
         <View style={{marginTop: 16}} />
         <HighlightedText>Categorias</HighlightedText>
-      </WhiteArea>
+        <FlatList
+          horizontal
+          data={categories}
+          renderItem={renderItem}
+          keyExtractor={item => item.id}
+        />
+      </WhiteAreaWithoutScrollView>
     </View>
   );
-};
+}
 
 const styles = StyleSheet.create({
   headerContainer: {
@@ -57,5 +101,3 @@ const styles = StyleSheet.create({
     fontFamily: 'Roboto-Regular',
   },
 });
-
-export default Purchase;

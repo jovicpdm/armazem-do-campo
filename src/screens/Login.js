@@ -1,29 +1,27 @@
 /* eslint-disable react-native/no-inline-styles */
-import React, { useState } from 'react';
-import { View, TextInput, StyleSheet, TouchableOpacity } from 'react-native';
-import { getAuth, signInWithEmailAndPassword } from 'firebase/auth';
-import { showMessage } from 'react-native-flash-message';
-
+import React, {useState} from 'react';
+import {View, TextInput, StyleSheet, TouchableOpacity} from 'react-native';
+import {getAuth, signInWithEmailAndPassword} from 'firebase/auth';
+import {showMessage} from 'react-native-flash-message';
 
 import Logo from '../components/Logo';
 import Input from '../components/Input';
 import InputPassword from '../components/InputPassword';
 import ButtonPrimary from '../components/ButtonPrimary';
-import { theme } from '../global/styles/theme';
+import {theme} from '../global/styles/theme';
 import ButtonSecondary from '../components/ButtonSecondary';
 import WhiteArea from '../components/WhiteArea';
 import TitleSection from '../components/TitleSection';
 
-export function Login({ navigation }) {
+export default function Login({navigation}) {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-
 
   const auth = getAuth();
   const authentication = () =>
     signInWithEmailAndPassword(auth, email, password)
       .then(userCredential => {
-        navigation.navigate('RegisterProduct');
+        navigation.navigate('Purchase');
       })
       .catch(error => {
         console.log(`message: ${error.message} code: ${error.code}`);
@@ -66,7 +64,7 @@ export function Login({ navigation }) {
           value={email}
           // onChangeText={onChangeEmail}
           //react-native/no-inline-styles
-          style={{ marginTop: 16 }}
+          style={{marginTop: 16}}
         />
         <InputPassword
           placeholderTextColor={theme.pallete.primary}
@@ -76,7 +74,7 @@ export function Login({ navigation }) {
           value={password}
         />
 
-        <View style={{ marginTop: 32 }} />
+        <View style={{marginTop: 32}} />
         <ButtonPrimary onPress={() => authentication()}>ENTRAR</ButtonPrimary>
         <ButtonSecondary
           onPress={() => {
@@ -88,6 +86,3 @@ export function Login({ navigation }) {
     </View>
   );
 }
-
-
-export default Login;
