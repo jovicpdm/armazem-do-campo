@@ -1,19 +1,12 @@
-import React, {useState} from 'react';
+import React from 'react';
 import {Text, StyleSheet, TouchableOpacity} from 'react-native';
-import {theme} from '../global/styles/theme';
 
 // const [state, setstate] = useState(initialState);
 
 const CategoryLabel = ({description, id, onPress, color}) => {
   return (
     <TouchableOpacity onPress={onPress}>
-      <Text
-        style={
-          // eslint-disable-next-line no-sequences
-          [styles.category, {color: color}]
-        }>
-        {description}
-      </Text>
+      <Text style={[styles.category, {color: color}]}>{description}</Text>
     </TouchableOpacity>
   );
 };
