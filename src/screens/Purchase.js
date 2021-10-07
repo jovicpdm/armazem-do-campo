@@ -69,12 +69,16 @@ export default function Purchase({navigation}) {
       <WhiteAreaWithoutScrollView>
         <View style={{marginTop: 16}} />
         <HighlightedText>Categorias</HighlightedText>
-        <FlatList
-          horizontal
-          data={categories}
-          renderItem={renderItem}
-          keyExtractor={item => item.id}
-        />
+        <View style={{marginBottom: 16}}>
+          <FlatList
+            showsHorizontalScrollIndicator={false}
+            horizontal
+            data={categories}
+            renderItem={renderItem}
+            keyExtractor={item => item.id}
+          />
+        </View>
+        <HighlightedText>Produtos</HighlightedText>
       </WhiteAreaWithoutScrollView>
     </View>
   );
