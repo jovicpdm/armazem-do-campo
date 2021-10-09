@@ -25,12 +25,9 @@ export default function Register({navigation}) {
   const writeUserData = () => {
     const db = getDatabase();
     const auth = getAuth();
-    const userRef = ref(db, 'users');
-    const newUserRef = push(userRef);
     createUserWithEmailAndPassword(auth, email, password)
       .then(userCredential => {
-        // eslint-disable-next-line no-undef
-        set(newUserRef, {
+        set(ref(db, 'users/' + userCredential.user.uid), {
           name: name,
           email: email,
           phone: phone,
@@ -39,6 +36,7 @@ export default function Register({navigation}) {
           status: 'aguardando',
           type: 'comprador',
         });
+        console.log(userCredential.user.uid);
       })
       .catch(error => {
         console.log(`message: ${error.message} code: ${error.code}`);

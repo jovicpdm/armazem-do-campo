@@ -2,6 +2,7 @@
 import React, {useState} from 'react';
 import {View} from 'react-native';
 import {getAuth, signInWithEmailAndPassword} from 'firebase/auth';
+import {getDatabase, onValue, ref} from '@firebase/database';
 import {showMessage} from 'react-native-flash-message';
 
 import Logo from '../components/Logo';
@@ -17,11 +18,27 @@ export default function Login({navigation}) {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
+  const db = getDatabase();
   const auth = getAuth();
   const authentication = () =>
     signInWithEmailAndPassword(auth, email, password)
       .then(userCredential => {
-        navigation.navigate('Purchase');
+        // navigation.navigate('Purchase');
+        console.log(userCredential);
+        const userRef = ref(db, 'users/' + userCredential.user.uid);
+        onValue(userRef, snapshot => {
+          const data = snapshot.val();
+          if (data.type === 'admin') {
+            navigation.navigate('Admin');
+          }
+          if (data.status === 'aguardando') {
+            navigation.navigate('Waiting');
+          } else if (data.status === 'reprovado') {
+            navigation.navigate('Disapproved');
+          } else if (data.status === 'aprovado') {
+            navigation.navigate('Purchase');
+          }
+        });
       })
       .catch(error => {
         console.log(`message: ${error.message} code: ${error.code}`);
