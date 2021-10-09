@@ -207,10 +207,8 @@ const styles = StyleSheet.create({
   },
   txtPicker: {
     borderEndColor: theme.pallete.primary,
-    tintColor: '#ffcbdb',
-    textDecorationColor: '#ffcbdb',
-    textShadowColor: '#ffcbdb',
     height: '100%',
     width: '100%',
+    color: theme.pallete.red,
   },
 });
