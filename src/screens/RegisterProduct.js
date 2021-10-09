@@ -116,7 +116,7 @@ export default function RegisterProduct({navigation}) {
             {categories.map(category => {
               return (
                 <Picker.Item
-                  label={category.description}
+                  label={category.description.toLowerCase()}
                   value={category.description}
                 />
               );
