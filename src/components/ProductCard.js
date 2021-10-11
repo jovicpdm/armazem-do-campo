@@ -3,9 +3,9 @@ import {StyleSheet} from 'react-native';
 import {Card, Paragraph, Title} from 'react-native-paper';
 import {theme} from '../global/styles/theme';
 
-const ProductCard = ({name, price, image}) => {
+const ProductCard = ({name, price, image, onPress}) => {
   return (
-    <Card style={styles.card} elevation={0} mode="outlined">
+    <Card style={styles.card} elevation={0} mode="outlined" onPress={onPress}>
       <Card.Content style={styles.container}>
         <Card.Cover source={image} style={styles.image} />
         <Card.Content>

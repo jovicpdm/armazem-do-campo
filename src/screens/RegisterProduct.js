@@ -29,6 +29,7 @@ export default function RegisterProduct({navigation}) {
     {description: 'PÃES', id: 11},
     {description: 'BISCOITOS E SALGADOS', id: 12},
   ]);
+
   const [selectedCategory, setSelectedCategory] = useState();
 
   const [formsOfSale, setFormsOfSale] = useState([
