@@ -1,15 +1,21 @@
 import React from 'react';
-import {View, StyleSheet} from 'react-native';
-import {theme} from '../global/styles/theme';
+import {TouchableOpacity, StyleSheet} from 'react-native';
 
-const CardContainer = ({children}) => {
-  return <View style={styles.container}>{children}</View>;
+const CardContainer = ({children, background, onPress}) => {
+  return (
+    <TouchableOpacity
+      onPress={onPress}
+      style={[styles.container, {backgroundColor: background}]}>
+      {children}
+    </TouchableOpacity>
+  );
 };
 
 const styles = StyleSheet.create({
   container: {
     padding: 8,
-    backgroundColor: theme.pallete.primary004,
+    borderRadius: 8,
+    alignItems: 'center',
   },
 });
 

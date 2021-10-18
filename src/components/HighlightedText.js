@@ -10,6 +10,7 @@ const styles = StyleSheet.create({
     fontSize: 16,
     color: '#1FB76E',
     fontFamily: 'Roboto-Medium',
+    textAlign: 'center',
   },
 });
 
