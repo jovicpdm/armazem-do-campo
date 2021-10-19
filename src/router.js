@@ -7,8 +7,7 @@ import Login from './screens/Login';
 import Register from './screens/Register';
 import Purchase from './screens/Purchase';
 import RegisterProduct from './screens/RegisterProduct';
-import Disaproverd from './screens/Disapproved';
-import Waiting from './screens/Waiting';
+import Feedback from './screens/Feedback';
 import Admin from './screens/Admin';
 
 const {Navigator, Screen} = createNativeStackNavigator();
@@ -24,7 +23,7 @@ const Router = () => {
   return (
     <NavigationContainer theme={MyTheme}>
       <Navigator
-        initialRouteName="Login"
+        initialRouteName="Disapproved"
         headerMode="none"
         screenOptions={{
           headerShown: false,
@@ -36,8 +35,7 @@ const Router = () => {
         <Screen name="Register" component={Register} />
         <Screen name="Purchase" component={Purchase} />
         <Screen name="RegisterProduct" component={RegisterProduct} />
-        <Screen name="Disapproved" component={Disaproverd} />
-        <Screen name="Waiting" component={Waiting} />
+        <Screen name="Feedback" component={Feedback} />
         <Screen name="Admin" component={Admin} />
       </Navigator>
     </NavigationContainer>

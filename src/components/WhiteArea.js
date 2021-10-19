@@ -7,7 +7,7 @@ import {theme} from '../global/styles/theme';
 const WhiteArea = ({children}, props) => {
   return (
     <ScrollView style={styles.container}>
-      <FlashMessage style={[styles.message, props.style]} duration={2000} />
+      {/* <FlashMessage style={[styles.message, props.style]} duration={2000} /> */}
       {children}
     </ScrollView>
   );

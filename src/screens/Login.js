@@ -1,6 +1,6 @@
 /* eslint-disable react-native/no-inline-styles */
 import React, {useState} from 'react';
-import {View} from 'react-native';
+import {View, Text} from 'react-native';
 import {getAuth, signInWithEmailAndPassword} from 'firebase/auth';
 import {getDatabase, onValue, ref} from '@firebase/database';
 import {showMessage} from 'react-native-flash-message';
@@ -13,18 +13,19 @@ import {theme} from '../global/styles/theme';
 import ButtonSecondary from '../components/ButtonSecondary';
 import WhiteArea from '../components/WhiteArea';
 import TitleSection from '../components/TitleSection';
+import ErrorMessage from '../components/ErrorMessage';
 
 export default function Login({navigation}) {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [showError, setShowError] = useState(false);
+  const [error, setError] = useState('teste');
 
   const db = getDatabase();
   const auth = getAuth();
   const authentication = () =>
     signInWithEmailAndPassword(auth, email, password)
       .then(userCredential => {
-        // navigation.navigate('Purchase');
-        console.log(userCredential);
         const userRef = ref(db, 'users/' + userCredential.user.uid);
         onValue(userRef, snapshot => {
           const data = snapshot.val();
@@ -32,9 +33,9 @@ export default function Login({navigation}) {
             navigation.navigate('Admin');
           }
           if (data.status === 'aguardando') {
-            navigation.navigate('Waiting');
+            navigation.navigate('Feedback', {status: 'aguardando'});
           } else if (data.status === 'reprovado') {
-            navigation.navigate('Disapproved');
+            navigation.navigate('Feedback', {status: 'reprovado'});
           } else if (data.status === 'aprovado') {
             navigation.navigate('Purchase');
           }
@@ -43,30 +44,15 @@ export default function Login({navigation}) {
       .catch(error => {
         console.log(`message: ${error.message} code: ${error.code}`);
         if (error.code === 'auth/invalid-email') {
-          showMessage({
-            message: 'Email inválido',
-            description: 'Por favor, insira um email válido',
-            type: 'danger',
-          });
+          setError('Email inválido!');
         } else if (error.code === 'auth/internal-error') {
-          showMessage({
-            message: 'Campo vazio',
-            description: 'Por favor, digite email e senha',
-            type: 'danger',
-          });
+          setError('Campo vazio');
         } else if (error.code === 'auth/user-not-found') {
-          showMessage({
-            message: 'Usuário não encontrado',
-            description: 'Não foi possível achar um usuário com esse email',
-            type: 'danger',
-          });
+          setError('Usuário não encontrado');
         } else if (error.code === 'auth/wrong-password') {
-          showMessage({
-            message: 'Senha incorreta',
-            description: 'Por favor, verifique sua senha',
-            type: 'danger',
-          });
+          setError('Senha incorreta');
         }
+        setShowError(true);
       });
 
   return (
@@ -74,12 +60,15 @@ export default function Login({navigation}) {
       <Logo />
       <WhiteArea>
         <TitleSection>Bem vindo</TitleSection>
+        {showError === false ? null : <ErrorMessage> {error} </ErrorMessage>}
         <Input
           placeholder={'Email'}
           keyboardType="email-address"
           onChangeText={text => setEmail(text)}
           value={email}
-          // onChangeText={onChangeEmail}
+          onFocus={() => {
+            setShowError(false);
+          }}
           //react-native/no-inline-styles
           style={{marginTop: 16}}
         />

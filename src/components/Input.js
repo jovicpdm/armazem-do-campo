@@ -7,7 +7,6 @@ const Input = props => {
     <View>
       <TextInput
         {...props}
-        multiline
         onChangeText={props.onChangeText}
         placeholderTextColor={theme.pallete.primary}
         placeholder={props.placeholder}
