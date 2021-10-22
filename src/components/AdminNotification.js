@@ -11,7 +11,7 @@ const AdminNotification = ({children}) => {
         name="arrow-right-bold-circle-outline"
         type="material-community"
         size={24}
-        color={theme.pallete.white}
+        color={theme.pallete.primary004}
       />
     </TouchableOpacity>
   );
@@ -21,12 +21,14 @@ const styles = StyleSheet.create({
   container: {
     flexDirection: 'row',
     justifyContent: 'space-around',
-    backgroundColor: theme.pallete.primary004,
+    borderColor: theme.pallete.primary004,
+    borderWidth: 1,
     borderRadius: 8,
-    alignContent: 'center',
+    alignItems: 'center',
+    paddingVertical: 8,
   },
   text: {
-    color: theme.pallete.white,
+    color: theme.pallete.primary004,
     textAlign: 'left',
   },
 });

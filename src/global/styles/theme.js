@@ -1,9 +1,12 @@
 export const theme = {
   pallete: {
     primary: '#1B5338',
+    primary002: '#11281C',
     primary004: '#208353',
     primary005: '#1FB76E',
+    primary007: '#46F6A1',
     white: '#e7e7e7',
+    gray: '#CCC',
     black: '#070707',
     red: '#D55D1D',
     yellow: '#C79B29',

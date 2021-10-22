@@ -3,9 +3,7 @@ import {TouchableOpacity, StyleSheet} from 'react-native';
 
 const CardContainer = ({children, background, onPress}) => {
   return (
-    <TouchableOpacity
-      onPress={onPress}
-      style={[styles.container, {backgroundColor: background}]}>
+    <TouchableOpacity onPress={onPress} style={[styles.container]}>
       {children}
     </TouchableOpacity>
   );
@@ -13,9 +11,13 @@ const CardContainer = ({children, background, onPress}) => {
 
 const styles = StyleSheet.create({
   container: {
-    padding: 8,
+    paddingVertical: 8,
+    paddingHorizontal: 8,
     borderRadius: 8,
     alignItems: 'center',
+    borderBottomWidth: 0.1,
+    flexDirection: 'row',
+    justifyContent: 'space-between',
   },
 });
 
