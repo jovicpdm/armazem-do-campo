@@ -1,7 +1,8 @@
 /* eslint-disable react-native/no-inline-styles */
-import React from 'react';
-import {View, Text, StyleSheet} from 'react-native';
+import React, {useState} from 'react';
+import {View, Text, StyleSheet, Button} from 'react-native';
 import {Icon} from 'react-native-elements';
+import DatePicker from 'react-native-date-picker';
 
 import {theme} from '../global/styles/theme';
 import TitleScreen from '../components/TitleScreen';
@@ -10,8 +11,13 @@ import WhiteAreaWithoutScrollView from '../components/WhiteAreaWithoutScrollView
 import HighlightedText from '../components/HighlightedText';
 import CardContainer from '../components/CardContainer';
 import AdminNotification from '../components/AdminNotification';
+import TextCard from '../components/TextCard';
+import IconMedium from '../components/IconMedium';
 
-export default function Admin() {
+export default function Admin({navigation: {navigate}}) {
+  const [date, setDate] = useState(new Date());
+  const [open, setOpen] = useState(false);
+
   return (
     <View>
       <TopScreen>
@@ -26,42 +32,45 @@ export default function Admin() {
         </View>
       </TopScreen>
       <WhiteAreaWithoutScrollView>
+        {/* <Button title="Open" onPress={() => setOpen(true)} />
+        <DatePicker
+          modal
+          open={open}
+          date={date}
+          onConfirm={date => {
+            setOpen(false);
+            setDate(date);
+          }}
+          onCancel={() => {
+            setOpen(false);
+          }}
+        /> */}
         <View style={{marginTop: 20, alignItems: 'center'}}>
           <HighlightedText>Gerenciamento</HighlightedText>
         </View>
         <View style={{marginVertical: 8}} />
-        <View style={{flexDirection: 'row', justifyContent: 'space-around'}}>
+        <View>
           <CardContainer
             background={theme.pallete.primary004}
-            onPress={() => alert('produto')}>
-            <Icon
+            onPress={() => {
+              navigate('ProductManagement');
+            }}>
+            <TextCard>Produtos</TextCard>
+            <IconMedium
               name="shopping-outline"
-              type="material-community"
-              size={40}
-              color={theme.pallete.white}
+              color={theme.pallete.primary002}
             />
-            <Text style={styles.textCard}>Produtos</Text>
           </CardContainer>
           <CardContainer
             background={theme.pallete.primary004}
-            onPress={() => alert('participante')}>
-            <Icon
+            onPress={() => navigate('ParticipantManagement')}>
+            <TextCard>Participantes</TextCard>
+            <IconMedium
               name="account-group-outline"
-              type="material-community"
-              size={40}
-              color={theme.pallete.white}
+              color={theme.pallete.primary002}
             />
-            <Text style={[styles.textCard, {marginHorizontal: 8}]}>
-              Participantes
-            </Text>
           </CardContainer>
         </View>
-        <View style={{marginVertical: 24}}>
-          <HighlightedText>Últimas atividades</HighlightedText>
-        </View>
-        <AdminNotification>
-          Fulano de Tal deseja se juntar à rede
-        </AdminNotification>
       </WhiteAreaWithoutScrollView>
     </View>
   );
@@ -69,9 +78,10 @@ export default function Admin() {
 
 const styles = StyleSheet.create({
   textCard: {
-    color: theme.pallete.white,
-    marginHorizontal: 24,
+    color: theme.pallete.primary004,
+    // marginHorizontal: 24,
     fontFamily: 'Roboto-Regular',
-    fontSize: 20,
+    fontSize: 16,
+    textAlign: 'right',
   },
 });

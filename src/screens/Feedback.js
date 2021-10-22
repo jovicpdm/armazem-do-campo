@@ -32,8 +32,8 @@ export default function Waiting({navigation: {goBack}, route}) {
                 : theme.pallete.red
             }>
             {params.status === 'aguardando'
-              ? 'Seu cadastro ainda está em análise, por favor, aguarde'
-              : 'Infelizmente seu cadastro não foi aprovado, agradecemos o interesse em participar da rede'}
+              ? 'Seu cadastro ainda está em análise, por favor, aguarde!'
+              : 'Infelizmente seu cadastro não foi aprovado, agradecemos o interesse em participar do Armazém'}
           </FeedbackLogin>
           <ButtonSecondary onPress={() => goBack()}>Voltar</ButtonSecondary>
         </View>

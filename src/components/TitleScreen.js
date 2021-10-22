@@ -15,5 +15,6 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     color: theme.pallete.textTitleScreen,
     fontFamily: 'Roboto-Bold',
+    textAlign: 'center',
   },
 });

@@ -1,5 +1,6 @@
 import React from 'react';
 import {Text, StyleSheet} from 'react-native';
+import {theme} from '../global/styles/theme';
 
 const HighlightedText = ({children}) => {
   return <Text style={styles.text}>{children}</Text>;
@@ -8,7 +9,7 @@ const HighlightedText = ({children}) => {
 const styles = StyleSheet.create({
   text: {
     fontSize: 16,
-    color: '#1FB76E',
+    color: theme.pallete.gray,
     fontFamily: 'Roboto-Medium',
     textAlign: 'center',
   },

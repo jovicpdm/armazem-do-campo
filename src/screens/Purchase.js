@@ -57,6 +57,12 @@ export default function Purchase({navigation}) {
           />
         </View>
         <MySearchBar placeholder="Pesquisar" />
+        <View style={{marginTop: 8}}>
+          <Text style={styles.welcomeSubtitle}>
+            Fechamento da compra: 18/01
+          </Text>
+          <Text style={styles.welcomeSubtitle}>Proxima entrega: 18/01</Text>
+        </View>
       </TopScreen>
       <WhiteAreaWithoutScrollView>
         <View style={{marginTop: 16}}>

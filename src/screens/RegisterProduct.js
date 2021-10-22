@@ -1,7 +1,6 @@
 import React, {useState} from 'react';
 import {View, Text, StyleSheet, ScrollView} from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome5';
-import OIcon from 'react-native-elements';
 import {theme} from '../global/styles/theme';
 import WhiteArea from '../components/WhiteArea';
 import Input from '../components/Input';
