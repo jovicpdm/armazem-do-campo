@@ -2,7 +2,7 @@
 import React, {useEffect, useState} from 'react';
 import {View, Text, StyleSheet, FlatList} from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
-import {getDatabase, ref, onValue, query, equalTo} from 'firebase/database';
+import {getDatabase, ref, onValue} from 'firebase/database';
 
 import {theme} from '../global/styles/theme';
 // eslint-disable-next-line no-unused-vars
