@@ -1,9 +1,9 @@
 /* eslint-disable react-native/no-inline-styles */
 import React, {useState} from 'react';
 import {ScrollView, Text, StyleSheet, View} from 'react-native';
-import {showMessage} from 'react-native-flash-message';
-import {getDatabase, ref, set, push} from 'firebase/database';
+import {getDatabase, ref, set} from 'firebase/database';
 import {getAuth, createUserWithEmailAndPassword} from 'firebase/auth';
+import * as ImagePicker from 'react-native-image-picker';
 
 import Input from '../components/Input';
 import InputPassword from '../components/InputPassword';
@@ -13,6 +13,7 @@ import {theme} from '../global/styles/theme';
 import ButtonSecondary from '../components/ButtonSecondary';
 import ButtonPrimary from '../components/ButtonPrimary';
 import firebase from '../config/firebase';
+import InputPhotoArea from '../components/InputPhotoArea';
 
 export default function Register({navigation}) {
   const [name, setName] = useState();
@@ -21,6 +22,7 @@ export default function Register({navigation}) {
   const [presentation, setPresentation] = useState();
   const [password, setPassword] = useState();
   const [confirmPassword, setConfirmPassword] = useState();
+  const [profilePhoto, setProfilePhoto] = useState();
 
   const writeUserData = () => {
     const db = getDatabase();
@@ -33,6 +35,7 @@ export default function Register({navigation}) {
           phone: phone,
           presentation: presentation,
           password: password,
+          photo: profilePhoto,
           status: 'aguardando',
           type: 'comprador',
         });
@@ -41,17 +44,17 @@ export default function Register({navigation}) {
       .catch(error => {
         console.log(`message: ${error.message} code: ${error.code}`);
         if (error.code === ' auth/email-already-in-use') {
-          showMessage({
-            message: 'Email já existente',
-            description: 'Por favor, insira um novo email',
-            type: 'danger',
-          });
+          // showMessage({
+          //   message: 'Email já existente',
+          //   description: 'Por favor, insira um novo email',
+          //   type: 'danger',
+          // });
         } else if (error.code === 'auth/internal-error') {
-          showMessage({
-            message: 'Campo vazio',
-            description: 'Por favor, digite email e senha',
-            type: 'danger',
-          });
+          // showMessage({
+          //   message: 'Campo vazio',
+          //   description: 'Por favor, digite email e senha',
+          //   type: 'danger',
+          // });
         }
       });
   };
@@ -93,6 +96,13 @@ export default function Register({navigation}) {
           value={presentation}
           keyboardType="default"
           style={styles.inputPresentation}
+        />
+        <InputPhotoArea
+          onPress={() => {
+            ImagePicker.launchImageLibrary([], data => {
+              setProfilePhoto(data.assets[0].uri);
+            });
+          }}
         />
         <InputPassword
           placeholder="Senha"

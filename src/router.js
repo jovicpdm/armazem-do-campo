@@ -26,7 +26,7 @@ const Router = () => {
   return (
     <NavigationContainer theme={MyTheme}>
       <Navigator
-        initialRouteName="Requests"
+        initialRouteName="Login"
         headerMode="none"
         screenOptions={{
           headerShown: false,

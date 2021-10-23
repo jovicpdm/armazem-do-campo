@@ -1,6 +1,5 @@
 import React from 'react';
 import {ScrollView, StyleSheet} from 'react-native';
-import FlashMessage from 'react-native-flash-message';
 
 import {theme} from '../global/styles/theme';
 
