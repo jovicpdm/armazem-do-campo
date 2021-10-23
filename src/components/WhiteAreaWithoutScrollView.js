@@ -1,16 +1,10 @@
 import React from 'react';
 import {View, StyleSheet} from 'react-native';
-import FlashMessage from 'react-native-flash-message';
 
 import {theme} from '../global/styles/theme';
 
 const WhiteAreaWithoutScrollView = ({children}, props) => {
-  return (
-    <View style={styles.container}>
-      <FlashMessage style={[styles.message, props.style]} duration={2000} />
-      {children}
-    </View>
-  );
+  return <View style={styles.container}>{children}</View>;
 };
 
 export default WhiteAreaWithoutScrollView;
