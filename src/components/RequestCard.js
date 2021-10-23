@@ -1,31 +1,35 @@
+/* eslint-disable react-native/no-inline-styles */
 import React from 'react';
 import {StyleSheet, View, Image, Text, TouchableOpacity} from 'react-native';
 import {Icon} from 'react-native-elements';
 import {theme} from '../global/styles/theme';
 
-const RequestCard = ({children}, {photo, email, phone, presentation, id}) => {
+const RequestCard = ({name, photo, email, phone, presentation, id}) => {
   return (
     <View style={styles.container}>
       <View style={styles.label}>
         <Image
           style={styles.profilePhoto}
           source={{
-            uri: 'https://upload.wikimedia.org/wikipedia/commons/8/83/Bra-Cos_%281%29_%28cropped%29.jpg',
+            uri: photo,
           }}
         />
         <View style={styles.labelInfo}>
-          <Text style={styles.text}>Neymar JR</Text>
+          <Text
+            style={[styles.text, {fontSize: 16, fontFamily: 'Roboto-Bold'}]}>
+            {name}
+          </Text>
           <View style={{flexDirection: 'row'}}>
             <Text style={[styles.text, {color: theme.pallete.primary005}]}>
               Email:{' '}
             </Text>
-            <Text style={styles.text}>neymar@email.com</Text>
+            <Text style={styles.text}>{email}</Text>
           </View>
           <View style={{flexDirection: 'row'}}>
             <Text style={[styles.text, {color: theme.pallete.primary005}]}>
               Telefone:{' '}
             </Text>
-            <Text style={styles.text}>94 111111111</Text>
+            <Text style={styles.text}>{phone}</Text>
           </View>
         </View>
       </View>
@@ -33,13 +37,7 @@ const RequestCard = ({children}, {photo, email, phone, presentation, id}) => {
         <Text style={[styles.text, {color: theme.pallete.primary005}]}>
           Apresentação:{' '}
         </Text>
-        <Text style={styles.text}>
-          Orem ipsum dolor sit amet, consectetur adipiscing elit. Ut blandit
-          consectetur mi ac pharetra. Phasellus at euismod erat. Duis consec
-          tetur odio purus, quis iaculis dui interdum nec. Donec velit neque,
-          vestibulum eget mauris vel, elementum auctor nibh. Duis semper purus
-          et massa sodales, eu facilisis mauris hendrerit. Mauris i{' '}
-        </Text>
+        <Text style={styles.text}>{presentation + ' '} </Text>
         <View style={styles.buttonArea}>
           <TouchableOpacity style={styles.button}>
             <Icon
@@ -108,7 +106,7 @@ const styles = StyleSheet.create({
   buttonArea: {
     marginTop: 12,
     justifyContent: 'space-around',
-    alignItems: 'flex-start',
+    alignItems: 'center',
     flexDirection: 'row',
   },
   textButton: {
