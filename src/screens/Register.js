@@ -14,6 +14,7 @@ import ButtonSecondary from '../components/ButtonSecondary';
 import ButtonPrimary from '../components/ButtonPrimary';
 import firebase from '../config/firebase';
 import InputPhotoArea from '../components/InputPhotoArea';
+import ErrorMessage from '../components/ErrorMessage';
 
 export default function Register({navigation}) {
   const [name, setName] = useState();
@@ -23,40 +24,45 @@ export default function Register({navigation}) {
   const [password, setPassword] = useState();
   const [confirmPassword, setConfirmPassword] = useState();
   const [profilePhoto, setProfilePhoto] = useState();
+  const [showError, setShowError] = useState(false);
+  const [error, setError] = useState('');
 
   const writeUserData = () => {
     const db = getDatabase();
     const auth = getAuth();
-    createUserWithEmailAndPassword(auth, email, password)
-      .then(userCredential => {
-        set(ref(db, 'users/' + userCredential.user.uid), {
-          name: name,
-          email: email,
-          phone: phone,
-          presentation: presentation,
-          password: password,
-          photo: profilePhoto,
-          status: 'aguardando',
-          type: 'comprador',
-        });
-        console.log(userCredential.user.uid);
-      })
-      .catch(error => {
-        console.log(`message: ${error.message} code: ${error.code}`);
-        if (error.code === ' auth/email-already-in-use') {
-          // showMessage({
-          //   message: 'Email já existente',
-          //   description: 'Por favor, insira um novo email',
-          //   type: 'danger',
-          // });
-        } else if (error.code === 'auth/internal-error') {
-          // showMessage({
-          //   message: 'Campo vazio',
-          //   description: 'Por favor, digite email e senha',
-          //   type: 'danger',
-          // });
-        }
-      });
+    if (name || phone || email || presentation || password) {
+      if (password === confirmPassword) {
+        createUserWithEmailAndPassword(auth, email, password)
+          .then(userCredential => {
+            set(ref(db, 'users/' + userCredential.user.uid), {
+              name: name,
+              email: email,
+              phone: phone,
+              presentation: presentation,
+              password: password,
+              photo: profilePhoto,
+              status: 'aguardando',
+              type: 'comprador',
+            });
+          })
+          .catch(err => {
+            console.log(`message: ${err.message} code: ${err.code}`);
+            if (err.code === ' auth/email-already-in-use') {
+              setShowError(true);
+              setError('Email já existente');
+            } else if (err.code === 'auth/internal-error') {
+              setShowError(true);
+              setError('Campo vazio');
+            }
+          });
+      } else {
+        setShowError(true);
+        setError('As senhas devem coincidir');
+      }
+    } else {
+      setShowError(true);
+      setError('Todos os campos devem ser preenchidos');
+    }
   };
 
   return (
@@ -74,6 +80,9 @@ export default function Register({navigation}) {
           value={name}
           keyboardType="default"
           style={{marginTop: 16}}
+          onFocus={() => {
+            setShowError(false);
+          }}
         />
         <Input
           placeholder="Telefone"
@@ -81,6 +90,9 @@ export default function Register({navigation}) {
           onChangeText={text => setPhone(text)}
           value={phone}
           type="phone-pad"
+          onFocus={() => {
+            setShowError(false);
+          }}
         />
         <Input
           placeholder="E-mail"
@@ -88,6 +100,9 @@ export default function Register({navigation}) {
           onChangeText={text => setEmail(text)}
           value={email}
           keyboardType="email-address"
+          onFocus={() => {
+            setShowError(false);
+          }}
         />
         <Input
           placeholder="Apresentação (Fale sobre você)"
@@ -96,11 +111,25 @@ export default function Register({navigation}) {
           value={presentation}
           keyboardType="default"
           style={styles.inputPresentation}
+          onFocus={() => {
+            setShowError(false);
+          }}
         />
         <InputPhotoArea
-          onPress={() => {
-            ImagePicker.launchImageLibrary([], data => {
-              setProfilePhoto(data.assets[0].uri);
+          openGallery={() => {
+            setShowError(false);
+            ImagePicker.launchImageLibrary({selectionLimit: 1}, data => {
+              if (data.didCancel !== true) {
+                setProfilePhoto(data.assets[0].uri);
+              }
+            });
+          }}
+          openCamera={() => {
+            setShowError(false);
+            ImagePicker.launchCamera({}, data => {
+              if (data.didCancel !== true) {
+                setProfilePhoto(data.assets[0].uri);
+              }
             });
           }}
         />
@@ -110,6 +139,9 @@ export default function Register({navigation}) {
           onChangeText={text => setPassword(text)}
           value={password}
           keyboardType="default"
+          onFocus={() => {
+            setShowError(false);
+          }}
         />
         <InputPassword
           placeholder="Confirmar senha"
@@ -117,7 +149,11 @@ export default function Register({navigation}) {
           onChangeText={text => setConfirmPassword(text)}
           value={confirmPassword}
           keyboardType="default"
+          onFocus={() => {
+            setShowError(false);
+          }}
         />
+        {showError ? <ErrorMessage>{error}</ErrorMessage> : null}
         <View style={{marginTop: 41}} />
         <ButtonPrimary onPress={() => writeUserData()}>CADASTRAR</ButtonPrimary>
         <ButtonSecondary
