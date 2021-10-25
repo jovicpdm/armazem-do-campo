@@ -3,8 +3,18 @@ import React from 'react';
 import {StyleSheet, View, Image, Text, TouchableOpacity} from 'react-native';
 import {Icon} from 'react-native-elements';
 import {theme} from '../global/styles/theme';
+import {getDatabase, ref, update} from 'firebase/database';
+
+import firebase from '../config/firebase';
 
 const RequestCard = ({name, photo, email, phone, presentation, id}) => {
+  const approve = (id, response) => {
+    const db = getDatabase();
+    update(ref(db, 'users/' + id), {
+      status: response === 'y' ? 'aprovado' : 'reprovado',
+    });
+  };
+
   return (
     <View style={styles.container}>
       <View style={styles.label}>
@@ -39,7 +49,11 @@ const RequestCard = ({name, photo, email, phone, presentation, id}) => {
         </Text>
         <Text style={styles.text}>{presentation + ' '} </Text>
         <View style={styles.buttonArea}>
-          <TouchableOpacity style={styles.button}>
+          <TouchableOpacity
+            style={styles.button}
+            onPress={() => {
+              approve(id, 'y');
+            }}>
             <Icon
               name="check"
               type="material-community"
@@ -51,7 +65,11 @@ const RequestCard = ({name, photo, email, phone, presentation, id}) => {
               Aprovar
             </Text>
           </TouchableOpacity>
-          <TouchableOpacity style={styles.button}>
+          <TouchableOpacity
+            style={styles.button}
+            onPress={() => {
+              approve(id, 'n');
+            }}>
             <Icon
               name="close"
               type="material-community"

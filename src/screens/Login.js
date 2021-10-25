@@ -1,9 +1,9 @@
+/* eslint-disable no-shadow */
 /* eslint-disable react-native/no-inline-styles */
 import React, {useState} from 'react';
 import {View, Text} from 'react-native';
 import {getAuth, signInWithEmailAndPassword} from 'firebase/auth';
 import {getDatabase, onValue, ref} from '@firebase/database';
-import {showMessage} from 'react-native-flash-message';
 
 import Logo from '../components/Logo';
 import Input from '../components/Input';
@@ -19,7 +19,7 @@ export default function Login({navigation}) {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [showError, setShowError] = useState(false);
-  const [error, setError] = useState('teste');
+  const [error, setError] = useState('');
 
   const db = getDatabase();
   const auth = getAuth();
@@ -41,15 +41,14 @@ export default function Login({navigation}) {
           }
         });
       })
-      .catch(error => {
-        console.log(`message: ${error.message} code: ${error.code}`);
-        if (error.code === 'auth/invalid-email') {
+      .catch(err => {
+        if (err.code === 'auth/invalid-email') {
           setError('Email inválido!');
-        } else if (error.code === 'auth/internal-error') {
+        } else if (err.code === 'auth/internal-error') {
           setError('Campo vazio');
-        } else if (error.code === 'auth/user-not-found') {
+        } else if (err.code === 'auth/user-not-found') {
           setError('Usuário não encontrado');
-        } else if (error.code === 'auth/wrong-password') {
+        } else if (err.code === 'auth/wrong-password') {
           setError('Senha incorreta');
         }
         setShowError(true);
@@ -78,6 +77,9 @@ export default function Login({navigation}) {
           keyboardType="default"
           onChangeText={text => setPassword(text)}
           value={password}
+          onFocus={() => {
+            setShowError(false);
+          }}
         />
 
         <View style={{marginTop: 32}} />
