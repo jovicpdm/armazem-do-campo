@@ -12,6 +12,7 @@ import Admin from './screens/Admin';
 import ParticipantManagement from './screens/ParticipantManagement';
 import ProductManagement from './screens/ProductManagement';
 import Requests from './screens/Requests';
+import ProductInfo from './screens/ProductInfo';
 
 const {Navigator, Screen} = createNativeStackNavigator();
 
@@ -46,6 +47,7 @@ const Router = () => {
         />
         <Screen name="ProductManagement" component={ProductManagement} />
         <Screen name="Requests" component={Requests} />
+        <Screen name="ProductInfo" component={ProductInfo} />
       </Navigator>
     </NavigationContainer>
   );

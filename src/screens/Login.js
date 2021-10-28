@@ -37,7 +37,9 @@ export default function Login({navigation}) {
           } else if (data.status === 'reprovado') {
             navigation.navigate('Feedback', {status: 'reprovado'});
           } else if (data.status === 'aprovado') {
-            navigation.navigate('Purchase');
+            navigation.navigate('Purchase', {
+              id: snapshot.key,
+            });
           }
         });
       })

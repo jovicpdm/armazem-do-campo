@@ -23,7 +23,7 @@ export default function Requests() {
       onValue(dbRef, snapshot => {
         snapshot.forEach(snap => {
           let {status} = snap.val();
-          if (status === 'aprovado') {
+          if (status == 'aguardando') {
             const {photo, name, email, phone, presentation} = snap.val();
             let user = {
               id: snap.key,

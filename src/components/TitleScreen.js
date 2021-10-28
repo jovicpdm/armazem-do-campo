@@ -3,8 +3,8 @@ import {Text, StyleSheet} from 'react-native';
 
 import {theme} from '../global/styles/theme';
 
-const TitleScreen = ({children}) => {
-  return <Text style={styles.title}>{children}</Text>;
+const TitleScreen = ({children, textAlign}) => {
+  return <Text style={[styles.title, {textAlign: textAlign}]}>{children}</Text>;
 };
 
 export default TitleScreen;

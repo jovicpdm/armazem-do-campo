@@ -1,6 +1,8 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable react-native/no-inline-styles */
 import React, {useEffect, useState} from 'react';
 import {View, Text, StyleSheet, FlatList} from 'react-native';
+import {Modal, Portal, Provider} from 'react-native-paper';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import {getDatabase, ref, onValue} from 'firebase/database';
 
@@ -14,15 +16,21 @@ import CategoryLabel from '../components/CategoryLabel';
 import ProductCard from '../components/ProductCard';
 import TitleScreen from '../components/TitleScreen';
 import TopScreen from '../components/TopScreen';
+import ProfilePhoto from '../components/ProfilePhoto';
+import ProfileModal from '../components/ProfileModal';
 
-export default function Purchase({navigation}) {
+export default function Purchase({navigation, route}) {
   const [categories, setCategories] = useState([]);
   const [selected, setSelected] = useState(0);
-  const db = getDatabase();
-  const dbRef = ref(db, 'categories');
   const [product, setProduct] = useState();
+  const [user, setUser] = useState({});
+  const [visible, setVisible] = useState(false);
 
+  const containerStyle = {backgroundColor: 'white', padding: 20};
+
+  const db = getDatabase();
   const listCategories = async () => {
+    const dbRef = ref(db, 'categories');
     const dataArray = [];
     await new Promise(resolve => {
       onValue(dbRef, snapshot => {
@@ -35,9 +43,31 @@ export default function Purchase({navigation}) {
     setCategories(dataArray);
   };
 
+  const searchUser = async () => {
+    let data = {};
+    const dbRef = ref(db, 'users/' + route.params.id);
+    await new Promise(resolve => {
+      onValue(dbRef, snapshot => {
+        let {photo, name, email, phone, presentation} = snapshot.val();
+        data = {
+          id: snapshot.key,
+          photo: photo,
+          name: name,
+          email: email,
+          phone: phone,
+          presentation: presentation,
+        };
+        resolve();
+      });
+    });
+  };
+
   useEffect(() => {
     listCategories();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  useEffect(() => {
+    searchUser();
   }, []);
 
   return (
@@ -45,16 +75,12 @@ export default function Purchase({navigation}) {
       <TopScreen>
         <View style={styles.welcomeContainer}>
           <View style={{marginRight: 48}}>
-            <TitleScreen>Seja Bem Vindo</TitleScreen>
+            <TitleScreen textAlign="left">Seja Bem Vindo</TitleScreen>
             <Text style={styles.welcomeSubtitle}>
               Compre alimentos direto do produtor
             </Text>
           </View>
-          <Icon
-            name="user-circle"
-            size={48}
-            color={theme.pallete.textTitleScreen}
-          />
+          <ProfilePhoto photo={`${user.photo}`} />
         </View>
         <MySearchBar placeholder="Pesquisar" />
         <View style={{marginTop: 8}}>
@@ -91,6 +117,9 @@ export default function Purchase({navigation}) {
         </View>
         <HighlightedText>Produtos</HighlightedText>
         <ProductCard
+          onPress={() => {
+            navigation.navigate('ProductInfo');
+          }}
           name="leite"
           price="R$ 120,00 p/ Litro"
           image={{

@@ -3,13 +3,13 @@ import {StyleSheet} from 'react-native';
 import Button from './Button';
 import {theme} from './../global/styles/theme';
 
-const ButtonPrimary = props => {
+const ButtonPrimary = ({style, onPress, children}) => {
   return (
     <Button
-      style={[styles.button, props.styles]}
-      onPress={props.onPress}
+      style={[styles.button, style]}
+      onPress={onPress}
       textColor={theme.pallete.white}>
-      {props.children}
+      {children}
     </Button>
   );
 };
@@ -19,13 +19,5 @@ export default ButtonPrimary;
 const styles = StyleSheet.create({
   button: {
     backgroundColor: theme.pallete.primary,
-    shadowColor: theme.pallete.shadowColor,
-    shadowOffset: {
-      width: 2,
-      height: 2,
-    },
-    shadowOpacity: 0.1,
-    borderRadius: 8,
-    elevation: 2,
   },
 });
