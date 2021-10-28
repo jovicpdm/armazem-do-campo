@@ -1,9 +1,12 @@
+/* eslint-disable no-catch-shadow */
+/* eslint-disable no-unused-vars */
 /* eslint-disable react-native/no-inline-styles */
 import React, {useState} from 'react';
 import {ScrollView, Text, StyleSheet, View} from 'react-native';
 import {getDatabase, ref, set} from 'firebase/database';
 import {getAuth, createUserWithEmailAndPassword} from 'firebase/auth';
 import * as ImagePicker from 'react-native-image-picker';
+import {getFirestore, collection, addDoc} from 'firebase/firestore';
 
 import Input from '../components/Input';
 import InputPassword from '../components/InputPassword';
@@ -23,7 +26,7 @@ export default function Register({navigation}) {
   const [presentation, setPresentation] = useState();
   const [password, setPassword] = useState();
   const [confirmPassword, setConfirmPassword] = useState();
-  const [profilePhoto, setProfilePhoto] = useState();
+  const [profilePhoto, setProfilePhoto] = useState('');
   const [showError, setShowError] = useState(false);
   const [error, setError] = useState('');
 
@@ -126,13 +129,22 @@ export default function Register({navigation}) {
           }}
           openCamera={() => {
             setShowError(false);
-            ImagePicker.launchCamera({}, data => {
+            const options = {
+              maxWidth: 2000,
+              maxHeight: 2000,
+              storageOptions: {
+                skipBackup: true,
+                path: 'images',
+              },
+            };
+            ImagePicker.launchCamera(options, data => {
               if (data.didCancel !== true) {
                 setProfilePhoto(data.assets[0].uri);
               }
             });
           }}
         />
+
         <InputPassword
           placeholder="Senha"
           placeholderTextColor={theme.pallete.primary}
