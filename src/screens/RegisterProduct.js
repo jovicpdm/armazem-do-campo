@@ -1,7 +1,7 @@
-import React, { useState } from 'react';
-import { View, Text, StyleSheet, ScrollView } from 'react-native';
+import React, {useState} from 'react';
+import {View, Text, StyleSheet, ScrollView} from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome5';
-import { theme } from '../global/styles/theme';
+import {theme} from '../global/styles/theme';
 import WhiteArea from '../components/WhiteArea';
 import Input from '../components/Input';
 import InputImage from '../components/InputImage';
@@ -9,10 +9,9 @@ import InputImage from '../components/InputImage';
 // import { getDatabase, ref, set, onValue, push } from 'firebase/database';
 import ButtonSecondary from '../components/ButtonSecondary';
 import ButtonPrimary from '../components/ButtonPrimary';
-import { getFirestore, collection, addDoc } from "firebase/firestore";
+import {getFirestore, collection, addDoc} from 'firebase/firestore';
 
-
-export default function RegisterProduct({ navigation }) {
+export default function RegisterProduct({navigation}) {
   const [productName, setProductName] = useState();
   const [price, setPrice] = useState();
   const [placeOfSale, setPlaceOfSale] = useState();
@@ -77,7 +76,6 @@ export default function RegisterProduct({ navigation }) {
   //   // eslint-disable-next-line react-hooks/exhaustive-deps
   // }, []);
 
-
   // const writeProductData = () => {
   //   const db = getDatabase();
   //   const productRef = ref(db, 'products');
@@ -95,12 +93,12 @@ export default function RegisterProduct({ navigation }) {
 
   async function writeProductData() {
     const db = getFirestore();
-    await addDoc(collection(db, "teste"), {
-      first: "Ada",
-      last: "Lovelace",
-      born: 1815
+    await addDoc(collection(db, 'teste'), {
+      first: 'Ada',
+      last: 'Lovelace',
+      born: 1815,
     });
-  };
+  }
 
   return (
     <ScrollView>
@@ -113,9 +111,7 @@ export default function RegisterProduct({ navigation }) {
         <Text style={styles.addProduct}>Cadastrar produto</Text>
       </View>
       <WhiteArea>
-        <InputImage
-          style={{ marginTop: 44 }}
-        />
+        <InputImage style={{marginTop: 44}} />
 
         <Input
           placeholder="Nome do produto"
@@ -123,7 +119,7 @@ export default function RegisterProduct({ navigation }) {
           onChangeText={text => setProductName(text)}
           value={productName}
           keyboardType="default"
-          style={{ marginTop: 12 }}
+          style={{marginTop: 12}}
         />
         <Input
           placeholder="Preço"
@@ -131,7 +127,7 @@ export default function RegisterProduct({ navigation }) {
           onChangeText={text => setPrice(text)}
           value={price}
           keyboardType="numeric"
-          style={{ marginTop: 16 }}
+          style={{marginTop: 16}}
         />
         <Input
           placeholder="Local de venda"
@@ -139,7 +135,7 @@ export default function RegisterProduct({ navigation }) {
           onChangeText={text => setPlaceOfSale(text)}
           value={placeOfSale}
           keyboardType="default"
-          style={{ marginTop: 16 }}
+          style={{marginTop: 16}}
         />
         <Input
           placeholder="Descrição"
@@ -204,11 +200,11 @@ export default function RegisterProduct({ navigation }) {
           </Picker>
         </View> */}
 
-        <View style={{ marginTop: 24 }} />
+        <View style={{marginTop: 24}} />
         <ButtonPrimary onPress={() => writeProductData()}>
           CADASTRAR
         </ButtonPrimary>
-        <ButtonSecondary onPress={() => { }}>CANCELAR</ButtonSecondary>
+        <ButtonSecondary onPress={() => {}}>CANCELAR</ButtonSecondary>
       </WhiteArea>
     </ScrollView>
   );
@@ -254,4 +250,3 @@ const styles = StyleSheet.create({
     color: theme.pallete.black,
   },
 });
-
