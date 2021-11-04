@@ -1,6 +1,5 @@
 import React from 'react';
 import {StyleSheet, Text, View} from 'react-native';
-import {Icon} from 'react-native-elements';
 import CardContainer from '../components/CardContainer';
 import HighlightedText from '../components/HighlightedText';
 import IconMedium from '../components/IconMedium';
@@ -25,10 +24,6 @@ export default function ParticipantManagement({navigation: {navigate}}) {
             navigate('Requests');
           }}>
           <TextCard>Solicitações</TextCard>
-          <IconMedium name="chevron-right" color={theme.pallete.primary002} />
-        </CardContainer>
-        <CardContainer>
-          <TextCard>Remover Participante</TextCard>
           <IconMedium name="chevron-right" color={theme.pallete.primary002} />
         </CardContainer>
       </WhiteAreaWithoutScrollView>
