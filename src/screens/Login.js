@@ -1,7 +1,7 @@
 /* eslint-disable no-shadow */
 /* eslint-disable react-native/no-inline-styles */
 import React, {useState} from 'react';
-import {View, Text} from 'react-native';
+import {View, ActivityIndicator} from 'react-native';
 import {getAuth, signInWithEmailAndPassword} from 'firebase/auth';
 import {getDatabase, onValue, ref} from '@firebase/database';
 
@@ -20,23 +20,27 @@ export default function Login({navigation}) {
   const [password, setPassword] = useState('');
   const [showError, setShowError] = useState(false);
   const [error, setError] = useState('');
+  const [loading, setLoading] = useState(false);
 
   const db = getDatabase();
   const auth = getAuth();
+
   const authentication = () =>
     signInWithEmailAndPassword(auth, email, password)
       .then(userCredential => {
         const userRef = ref(db, 'users/' + userCredential.user.uid);
         onValue(userRef, snapshot => {
+          console.log(snapshot);
           const data = snapshot.val();
-          if (data.type === 'admin') {
+          setLoading(false);
+          if (data.type == 'admin') {
             navigation.navigate('Admin');
           }
-          if (data.status === 'aguardando') {
+          if (data.status == 'aguardando') {
             navigation.navigate('Feedback', {status: 'aguardando'});
-          } else if (data.status === 'reprovado') {
+          } else if (data.status == 'reprovado') {
             navigation.navigate('Feedback', {status: 'reprovado'});
-          } else if (data.status === 'aprovado') {
+          } else if (data.status == 'aprovado') {
             navigation.navigate('Purchase', {
               id: snapshot.key,
             });
@@ -44,6 +48,7 @@ export default function Login({navigation}) {
         });
       })
       .catch(err => {
+        setLoading(false);
         if (err.code === 'auth/invalid-email') {
           setError('Email inválido!');
         } else if (err.code === 'auth/internal-error') {
@@ -85,13 +90,26 @@ export default function Login({navigation}) {
         />
 
         <View style={{marginTop: 32}} />
-        <ButtonPrimary onPress={() => authentication()}>ENTRAR</ButtonPrimary>
-        <ButtonSecondary
-          onPress={() => {
-            navigation.navigate('Register');
-          }}>
-          CADASTRAR
-        </ButtonSecondary>
+        {loading ? (
+          <ActivityIndicator />
+        ) : (
+          <>
+            <ButtonPrimary
+              onPress={() => {
+                setLoading(true);
+                authentication();
+              }}>
+              ENTRAR
+            </ButtonPrimary>
+            <ButtonSecondary
+              onPress={() => {
+                setLoading(true);
+                navigation.navigate('Register');
+              }}>
+              CADASTRAR
+            </ButtonSecondary>
+          </>
+        )}
       </WhiteArea>
     </View>
   );
