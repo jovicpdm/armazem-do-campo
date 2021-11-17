@@ -16,7 +16,6 @@ export default function ParticipantManagement({navigation: {navigate}}) {
         <TitleScreen>Gerenciamento de Participantes</TitleScreen>
       </TopScreen>
       <WhiteAreaWithoutScrollView>
-        <View style={{marginTop: 16}} />
         <HighlightedText>Gerenciar</HighlightedText>
         <View style={{marginTop: 8}} />
         <CardContainer

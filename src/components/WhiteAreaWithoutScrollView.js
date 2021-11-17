@@ -17,6 +17,7 @@ const styles = StyleSheet.create({
     borderTopLeftRadius: 30,
     borderTopRightRadius: 30,
     paddingHorizontal: 16,
+    paddingVertical: 16,
   },
   message: {
     alignItems: 'center',

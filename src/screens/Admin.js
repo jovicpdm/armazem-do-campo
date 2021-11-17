@@ -45,7 +45,7 @@ export default function Admin({navigation: {navigate}}) {
             setOpen(false);
           }}
         /> */}
-        <View style={{marginTop: 20, alignItems: 'center'}}>
+        <View style={{marginTop: 4, alignItems: 'center'}}>
           <HighlightedText>Gerenciamento</HighlightedText>
         </View>
         <View style={{marginVertical: 8}} />

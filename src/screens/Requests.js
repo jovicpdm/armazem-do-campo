@@ -53,11 +53,7 @@ export default function Requests() {
       </TopScreen>
       <WhiteAreaWithoutScrollView>
         {/* <Button title="teste" onPress={() => listRequests()} /> */}
-        {requests ? (
-          <View style={{marginTop: 16}}>
-            <HighlightedText>Sem solicitações</HighlightedText>
-          </View>
-        ) : null}
+        {requests ? <HighlightedText>Sem solicitações</HighlightedText> : null}
         <FlatList
           data={requests}
           renderItem={({item}) => {
