@@ -91,29 +91,27 @@ export default function Purchase({navigation, route}) {
         </View>
       </TopScreen>
       <WhiteAreaWithoutScrollView>
-        <View style={{marginTop: 16}}>
-          <HighlightedText>Categorias</HighlightedText>
-          <View style={{marginBottom: 16}}>
-            <FlatList
-              showsHorizontalScrollIndicator={false}
-              horizontal
-              data={categories}
-              renderItem={({item}) => {
-                return (
-                  <CategoryLabel
-                    description={item.description}
-                    onPress={() => setSelected(item.id)}
-                    color={
-                      item.id === selected
-                        ? theme.pallete.primary004
-                        : theme.pallete.black
-                    }
-                  />
-                );
-              }}
-              keyExtractor={item => item.id}
-            />
-          </View>
+        <HighlightedText>Categorias</HighlightedText>
+        <View style={{marginBottom: 16}}>
+          <FlatList
+            showsHorizontalScrollIndicator={false}
+            horizontal
+            data={categories}
+            renderItem={({item}) => {
+              return (
+                <CategoryLabel
+                  description={item.description}
+                  onPress={() => setSelected(item.id)}
+                  color={
+                    item.id === selected
+                      ? theme.pallete.primary004
+                      : theme.pallete.black
+                  }
+                />
+              );
+            }}
+            keyExtractor={item => item.id}
+          />
         </View>
         <HighlightedText>Produtos</HighlightedText>
         <ProductCard
