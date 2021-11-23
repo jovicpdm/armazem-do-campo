@@ -1,6 +1,6 @@
 import React from 'react';
 import {StyleSheet, View, Text} from 'react-native';
-import {TextInput} from 'react-native';
+import {Input} from 'react-native-elements';
 
 import TitleScreen from '../components/TitleScreen';
 import TopScreen from '../components/TopScreen';
@@ -19,9 +19,44 @@ export default function Basket() {
             <Text style={styles.productName}>Produto 1</Text>
             <Text style={styles.subText}>R$ 2,50 (litro)</Text>
           </View>
+          <Input
+            placeholder="0"
+            keyboardType="numeric"
+            containerStyle={{
+              width: 50,
+              alignItems: 'center',
+              justifyContent: 'center',
+              height: 60,
+              alignSelf: 'center'
+            }}
+            inputStyle={{
+              textAlign: 'center',
+            }}
+            selectionColor={theme.pallete.primary002}
+            maxLength={2}
+          />
+        </View>
+        <View style={styles.itemContainer}>
           <View style={styles.productInfo}>
-            <TextInput style={styles.input}  />
+            <Text style={styles.productName}>Produto 2</Text>
+            <Text style={styles.subText}>R$ 2,50 (litro)</Text>
           </View>
+          <Input
+            placeholder="0"
+            keyboardType="numeric"
+            containerStyle={{
+              width: 50,
+              alignItems: 'center',
+              justifyContent: 'center',
+              height: 60,
+              alignSelf: 'center'
+            }}
+            inputStyle={{
+              textAlign: 'center',
+            }}
+            selectionColor={theme.pallete.primary002}
+            maxLength={2}
+          />
         </View>
       </WhiteAreaWithoutScrollView>
     </View>
@@ -30,10 +65,10 @@ export default function Basket() {
 
 const styles = StyleSheet.create({
   itemContainer: {
-    // padding: 8,
-    borderBottomWidth: 0.5,
+    paddingHorizontal: 8,
     flexDirection: 'row',
     justifyContent: 'space-between',
+    marginVertical: 1,
   },
   productName: {
     color: theme.pallete.primary002,
@@ -47,12 +82,6 @@ const styles = StyleSheet.create({
     fontFamily: 'Roboto-Regular',
   },
   productInfo: {
-    alignItems: 'flex-start',
-  },
-  input: {
-    borderWidth: 1,
-    width: 30,
-    height: 35,
-    borderRadius: 8,
-  },
+
+  }
 });

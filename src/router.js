@@ -29,7 +29,7 @@ const Router = () => {
   return (
     <NavigationContainer theme={MyTheme}>
       <Navigator
-        initialRouteName="Basket"
+        initialRouteName="RegisterProduct"
         headerMode="none"
         screenOptions={{
           headerShown: false,
