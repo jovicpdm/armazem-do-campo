@@ -1,33 +1,13 @@
 import React, {useState} from 'react';
 import {View, StyleSheet, TouchableOpacity, Text, Image} from 'react-native';
 import {theme} from '../global/styles/theme';
-import * as ImagePicker from 'react-native-image-picker';
 
-const InputImage = props => {
-  const [avatar, setAvatar] = useState();
-
-
+const InputImage = ({onPress, props}) => {
   return (
     <View style={styles.container}>
-      <TouchableOpacity
-        {...props}
-        style={[styles.button, props.style]}
-        onPress={() =>
-          ImagePicker.launchImageLibrary({}, data => {
-            setAvatar(data.assets[0].uri);
-          })
-        }>
+      <TouchableOpacity {...props} style={[styles.button]} onPress={onPress}>
         <Text style={styles.buttonText}> Escolher imagem </Text>
       </TouchableOpacity>
-      <View style={{paddingLeft: 12}} />
-      <Image
-        source={{
-          uri: avatar
-            ? avatar
-            : 'https://images-americanas.b2w.io/produtos/1368573253/imagens/super-caixa-12-pedras-de-protecao-e-purificacao/1368573309_1_large.jpg',
-        }}
-        style={styles.image}
-      />
     </View>
   );
 };
@@ -37,7 +17,7 @@ const styles = StyleSheet.create({
     flex: 1,
     flexDirection: 'row',
     alignItems: 'center',
-    justifyContent: 'flex-end',
+    justifyContent: 'center',
   },
   button: {
     borderColor: theme.pallete.primary,

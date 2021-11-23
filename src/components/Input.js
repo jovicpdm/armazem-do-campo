@@ -24,7 +24,7 @@ const styles = StyleSheet.create({
     borderRadius: 8,
     width: '100%',
     alignSelf: 'center',
-    paddingHorizontal: 23,
+    paddingHorizontal: 24,
     paddingVertical: 12,
     fontFamily: 'WorkSans-Regular',
     fontWeight: '400',
