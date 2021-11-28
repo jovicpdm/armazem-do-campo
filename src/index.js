@@ -1,5 +1,5 @@
 import React from 'react';
-import {YellowBox} from 'react-native';
+import {YellowBox, StatusBar} from 'react-native';
 import {DefaultTheme, NavigationContainer} from '@react-navigation/native';
 import {theme} from './global/styles/theme';
 import Router from './router';
@@ -17,6 +17,7 @@ export default function App() {
   return (
     <>
       <NavigationContainer theme={MyTheme}>
+        <StatusBar backgroundColor={theme.pallete.primary} hidden={false} />
         <Router />
       </NavigationContainer>
     </>

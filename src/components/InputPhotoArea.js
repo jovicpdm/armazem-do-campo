@@ -46,6 +46,7 @@ const styles = StyleSheet.create({
     fontFamily: 'Roboto-Regular',
     fontSize: 12,
     textAlign: 'left',
+    color: theme.pallete.gray
   },
   subContainer: {
     alignItems: 'center',

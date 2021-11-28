@@ -1,11 +1,10 @@
 import React, {useState, useEffect} from 'react';
-import {View, Text, StyleSheet, ScrollView, Platform} from 'react-native';
+import {View, Text, StyleSheet} from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome5';
-import {getFirestore, collection, addDoc, doc} from 'firebase/firestore';
-import {onValue, getDatabase, ref} from 'firebase/database';
-import storage from '@react-native-firebase/storage';
+import {onValue, getDatabase, ref, set} from 'firebase/database';
 import * as ImagePicker from 'react-native-image-picker';
 import {Picker} from '@react-native-picker/picker';
+import uuid from 'react-native-uuid';
 
 import firebase from '../config/firebase';
 import {theme} from '../global/styles/theme';
@@ -15,8 +14,8 @@ import InputImage from '../components/InputImage';
 import ButtonSecondary from '../components/ButtonSecondary';
 import ButtonPrimary from '../components/ButtonPrimary';
 
-export default function RegisterProduct({navigation, route}) {
-  const [photo, setPhoto] = useState('');
+export default function RegisterProduct({navigation}) {
+  const [images, setImages] = useState([]);
   const [productName, setProductName] = useState();
   const [price, setPrice] = useState();
   const [placeOfSale, setPlaceOfSale] = useState();
@@ -57,31 +56,26 @@ export default function RegisterProduct({navigation, route}) {
     setFormsOfSale(dataArray);
   };
 
-  const upload = async () => {
-    const reference = storage().ref('logo.png');
-    const pathToFile = "https://sportbuzz.uol.com.br/media/_versions/douglascosta_82934045_116411013185365_8270789263511275541_n_widexl.jpg";
-    await reference.putFile(pathToFile);
+  const addProduct = () => {
+    const id = uuid.v4();
+    set(ref(db, 'products' + id), {
+      name: productName,
+      price: price,
+      placeOfSale: placeOfSale,
+      description: description,
+      category: selectedCategory,
+      formsOfSale: formsOfSale,
+    });
+
+    images.forEach(image => {
+      api.post(image);
+    });
   };
 
   useEffect(() => {
     listCategories();
     listFormsOfSale();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
-
-  const addProduct = () => {
-    const db = getFirestore();
-    try {
-      const docRef = addDoc(collection(db, 'users'), {
-        first: 'Ada',
-        last: 'Lovelace',
-        born: 1815,
-      });
-      console.log('Document written with ID: ', doc);
-    } catch (e) {
-      console.error('Error adding document: ', e);
-    }
-  };
 
   return (
     <>
@@ -128,14 +122,19 @@ export default function RegisterProduct({navigation, route}) {
         />
         <Text style={styles.titlePicker}>Selecionar Imagem do Produto</Text>
         <InputImage
+          name="Escolher Imagem"
           style={{marginTop: 44}}
-          onPress={() =>
-            ImagePicker.launchImageLibrary({}, data => {
+          onPress={() => {
+            const dataArray = [];
+            ImagePicker.launchImageLibrary({selectionLimit: 0, includeBase64: true}, data => {
               if (data.didCancel !== true) {
-                setPhoto(data.assets[0].uri);
+                data.assets.forEach(item => {
+                  dataArray.push(item.base64);
+                });
               }
-            })
-          }
+            });
+            setImages(dataArray);
+          }}
         />
         <Text style={styles.titlePicker}>Categoria</Text>
         <Picker
@@ -147,14 +146,14 @@ export default function RegisterProduct({navigation, route}) {
           <Picker.Item
             color={theme.pallete.black}
             label="Selecione a categoria"
-            value="Selecione a categoria"
+            value={0}
           />
           {categories.map(category => {
             return (
               <Picker.Item
                 color={theme.pallete.black}
                 label={category.description.toLowerCase()}
-                value={category.description}
+                value={category.id}
                 key={category.description}
               />
             );
@@ -170,16 +169,16 @@ export default function RegisterProduct({navigation, route}) {
           style={{color: theme.pallete.black}}
           onValueChange={itemValue => setSelectedFormOfSale(itemValue)}>
           <Picker.Item
-            color={theme.pallete.white}
+            color={theme.pallete.black}
             label="Selecione a unidade de medida"
-            value="Selecione a unidade de medida"
+            value={0}
           />
           {formsOfSale.map(forms => {
             return (
               <Picker.Item
-                color={theme.pallete.white}
+                color={theme.pallete.black}
                 label={forms.description.toLowerCase()}
-                value={forms.description}
+                value={forms.id}
                 key={forms.description}
               />
             );
