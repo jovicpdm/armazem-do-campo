@@ -26,7 +26,7 @@ export default function Register({navigation}) {
   const [presentation, setPresentation] = useState();
   const [password, setPassword] = useState();
   const [confirmPassword, setConfirmPassword] = useState();
-  const [profilePhoto, setProfilePhoto] = useState('');
+  const [profilePhoto, setProfilePhoto] = useState();
   const [showError, setShowError] = useState(false);
   const [error, setError] = useState('');
 
@@ -47,6 +47,7 @@ export default function Register({navigation}) {
               status: 'aguardando',
               type: 'comprador',
             });
+            console.log('Concluído');
           })
           .catch(err => {
             console.log(`message: ${err.message} code: ${err.code}`);
@@ -121,9 +122,9 @@ export default function Register({navigation}) {
         <InputPhotoArea
           openGallery={() => {
             setShowError(false);
-            ImagePicker.launchImageLibrary({selectionLimit: 1}, data => {
+            ImagePicker.launchImageLibrary({includeBase64: true}, data => {
               if (data.didCancel !== true) {
-                setProfilePhoto(data.assets[0].uri);
+                setProfilePhoto(data.assets[0].base64);
               }
             });
           }}
@@ -139,7 +140,7 @@ export default function Register({navigation}) {
             };
             ImagePicker.launchCamera(options, data => {
               if (data.didCancel !== true) {
-                setProfilePhoto(data.assets[0].uri);
+                setProfilePhoto(data.assets[0].base64);
               }
             });
           }}

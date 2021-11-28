@@ -30,7 +30,6 @@ const Router = () => {
     <NavigationContainer theme={MyTheme}>
       <Navigator
         initialRouteName="RegisterProduct"
-        headerMode="none"
         screenOptions={{
           headerShown: false,
           cardStyle: {

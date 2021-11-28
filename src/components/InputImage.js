@@ -2,11 +2,11 @@ import React, {useState} from 'react';
 import {View, StyleSheet, TouchableOpacity, Text, Image} from 'react-native';
 import {theme} from '../global/styles/theme';
 
-const InputImage = ({onPress, props}) => {
+const InputImage = ({onPress, props, name}) => {
   return (
     <View style={styles.container}>
       <TouchableOpacity {...props} style={[styles.button]} onPress={onPress}>
-        <Text style={styles.buttonText}> Escolher imagem </Text>
+        <Text style={styles.buttonText}> {name} </Text>
       </TouchableOpacity>
     </View>
   );

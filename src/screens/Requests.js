@@ -1,7 +1,8 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import React, {useState, useEffect} from 'react';
-import {Button, StyleSheet, View, FlatList} from 'react-native';
+import {StyleSheet, View, FlatList} from 'react-native';
 import {getDatabase, ref, onValue} from 'firebase/database';
+import base64 from 'react-native-base64';
 
 import firebase from '../config/firebase';
 import RequestCard from '../components/RequestCard';
@@ -17,7 +18,6 @@ export default function Requests() {
   const dbRef = ref(db, 'users');
 
   const listRequests = async () => {
-    // setRequests([]);
     const dataArray = [];
     await new Promise(resolve => {
       onValue(dbRef, snapshot => {
@@ -59,7 +59,7 @@ export default function Requests() {
           renderItem={({item}) => {
             return (
               <RequestCard
-                photo={item.photo}
+                photo={`data:image/gif;base64,${item.photo}`}
                 name={item.name}
                 email={item.email}
                 phone={item.phone}
