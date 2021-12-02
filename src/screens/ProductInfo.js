@@ -1,6 +1,7 @@
 import React, {useState} from 'react';
 import {View, Text, StyleSheet, ScrollView} from 'react-native';
 import {ImageSlider} from 'react-native-image-slider-banner';
+import {getDatabase, onValue, ref} from '@firebase/database';
 
 import {theme} from '../global/styles/theme';
 import TitleSection from '../components/TitleSection';
@@ -13,6 +14,11 @@ export default function ProductInfo() {
   const [amount, setAmount] = useState([]);
 
   const createAmountArray = () => {};
+
+  const getProduct = () => {
+    const db = getDatabase();
+    productRef = ref()
+  }
 
   const images = [
     {

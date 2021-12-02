@@ -29,7 +29,7 @@ const Router = () => {
   return (
     <NavigationContainer theme={MyTheme}>
       <Navigator
-        initialRouteName="RegisterProduct"
+        initialRouteName="Login"
         screenOptions={{
           headerShown: false,
           cardStyle: {

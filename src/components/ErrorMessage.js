@@ -9,11 +9,11 @@ const ErrorMessage = ({children}) => {
 
 const styles = StyleSheet.create({
   text: {
-    color: theme.pallete.white,
+    color: theme.pallete.red,
     fontFamily: 'Roboto-Medium',
     textAlign: 'center',
     fontSize: 16,
-    backgroundColor: theme.pallete.red,
+    backgroundColor: theme.pallete.red001,
     borderRadius: 4,
     padding: 4,
     marginVertical: 8,

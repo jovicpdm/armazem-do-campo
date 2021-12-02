@@ -24,6 +24,7 @@ export default function RegisterProduct({navigation}) {
   const [selectedCategory, setSelectedCategory] = useState(0);
   const [formsOfSale, setFormsOfSale] = useState([]);
   const [selectedFormOfSale, setSelectedFormOfSale] = useState();
+  const [mainImage, setMainImage] = useState();
 
   const db = getDatabase();
   const dbRefForm = ref(db, 'formsOfSale');
@@ -58,17 +59,27 @@ export default function RegisterProduct({navigation}) {
 
   const addProduct = () => {
     const id = uuid.v4();
-    set(ref(db, 'products' + id), {
+    set(ref(db, 'products/' + id), {
+      id: id,
       name: productName,
       price: price,
       placeOfSale: placeOfSale,
       description: description,
       category: selectedCategory,
-      formsOfSale: formsOfSale,
+      formsOfSale: selectedFormOfSale,
+      mainImage: mainImage
     });
 
     images.forEach(image => {
-      api.post(image);
+      set(ref(db, 'products/' + id + '/images/' + uuid.v4()), {
+        image: image,
+      })
+        .then(() => {
+          console.log('Funcionou');
+        })
+        .catch(e => {
+          console.log(e);
+        });
     });
   };
 
@@ -120,22 +131,46 @@ export default function RegisterProduct({navigation}) {
           keyboardType="default"
           style={styles.inputDescription}
         />
-        <Text style={styles.titlePicker}>Selecionar Imagem do Produto</Text>
-        <InputImage
-          name="Escolher Imagem"
-          style={{marginTop: 44}}
-          onPress={() => {
-            const dataArray = [];
-            ImagePicker.launchImageLibrary({selectionLimit: 0, includeBase64: true}, data => {
-              if (data.didCancel !== true) {
-                data.assets.forEach(item => {
-                  dataArray.push(item.base64);
-                });
-              }
-            });
-            setImages(dataArray);
-          }}
-        />
+        <View style={styles.containerLabel}>
+          <Text style={styles.titlePicker}>
+            Selecione uma foto principal para o produto
+          </Text>
+          <InputImage
+            name="Escolher Imagem"
+            style={{marginTop: 44}}
+            onPress={() => {
+              ImagePicker.launchImageLibrary(
+                {includeBase64: true},
+                data => {
+                  if (data.didCancel !== true) {
+                    setMainImage(data.assets[0].base64);
+                  }
+                },
+              );
+            }}
+          />
+        </View>
+        <View style={styles.containerLabel}>
+          <Text style={styles.titlePicker}>Selecionar Imagens do Produto</Text>
+          <InputImage
+            name="Escolher Imagens"
+            style={{marginTop: 44}}
+            onPress={() => {
+              const dataArray = [];
+              ImagePicker.launchImageLibrary(
+                {selectionLimit: 0, includeBase64: true},
+                data => {
+                  if (data.didCancel !== true) {
+                    data.assets.forEach(item => {
+                      dataArray.push(item.base64);
+                    });
+                  }
+                },
+              );
+              setImages(dataArray);
+            }}
+          />
+        </View>
         <Text style={styles.titlePicker}>Categoria</Text>
         <Picker
           dropdownIconColor={theme.pallete.primary004}
@@ -153,7 +188,7 @@ export default function RegisterProduct({navigation}) {
               <Picker.Item
                 color={theme.pallete.black}
                 label={category.description.toLowerCase()}
-                value={category.id}
+                value={category.description.toLowerCase()}
                 key={category.description}
               />
             );
@@ -178,7 +213,7 @@ export default function RegisterProduct({navigation}) {
               <Picker.Item
                 color={theme.pallete.black}
                 label={forms.description.toLowerCase()}
-                value={forms.id}
+                value={forms.description.toLowerCase()}
                 key={forms.description}
               />
             );
@@ -222,18 +257,12 @@ const styles = StyleSheet.create({
     color: theme.pallete.primary,
     fontSize: 16,
   },
-  // select: {
-  //   borderColor: theme.pallete.primary,
-  //   borderWidth: 1,
-  //   borderRadius: 8,
-  //   maxHeight: 32,
-  //   width: '100%',
-  //   paddingHorizontal: 12,
-  // },
-  // txtPicker: {
-  //   // borderEndColor: theme.pallete.primary,
-  //   height: '100%',
-  //   width: '100%',
-  //   color: theme.pallete.black,
-  // },
+  containerLabel: {
+    borderWidth: 1,
+    padding: 8,
+    borderRadius: 8,
+    alignItems: 'center',
+    justifyContent: 'center',
+    marginTop: 16,
+  },
 });

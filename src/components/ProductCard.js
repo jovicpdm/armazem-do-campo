@@ -1,25 +1,30 @@
 import React from 'react';
-import {StyleSheet} from 'react-native';
+import {StyleSheet, Image, View} from 'react-native';
 import {Card, Paragraph, Title} from 'react-native-paper';
 import {theme} from '../global/styles/theme';
 
 const ProductCard = ({name, price, image, onPress}) => {
   return (
-    <Card style={styles.card} elevation={0} mode="outlined" onPress={onPress}>
-      <Card.Content style={styles.container}>
-        <Card.Cover source={image} style={styles.image} />
-        <Card.Content>
-          <Title>{name}</Title>
-          <Paragraph>{price}</Paragraph>
+    <View>
+      <Card style={styles.card} elevation={1} mode="outlined" onPress={onPress}>
+        <Card.Content style={styles.container}>
+          <Image
+            style={styles.image}
+            source={{uri: `data:image/gif;base64,${image}`}}
+          />
+          <Card.Content>
+            <Title>{name}</Title>
+            <Paragraph>R$ {price}</Paragraph>
+          </Card.Content>
         </Card.Content>
-      </Card.Content>
-    </Card>
+      </Card>
+    </View>
   );
 };
 
 const styles = StyleSheet.create({
   card: {
-    marginTop: 24,
+    marginTop: 8,
     backgroundColor: theme.pallete.white,
     borderRadius: 8,
   },
