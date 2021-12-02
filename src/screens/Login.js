@@ -30,7 +30,6 @@ export default function Login({navigation}) {
       .then(userCredential => {
         const userRef = ref(db, 'users/' + userCredential.user.uid);
         onValue(userRef, snapshot => {
-          console.log(snapshot);
           const data = snapshot.val();
           setLoading(false);
           if (data.type == 'admin') {
@@ -87,10 +86,11 @@ export default function Login({navigation}) {
           onFocus={() => {
             setShowError(false);
           }}
+          
         />
 
         <View style={{marginTop: 32}} />
-        {loading ? (
+        {loading === true ? (
           <ActivityIndicator />
         ) : (
           <>
@@ -103,7 +103,6 @@ export default function Login({navigation}) {
             </ButtonPrimary>
             <ButtonSecondary
               onPress={() => {
-                setLoading(true);
                 navigation.navigate('Register');
               }}>
               CADASTRAR

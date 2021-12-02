@@ -18,7 +18,6 @@ export default ProfilePhoto;
 
 const styles = StyleSheet.create({
   profilePhoto: {
-    backgroundColor: 'black',
     width: 60,
     height: 60,
     borderRadius: 100,
