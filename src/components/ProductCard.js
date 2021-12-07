@@ -1,32 +1,102 @@
-import React from 'react';
-import {StyleSheet, Image, View} from 'react-native';
-import {Card, Paragraph, Title} from 'react-native-paper';
+import React, {useState} from 'react';
+import {
+  StyleSheet,
+  Image,
+  View,
+  Text,
+  TouchableOpacity,
+} from 'react-native';
 import {theme} from '../global/styles/theme';
+import { TextInput } from 'react-native-paper';
+import IconMedium from './IconMedium';
+import SmallButton from './SmallButton';
 
-const ProductCard = ({name, price, image, onPress}) => {
+const ProductCard = ({
+  name,
+  price,
+  image,
+  description,
+  formOfSale,
+  placeOfSale,
+}) => {
+  const [expand, setExpand] = useState(false);
+  const [showInput, setShowInput] = useState(false);
+
   return (
-    <View>
-      <Card style={styles.card} elevation={1} mode="outlined" onPress={onPress}>
-        <Card.Content style={styles.container}>
-          <Image
-            style={styles.image}
-            source={{uri: `data:image/gif;base64,${image}`}}
-          />
-          <Card.Content>
-            <Title>{name}</Title>
-            <Paragraph>R$ {price}</Paragraph>
-          </Card.Content>
-        </Card.Content>
-      </Card>
+    <View style={styles.card}>
+      <View style={styles.container}>
+        <Image
+          style={styles.image}
+          source={{uri: `data:image/gif;base64,${image}`}}
+        />
+        <View style={styles.titleSubtitle}>
+          <Text style={styles.title}>{name}</Text>
+          <Text style={styles.subtitle}>
+            R$ {price} ({formOfSale})
+          </Text>
+        </View>
+      </View>
+      {expand ? (
+        <>
+          <View style={{marginTop: 16}} />
+          <Text style={[styles.subtitle, {marginLeft: 88}]}>{description}</Text>
+          <View style={{marginTop: 16}} />
+          {showInput ? (
+            <>
+              <TextInput placeholder="000" maxLength={3} />
+              <SmallButton 
+                name="adicionar à cesta"
+                type="primary"
+                onPress={() => {
+
+                }}
+              />
+              <SmallButton
+                name="cancelar"
+                onPress={() => {
+                  setShowInput(!showInput);
+                }}
+              />
+            </>
+          ) : (
+            <SmallButton
+              name="comprar"
+              type="primary"
+              onPress={() => {
+                setShowInput(!showInput);
+              }}
+            />
+          )}
+        </>
+      ) : null}
+      <TouchableOpacity
+        style={{height: 40, alignItems: 'center', justifyContent: 'center'}}
+        onPress={() => {
+          setExpand(!expand);
+        }}>
+        {expand ? (
+          <IconMedium name="chevron-up" />
+        ) : (
+          <IconMedium name="chevron-down" />
+        )}
+      </TouchableOpacity>
     </View>
   );
 };
 
 const styles = StyleSheet.create({
   card: {
+    padding: 2,
     marginTop: 8,
-    backgroundColor: theme.pallete.white,
+    backgroundColor: '#eaeaea',
     borderRadius: 8,
+    elevation: 1,
+    shadowOffset: {
+      width: 0.1,
+      height: 0.1,
+    },
+    shadowOpacity: 0.2,
+    justifyContent: 'space-between',
   },
   container: {
     flexDirection: 'row',
@@ -36,6 +106,21 @@ const styles = StyleSheet.create({
     height: 80,
     width: 80,
     borderRadius: 8,
+  },
+  titleSubtitle: {
+    flexDirection: 'column',
+    marginLeft: 8,
+    alignContent: 'space-around',
+  },
+  title: {
+    color: theme.pallete.black,
+    fontFamily: 'Roboto-Bold',
+    fontSize: 18,
+  },
+  subtitle: {
+    color: theme.pallete.gray001,
+    fontFamily: 'Roboto-Regular',
+    fontSize: 12,
   },
 });
 

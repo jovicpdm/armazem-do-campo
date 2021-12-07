@@ -171,7 +171,7 @@ export default function Register({navigation}) {
         <ButtonPrimary onPress={() => writeUserData()}>CADASTRAR</ButtonPrimary>
         <ButtonSecondary
           onPress={() => {
-            navigation.goBack();
+            navigation.navigate("Login");
           }}>
           ENTRAR
         </ButtonSecondary>
