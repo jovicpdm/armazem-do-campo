@@ -40,7 +40,7 @@ export default function Purchase({navigation, route}) {
     const dbRef = ref(db, 'users/' + route.params.id);
     await new Promise(resolve => {
       onValue(dbRef, snapshot => {
-        let {photo, name, email, phone, presentation} = snapshot.val();
+        const {photo, name, email, phone, presentation} = snapshot.val();
         data = {
           id: snapshot.key,
           photo: photo,
@@ -98,24 +98,49 @@ export default function Purchase({navigation, route}) {
   }, []);
 
   return (
-    <View>
+    <>
       <TopScreen>
         <View style={styles.welcomeContainer}>
-          <View style={{marginRight: 48}}>
-            <TitleScreen textAlign="left">Seja Bem Vindo</TitleScreen>
-            <Text style={styles.welcomeSubtitle}>
-              Compre alimentos direto do produtor
-            </Text>
+          <View>
+            <TitleScreen textAlign="center">Seja Bem Vindo</TitleScreen>
+            <View style={{marginTop: 8}}>
+              <View style={styles.dateArea}>
+                <Text style={styles.welcomeSubtitle}>
+                  Fechamento da compra:
+                </Text>
+                <Text
+                  style={[
+                    styles.welcomeSubtitle,
+                    {
+                      fontFamily: 'Roboto-Bold',
+                      color: theme.pallete.primary007,
+                    },
+                  ]}>
+                  {' '}
+                  18/12
+                </Text>
+              </View>
+              <View style={styles.dateArea}>
+                <Text style={styles.welcomeSubtitle}>
+                  Entrega:
+                </Text>
+                <Text
+                  style={[
+                    styles.welcomeSubtitle,
+                    {
+                      fontFamily: 'Roboto-Bold',
+                      color: theme.pallete.primary007,
+                    },
+                  ]}>
+                  {' '}
+                  22/12
+                </Text>
+              </View>
+            </View>
           </View>
-          {/* <ProfilePhoto photo={`data:image/gif;base64,${user.photo}`} /> */}
+          <ProfilePhoto photo={`data:image/gif;base64,${user.photo}`} />
         </View>
-        <MySearchBar placeholder="Pesquisar" />
-        <View style={{marginTop: 8}}>
-          <Text style={styles.welcomeSubtitle}>
-            Fechamento da compra: 18/01
-          </Text>
-          <Text style={styles.welcomeSubtitle}>Proxima entrega: 18/01</Text>
-        </View>
+        {/* <MySearchBar placeholder="Pesquisar" /> */}
       </TopScreen>
       <WhiteAreaWithoutScrollView>
         <HighlightedText>Categorias</HighlightedText>
@@ -141,37 +166,35 @@ export default function Purchase({navigation, route}) {
           />
         </View>
         <HighlightedText>Produtos</HighlightedText>
-
-        {!loading ? (
-          <FlatList
-            data={products}
-            key={item => item.id}
-            renderItem={({item}) => {
-              return (
-                <ProductCard
-                  name={item.name}
-                  price={item.price}
-                  image={item.mainImage}
-                  onPress={() => {
-                    navigation.navigate("ProductInfo", {
-                      id: item.id
-                    })
-                  }}
-                />
-              );
-            }}
-          />
-        ) : (
-          <ActivityIndicator size={48} />
-        )}
+        <View style={{flex: 1}}>
+          {!loading ? (
+            <FlatList
+              data={products}
+              renderItem={({item}) => {
+                return (
+                  <ProductCard
+                    name={item.name}
+                    price={item.price}
+                    image={item.mainImage}
+                    description={item.description}
+                    formOfSale={item.formsOfSale.toLowerCase()}
+                    placeOfSale={item.placeOfSale}
+                  />
+                );
+              }}
+              keyExtractor={item => item.id}
+            />
+          ) : (
+            <ActivityIndicator size={48} />
+          )}
+        </View>
       </WhiteAreaWithoutScrollView>
-    </View>
+    </>
   );
 }
 
 const styles = StyleSheet.create({
   welcomeContainer: {
-    display: 'flex',
     flexDirection: 'row',
   },
   welcomeSubtitle: {
@@ -179,5 +202,9 @@ const styles = StyleSheet.create({
     color: theme.pallete.textTitleScreen,
     letterSpacing: 0.4,
     fontFamily: 'Roboto-Regular',
+  },
+  dateArea: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
   },
 });

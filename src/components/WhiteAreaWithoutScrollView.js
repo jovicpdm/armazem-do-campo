@@ -11,6 +11,7 @@ export default WhiteAreaWithoutScrollView;
 
 const styles = StyleSheet.create({
   container: {
+    flex: 1,
     backgroundColor: theme.pallete.white,
     maxHeight: '100%',
     height: '100%',
