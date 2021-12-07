@@ -1,15 +1,11 @@
 import React, {useState} from 'react';
-import {
-  StyleSheet,
-  Image,
-  View,
-  Text,
-  TouchableOpacity,
-} from 'react-native';
+import {StyleSheet, Image, View, Text, TouchableOpacity} from 'react-native';
 import {theme} from '../global/styles/theme';
-import { TextInput } from 'react-native-paper';
+import {TextInput} from 'react-native-paper';
 import IconMedium from './IconMedium';
 import SmallButton from './SmallButton';
+
+import {getDatabase, ref, set} from 'firebase/database'
 
 const ProductCard = ({
   name,
@@ -18,9 +14,22 @@ const ProductCard = ({
   description,
   formOfSale,
   placeOfSale,
+  amount,
+  userId,
 }) => {
   const [expand, setExpand] = useState(false);
   const [showInput, setShowInput] = useState(false);
+  const [amountBuy, setAmountBuy] = useState(0);
+
+  const addBasket = () => {
+    dbRef = ref(db, 'purchase/' + userId);
+    set(ref, {
+      status: "open",
+      name: name,
+      amountBuy: amountBuy,
+
+    })
+  }
 
   return (
     <View style={styles.card}>
@@ -34,6 +43,9 @@ const ProductCard = ({
           <Text style={styles.subtitle}>
             R$ {price} ({formOfSale})
           </Text>
+          <Text style={styles.subtitle}>
+            {amount} {formOfSale}(s) restantes
+          </Text>
         </View>
       </View>
       {expand ? (
@@ -43,13 +55,17 @@ const ProductCard = ({
           <View style={{marginTop: 16}} />
           {showInput ? (
             <>
-              <TextInput placeholder="000" maxLength={3} />
-              <SmallButton 
+              <TextInput
+                maxLength={3}
+                label={`total: R$ ${amountBuy * price}`}
+                onChangeText={text => setAmountBuy(Number(text))}
+                selectionColor={theme.pallete.primary}
+                keyboardType="decimal-pad"
+              />
+              <SmallButton
                 name="adicionar à cesta"
                 type="primary"
-                onPress={() => {
-
-                }}
+                onPress={() => {}}
               />
               <SmallButton
                 name="cancelar"
