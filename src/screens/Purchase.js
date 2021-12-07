@@ -10,6 +10,7 @@ import {
 } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import {getDatabase, ref, onValue} from 'firebase/database';
+import {SpeedDial} from 'react-native-elements';
 
 import {theme} from '../global/styles/theme';
 // eslint-disable-next-line no-unused-vars
@@ -22,6 +23,7 @@ import ProductCard from '../components/ProductCard';
 import TitleScreen from '../components/TitleScreen';
 import TopScreen from '../components/TopScreen';
 import ProfilePhoto from '../components/ProfilePhoto';
+import SmallButton from '../components/SmallButton';
 
 export default function Purchase({navigation, route}) {
   const [categories, setCategories] = useState([]);
@@ -30,6 +32,7 @@ export default function Purchase({navigation, route}) {
   const [user, setUser] = useState({});
   const [image, setImage] = useState();
   const [loading, setLoading] = useState(false);
+  const [open, setOpen] = useState(false);
 
   const containerStyle = {backgroundColor: 'white', padding: 20};
 
@@ -71,23 +74,18 @@ export default function Purchase({navigation, route}) {
 
   const listProducts = async () => {
     setLoading(true);
+    setProducts();
     const dbRef = ref(db, 'products');
-    const dataArray = [];
     await new Promise(resolve => {
+      let dataArray = [];
       onValue(dbRef, snapshot => {
         snapshot.forEach(snap => {
           dataArray.push(snap.val());
         });
         resolve();
+        setProducts(dataArray);
       });
-    })
-      .then(() => {
-        console.log('show');
-      })
-      .catch(e => {
-        console.log(e);
-      });
-    setProducts(dataArray);
+    });
     setLoading(false);
   };
 
@@ -121,9 +119,7 @@ export default function Purchase({navigation, route}) {
                 </Text>
               </View>
               <View style={styles.dateArea}>
-                <Text style={styles.welcomeSubtitle}>
-                  Entrega:
-                </Text>
+                <Text style={styles.welcomeSubtitle}>Entrega:</Text>
                 <Text
                   style={[
                     styles.welcomeSubtitle,
@@ -140,7 +136,7 @@ export default function Purchase({navigation, route}) {
           </View>
           <ProfilePhoto photo={`data:image/gif;base64,${user.photo}`} />
         </View>
-        {/* <MySearchBar placeholder="Pesquisar" /> */}
+        {/* <SmallButton name="ir para cesta"/> */}
       </TopScreen>
       <WhiteAreaWithoutScrollView>
         <HighlightedText>Categorias</HighlightedText>
@@ -162,13 +158,16 @@ export default function Purchase({navigation, route}) {
                 />
               );
             }}
-            keyExtractor={item => item.id}
+            keyExtractor={(item, index) => {
+              return item.id;
+            }}
           />
         </View>
         <HighlightedText>Produtos</HighlightedText>
         <View style={{flex: 1}}>
           {!loading ? (
             <FlatList
+              showsVerticalScrollIndicator={false}
               data={products}
               renderItem={({item}) => {
                 return (
@@ -179,6 +178,8 @@ export default function Purchase({navigation, route}) {
                     description={item.description}
                     formOfSale={item.formsOfSale.toLowerCase()}
                     placeOfSale={item.placeOfSale}
+                    amount={item.amount}
+                    userId={route.params.id}
                   />
                 );
               }}
@@ -188,6 +189,22 @@ export default function Purchase({navigation, route}) {
             <ActivityIndicator size={48} />
           )}
         </View>
+        <SpeedDial
+          color={theme.pallete.primary}
+          isOpen={open}
+          buttonStyle={{borderRadius: 8}}
+          icon={{name: 'list', color: '#fff'}}
+          openIcon={{name: 'close', color: '#fff'}}
+          onOpen={() => setOpen(!open)}
+          onClose={() => setOpen(!open)}>
+          <SpeedDial.Action
+            buttonStyle={{borderRadius: 8}}
+            color={theme.pallete.primary004}
+            icon={{name: 'basket', color: '#fff', type: 'material-community'}}
+            title="Ir para cesta"
+            onPress={() => console.log('Add Something')}
+          />
+        </SpeedDial>
       </WhiteAreaWithoutScrollView>
     </>
   );
@@ -196,6 +213,8 @@ export default function Purchase({navigation, route}) {
 const styles = StyleSheet.create({
   welcomeContainer: {
     flexDirection: 'row',
+    justifyContent: 'center',
+    alignItems: 'center',
   },
   welcomeSubtitle: {
     fontSize: 12,

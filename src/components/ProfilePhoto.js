@@ -1,7 +1,7 @@
 import React from 'react';
 import {TouchableOpacity, Image, StyleSheet} from 'react-native';
 
-const ProfilePhoto = ({photo, onPress}) => {
+const ProfilePhoto = ({photo, onPress, children}) => {
   return (
     <TouchableOpacity onPress={onPress}>
       <Image
@@ -10,6 +10,7 @@ const ProfilePhoto = ({photo, onPress}) => {
           uri: photo,
         }}
       />
+      {children}
     </TouchableOpacity>
   );
 };
@@ -21,5 +22,6 @@ const styles = StyleSheet.create({
     width: 60,
     height: 60,
     borderRadius: 100,
+    marginLeft: 60,
   },
 });
