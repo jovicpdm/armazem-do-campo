@@ -11,14 +11,9 @@ import Feedback from './screens/Feedback';
 import Admin from './screens/Admin';
 import ParticipantManagement from './screens/ParticipantManagement';
 import ProductManagement from './screens/ProductManagement';
-<<<<<<< HEAD
 import ProductList from './screens/ProductList';
 import ProductListDelete from './screens/ProductListDelete';
-=======
-import ProductList from './screens/ProductList'
-import ProductListDelete from './screens/ProductListDelete'
 import GeneralInformation from './screens/GeneralInformation';
->>>>>>> 73f18e4b1a7f94874afa8bd05f4b395a29b07248
 import Requests from './screens/Requests';
 import Payment from './screens/Payment';
 import ProductInfo from './screens/ProductInfo';
@@ -39,11 +34,7 @@ const Router = () => {
   return (
     <NavigationContainer theme={MyTheme}>
       <Navigator
-<<<<<<< HEAD
         initialRouteName="Login"
-=======
-        initialRouteName="RegisterProduct"
->>>>>>> 73f18e4b1a7f94874afa8bd05f4b395a29b07248
         screenOptions={{
           headerShown: false,
         }}

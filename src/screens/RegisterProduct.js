@@ -15,7 +15,6 @@ import ButtonSecondary from '../components/ButtonSecondary';
 import ButtonPrimary from '../components/ButtonPrimary';
 
 export default function RegisterProduct({ navigation: { navigate } }) {
-  const [images, setImages] = useState([]);
   const [productName, setProductName] = useState();
   const [price, setPrice] = useState();
   const [placeOfSale, setPlaceOfSale] = useState();
@@ -25,6 +24,7 @@ export default function RegisterProduct({ navigation: { navigate } }) {
   const [formsOfSale, setFormsOfSale] = useState([]);
   const [selectedFormOfSale, setSelectedFormOfSale] = useState();
   const [mainImage, setMainImage] = useState();
+  const [amount, setAmount] = useState();
 
   const db = getDatabase();
   const dbRefForm = ref(db, 'formsOfSale');
@@ -67,7 +67,8 @@ export default function RegisterProduct({ navigation: { navigate } }) {
       description: description,
       category: selectedCategory,
       formsOfSale: selectedFormOfSale,
-      mainImage: mainImage
+      mainImage: mainImage,
+      amount: amount,
     });
 
     images.forEach(image => {
@@ -131,9 +132,17 @@ export default function RegisterProduct({ navigation: { navigate } }) {
           keyboardType="default"
           style={styles.inputDescription}
         />
+        <Input
+          placeholder="Quantidade "
+          placeholderTextColor={theme.pallete.primary}
+          onChangeText={text => setAmount(text)}
+          value={description}
+          keyboardType="numeric"
+          style={styles.inputDescription}
+        />
         <View style={styles.containerLabel}>
           <Text style={styles.titlePicker}>
-            Selecione uma foto principal para o produto
+            Selecione uma foto para o produto
           </Text>
           <InputImage
             name="Escolher Imagem"
@@ -147,27 +156,6 @@ export default function RegisterProduct({ navigation: { navigate } }) {
                   }
                 },
               );
-            }}
-          />
-        </View>
-        <View style={styles.containerLabel}>
-          <Text style={styles.titlePicker}>Selecionar Imagens do Produto</Text>
-          <InputImage
-            name="Escolher Imagens"
-            style={{marginTop: 44}}
-            onPress={() => {
-              const dataArray = [];
-              ImagePicker.launchImageLibrary(
-                {selectionLimit: 0, includeBase64: true},
-                data => {
-                  if (data.didCancel !== true) {
-                    data.assets.forEach(item => {
-                      dataArray.push(item.base64);
-                    });
-                  }
-                },
-              );
-              setImages(dataArray);
             }}
           />
         </View>

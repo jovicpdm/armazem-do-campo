@@ -4,12 +4,7 @@ import {ScrollView, StyleSheet} from 'react-native';
 import {theme} from '../global/styles/theme';
 
 const WhiteArea = ({children}, props) => {
-  return (
-    <ScrollView style={styles.container}>
-      {/* <FlashMessage style={[styles.message, props.style]} duration={2000} /> */}
-      {children}
-    </ScrollView>
-  );
+  return <ScrollView style={styles.container}>{children}</ScrollView>;
 };
 
 export default WhiteArea;
@@ -22,10 +17,5 @@ const styles = StyleSheet.create({
     borderTopLeftRadius: 30,
     borderTopRightRadius: 30,
     paddingHorizontal: 16,
-  },
-  message: {
-    alignItems: 'center',
-    borderRadius: 8,
-    textAlign: 'center',
   },
 });
