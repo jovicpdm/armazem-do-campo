@@ -202,7 +202,11 @@ export default function Purchase({navigation, route}) {
             color={theme.pallete.primary004}
             icon={{name: 'basket', color: '#fff', type: 'material-community'}}
             title="Ir para cesta"
-            onPress={() => console.log('Add Something')}
+            onPress={() =>
+              navigation.navigate("Basket", {
+                id: route.params.id,
+              })
+            }
           />
         </SpeedDial>
       </WhiteAreaWithoutScrollView>

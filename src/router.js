@@ -11,12 +11,13 @@ import Feedback from './screens/Feedback';
 import Admin from './screens/Admin';
 import ParticipantManagement from './screens/ParticipantManagement';
 import ProductManagement from './screens/ProductManagement';
-import ProductList from './screens/ProductList'
-import ProductListDelete from './screens/ProductListDelete'
+import ProductList from './screens/ProductList';
+import ProductListDelete from './screens/ProductListDelete';
 import Requests from './screens/Requests';
 import ProductInfo from './screens/ProductInfo';
 import Profile from './screens/Profile';
 import Basket from './screens/Basket';
+import { StatusBar } from 'react-native';
 
 const {Navigator, Screen} = createNativeStackNavigator();
 
@@ -31,13 +32,11 @@ const Router = () => {
   return (
     <NavigationContainer theme={MyTheme}>
       <Navigator
-        initialRouteName="Admin"
+        initialRouteName="Login"
         screenOptions={{
           headerShown: false,
-          cardStyle: {
-            backgroundColor: 'transparent',
-          },
-        }}>
+        }}
+        >
         <Screen name="Login" component={Login} />
         <Screen name="Register" component={Register} />
         <Screen name="Purchase" component={Purchase} />
@@ -53,7 +52,7 @@ const Router = () => {
         <Screen name="ProductListDelete" component={ProductListDelete} />
         <Screen name="Requests" component={Requests} />
         <Screen name="ProductInfo" component={ProductInfo} />
- 
+
         <Screen name="Profile" component={Profile} />
         <Screen name="Basket" component={Basket} />
       </Navigator>
