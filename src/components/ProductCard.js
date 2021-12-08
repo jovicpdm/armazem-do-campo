@@ -1,11 +1,11 @@
 import React, {useState} from 'react';
 import {StyleSheet, Image, View, Text, TouchableOpacity} from 'react-native';
+import {getDatabase, ref, set} from 'firebase/database';
+
 import {theme} from '../global/styles/theme';
 import {TextInput} from 'react-native-paper';
 import IconMedium from './IconMedium';
 import SmallButton from './SmallButton';
-
-import {getDatabase, ref, set} from 'firebase/database'
 
 const ProductCard = ({
   name,
@@ -20,16 +20,17 @@ const ProductCard = ({
   const [expand, setExpand] = useState(false);
   const [showInput, setShowInput] = useState(false);
   const [amountBuy, setAmountBuy] = useState(0);
+  const db = getDatabase();
 
   const addBasket = () => {
-    dbRef = ref(db, 'purchase/' + userId);
-    set(ref, {
-      status: "open",
+    const dbRef = ref(db, 'purchase/' + userId + `/${name}`);
+    set(dbRef , {
+      status: 'open',
       name: name,
       amountBuy: amountBuy,
-
-    })
-  }
+      price: amountBuy * price,
+    });
+  };
 
   return (
     <View style={styles.card}>
@@ -58,14 +59,21 @@ const ProductCard = ({
               <TextInput
                 maxLength={3}
                 label={`total: R$ ${amountBuy * price}`}
+                placeholder="0"
                 onChangeText={text => setAmountBuy(Number(text))}
-                selectionColor={theme.pallete.primary}
                 keyboardType="decimal-pad"
               />
               <SmallButton
                 name="adicionar à cesta"
                 type="primary"
-                onPress={() => {}}
+                onPress={() => {
+                  try {
+                    addBasket();
+                    console.log("Sucesso!");
+                  } catch (error) {
+                    console.log(error);
+                  }
+                }}
               />
               <SmallButton
                 name="cancelar"

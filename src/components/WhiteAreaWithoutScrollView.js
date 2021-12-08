@@ -13,7 +13,6 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: theme.pallete.white,
-    maxHeight: '100%',
     height: '100%',
     borderTopLeftRadius: 30,
     borderTopRightRadius: 30,
