@@ -42,7 +42,7 @@ const ProductCard = ({
         <View style={styles.titleSubtitle}>
           <Text style={styles.title}>{name}</Text>
           <Text style={styles.subtitle}>
-            R$ {price} ({formOfSale})
+            R$ {price} {formOfSale}
           </Text>
           <Text style={styles.subtitle}>
             {amount} {formOfSale}(s) restantes

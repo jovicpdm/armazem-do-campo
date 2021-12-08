@@ -7,6 +7,7 @@ import TextCard from '../components/TextCard';
 import TitleScreen from '../components/TitleScreen';
 import TopScreen from '../components/TopScreen';
 import WhiteAreaWithoutScrollView from '../components/WhiteAreaWithoutScrollView';
+import WhiteArea from '../components/WhiteArea';
 import { theme } from '../global/styles/theme';
 
 export default function ProductManagement({ navigation: { navigate } }) {
@@ -15,7 +16,7 @@ export default function ProductManagement({ navigation: { navigate } }) {
       <TopScreen>
         <TitleScreen>Gerenciamento de Produtos</TitleScreen>
       </TopScreen>
-      <WhiteAreaWithoutScrollView>
+      <WhiteArea>
         <HighlightedText>Gerenciar</HighlightedText>
 
         <View style={{ marginTop: 8 }} />
@@ -54,9 +55,17 @@ export default function ProductManagement({ navigation: { navigate } }) {
           <IconMedium name="chevron-right" color={theme.pallete. primary002} />
         </CardContainer>
 
+        <View style={{ marginTop: 8 }} />
+        <CardContainer
+          onPress={() => {
+            navigate('GeneralInformation');
+          }}>
+          <TextCard>Informações gerais </TextCard>
+          <IconMedium name="chevron-right" color={theme.pallete. primary002} />
+        </CardContainer>
 
 
-      </WhiteAreaWithoutScrollView>
+      </WhiteArea>
     </View>
   );
 }

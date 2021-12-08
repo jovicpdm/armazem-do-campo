@@ -1,11 +1,40 @@
 import React from 'react';
-import { StyleSheet, Image, View, TouchableOpacity, Text } from 'react-native';
+import { StyleSheet, Image, View, TouchableOpacity, Text, Alert, } from 'react-native';
 import { Card, Paragraph, Title } from 'react-native-paper';
 import { theme } from '../global/styles/theme';
 import IconMedium from './IconMedium';
+import { getDatabase, ref, onValue, remove } from 'firebase/database';
 
 
 const ProductCardDelete = ({ name, price, id, image, onPress, props }) => {
+
+    const deleteProd = (id) => {
+        const db = getDatabase();
+        remove(ref(db, 'products/' + id), {
+            
+        })
+    }
+
+
+    const showConfirm = () => {
+        Alert.alert(
+            "Confirmação!!!",
+            "Deseja realmente remover o produto?",
+
+            [
+                {
+                    text: "Remover",
+                    onPress: () => deleteProd(id)
+                    
+                },
+                {
+                    text: "Cancelar",
+                }
+            ],
+            { cancelable: true }
+
+        )
+    }
 
     return (
         <View>
@@ -21,8 +50,6 @@ const ProductCardDelete = ({ name, price, id, image, onPress, props }) => {
                         <Card.Content>
                             <Title>{name}</Title>
                             <Paragraph>R$ {price}</Paragraph>
-                            <Text>{id}</Text>
-
                         </Card.Content>
                     </Card.Content>
                 </View>
@@ -30,7 +57,7 @@ const ProductCardDelete = ({ name, price, id, image, onPress, props }) => {
                 <View style={styles.button}>
                     <TouchableOpacity
                         {...props}
-                        onPress={onPress}
+                        onPress={showConfirm}
                     >
                         <IconMedium
                             name="delete"
