@@ -9,9 +9,11 @@ import {
 } from 'react-native';
 import { getDatabase, ref, onValue } from 'firebase/database';
 import ProductCard from '../components/ProductCard';
+import ProductCardView from '../components/ProductCardView';
 import TitleScreen from '../components/TitleScreen';
 import TopScreen from '../components/TopScreen';
 import WhiteAreaWithoutScrollView from '../components/WhiteAreaWithoutScrollView';
+import WhiteArea from '../components/WhiteArea';
 
 export default function ProductList({ navigation: { navigate } }) {
 
@@ -52,7 +54,7 @@ export default function ProductList({ navigation: { navigate } }) {
       <TopScreen>
         <TitleScreen>Produtos</TitleScreen>
       </TopScreen>
-      <WhiteAreaWithoutScrollView>
+      <WhiteArea>
 
         {!loading ? (
           <FlatList
@@ -60,7 +62,7 @@ export default function ProductList({ navigation: { navigate } }) {
             key={item => item.id}
             renderItem={({ item }) => {
               return (
-                <ProductCard
+                <ProductCardView
                   name={item.name}
                   price={item.price}
                   image={item.mainImage}
@@ -78,7 +80,7 @@ export default function ProductList({ navigation: { navigate } }) {
         )}
 
 
-      </WhiteAreaWithoutScrollView>
+      </WhiteArea>
     </View>
   );
 }

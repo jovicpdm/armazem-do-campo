@@ -14,7 +14,7 @@ import InputImage from '../components/InputImage';
 import ButtonSecondary from '../components/ButtonSecondary';
 import ButtonPrimary from '../components/ButtonPrimary';
 
-export default function RegisterProduct({navigation}) {
+export default function RegisterProduct({ navigation: { navigate } }) {
   const [images, setImages] = useState([]);
   const [productName, setProductName] = useState();
   const [price, setPrice] = useState();
@@ -223,7 +223,7 @@ export default function RegisterProduct({navigation}) {
         <ButtonPrimary onPress={() => addProduct()}>CADASTRAR</ButtonPrimary>
         <ButtonSecondary
           onPress={() => {
-            upload();
+            navigate('ProductManagement');
           }}>
           CANCELAR
         </ButtonSecondary>

@@ -11,6 +11,7 @@ import ProductCardDelete from '../components/ProductCardDelete';
 import TitleScreen from '../components/TitleScreen';
 import TopScreen from '../components/TopScreen';
 import WhiteAreaWithoutScrollView from '../components/WhiteAreaWithoutScrollView';
+import WhiteArea from '../components/WhiteArea';
 
 export default function ProductList({ navigation: { navigate } }) {
 
@@ -41,37 +42,11 @@ export default function ProductList({ navigation: { navigate } }) {
         setLoading(false);
     };
 
-    const deleteProd = async () => {
-        remove(ref(db, 'products/' + id), {
-            
-        })
-    }
-
-    
-
     useEffect(() => {
         listProducts();
     }, []);
 
-    const showConfirm = () => {
-        Alert.alert(
-            "Confirmação!!!",
-            "Deseja realmente remover o produto?",
-
-            [
-                {
-                    text: "Remover",
-                    onPress: () => deleteProd()
-                    
-                },
-                {
-                    text: "Cancelar",
-                }
-            ],
-            { cancelable: true }
-
-        )
-    }
+    
 
 
     return (
@@ -79,7 +54,7 @@ export default function ProductList({ navigation: { navigate } }) {
             <TopScreen>
                 <TitleScreen> Remover Produtos</TitleScreen>
             </TopScreen>
-            <WhiteAreaWithoutScrollView>
+            <WhiteArea>
 
                 {!loading ? (
                     <FlatList
@@ -92,7 +67,7 @@ export default function ProductList({ navigation: { navigate } }) {
                                     price={item.price}
                                     id={item.id}
                                     image={item.mainImage}
-                                    onPress={showConfirm}
+                                    
 
                                 />
                             );
@@ -103,7 +78,7 @@ export default function ProductList({ navigation: { navigate } }) {
                 )}
 
 
-            </WhiteAreaWithoutScrollView>
+            </WhiteArea>
         </View>
     );
 }
