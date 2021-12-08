@@ -33,7 +33,7 @@ const Router = () => {
   return (
     <NavigationContainer theme={MyTheme}>
       <Navigator
-        initialRouteName="GeneralInformation"
+        initialRouteName="Admin"
         screenOptions={{
           headerShown: false,
           cardStyle: {
