@@ -11,6 +11,7 @@ import ProductCardDelete from '../components/ProductCardDelete';
 import TitleScreen from '../components/TitleScreen';
 import TopScreen from '../components/TopScreen';
 import WhiteAreaWithoutScrollView from '../components/WhiteAreaWithoutScrollView';
+import WhiteArea from '../components/WhiteArea';
 
 export default function ProductList({ navigation: { navigate } }) {
 
@@ -79,7 +80,7 @@ export default function ProductList({ navigation: { navigate } }) {
             <TopScreen>
                 <TitleScreen> Remover Produtos</TitleScreen>
             </TopScreen>
-            <WhiteAreaWithoutScrollView>
+            <WhiteArea>
 
                 {!loading ? (
                     <FlatList
@@ -103,7 +104,7 @@ export default function ProductList({ navigation: { navigate } }) {
                 )}
 
 
-            </WhiteAreaWithoutScrollView>
+            </WhiteArea>
         </View>
     );
 }

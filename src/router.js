@@ -13,7 +13,9 @@ import ParticipantManagement from './screens/ParticipantManagement';
 import ProductManagement from './screens/ProductManagement';
 import ProductList from './screens/ProductList'
 import ProductListDelete from './screens/ProductListDelete'
+import GeneralInformation from './screens/GeneralInformation';
 import Requests from './screens/Requests';
+import Payment from './screens/Payment';
 import ProductInfo from './screens/ProductInfo';
 import Profile from './screens/Profile';
 import Basket from './screens/Basket';
@@ -31,7 +33,7 @@ const Router = () => {
   return (
     <NavigationContainer theme={MyTheme}>
       <Navigator
-        initialRouteName="Admin"
+        initialRouteName="GeneralInformation"
         screenOptions={{
           headerShown: false,
           cardStyle: {
@@ -44,6 +46,7 @@ const Router = () => {
         <Screen name="RegisterProduct" component={RegisterProduct} />
         <Screen name="Feedback" component={Feedback} />
         <Screen name="Admin" component={Admin} />
+        {/* <Screen name="Payment" component={Payment} /> */}
         <Screen
           name="ParticipantManagement"
           component={ParticipantManagement}
@@ -51,6 +54,7 @@ const Router = () => {
         <Screen name="ProductManagement" component={ProductManagement} />
         <Screen name="ProductList" component={ProductList} />
         <Screen name="ProductListDelete" component={ProductListDelete} />
+        <Screen name="GeneralInformation" component={GeneralInformation} />
         <Screen name="Requests" component={Requests} />
         <Screen name="ProductInfo" component={ProductInfo} />
  

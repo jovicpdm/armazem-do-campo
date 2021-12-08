@@ -11,7 +11,7 @@ import { TextInput } from 'react-native-paper';
 import IconMedium from './IconMedium';
 import SmallButton from './SmallButton';
 
-const ProductCard = ({
+const ProductCardView = ({
   name,
   price,
   image,
@@ -36,50 +36,6 @@ const ProductCard = ({
           </Text>
         </View>
       </View>
-      {expand ? (
-        <>
-          <View style={{marginTop: 16}} />
-          <Text style={[styles.subtitle, {marginLeft: 88}]}>{description}</Text>
-          <View style={{marginTop: 16}} />
-          {showInput ? (
-            <>
-              <TextInput placeholder="000" maxLength={3} />
-              <SmallButton 
-                name="adicionar à cesta"
-                type="primary"
-                onPress={() => {
-
-                }}
-              />
-              <SmallButton
-                name="cancelar"
-                onPress={() => {
-                  setShowInput(!showInput);
-                }}
-              />
-            </>
-          ) : (
-            <SmallButton
-              name="comprar"
-              type="primary"
-              onPress={() => {
-                setShowInput(!showInput);
-              }}
-            />
-          )}
-        </>
-      ) : null}
-      <TouchableOpacity
-        style={{height: 40, alignItems: 'center', justifyContent: 'center'}}
-        onPress={() => {
-          setExpand(!expand);
-        }}>
-        {expand ? (
-          <IconMedium name="chevron-up" />
-        ) : (
-          <IconMedium name="chevron-down" />
-        )}
-      </TouchableOpacity>
     </View>
   );
 };
@@ -124,4 +80,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default ProductCard;
+export default ProductCardView;

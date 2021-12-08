@@ -6,4 +6,10 @@
         <item name="android:textColor">#f7f7f7</item>
     </style>
 
+    <style name="TimePickerTheme" parent="Theme.AppCompat.Light.Dialog">
+    <item name="colorPrimary">@color/colorPrimary</item>
+    <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+    <item name="colorAccent">@color/blue</item>
+    </style>
+
 </resources>
