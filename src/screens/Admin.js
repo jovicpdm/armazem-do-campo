@@ -8,6 +8,7 @@ import {theme} from '../global/styles/theme';
 import TitleScreen from '../components/TitleScreen';
 import TopScreen from '../components/TopScreen';
 import WhiteAreaWithoutScrollView from '../components/WhiteAreaWithoutScrollView';
+import WhiteArea from '../components/WhiteArea';
 import HighlightedText from '../components/HighlightedText';
 import CardContainer from '../components/CardContainer';
 import AdminNotification from '../components/AdminNotification';
@@ -31,7 +32,9 @@ export default function Admin({navigation: {navigate}}) {
           />
         </View>
       </TopScreen>
-      <WhiteAreaWithoutScrollView>
+
+  
+      <WhiteArea>
         {/* <Button title="Open" onPress={() => setOpen(true)} />
         <DatePicker
           modal
@@ -71,7 +74,8 @@ export default function Admin({navigation: {navigate}}) {
             />
           </CardContainer>
         </View>
-      </WhiteAreaWithoutScrollView>
+      </WhiteArea>
+      
     </View>
   );
 }
