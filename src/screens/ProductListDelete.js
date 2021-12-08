@@ -42,37 +42,11 @@ export default function ProductList({ navigation: { navigate } }) {
         setLoading(false);
     };
 
-    const deleteProd = async () => {
-        remove(ref(db, 'products/' + id), {
-            
-        })
-    }
-
-    
-
     useEffect(() => {
         listProducts();
     }, []);
 
-    const showConfirm = () => {
-        Alert.alert(
-            "Confirmação!!!",
-            "Deseja realmente remover o produto?",
-
-            [
-                {
-                    text: "Remover",
-                    onPress: () => deleteProd()
-                    
-                },
-                {
-                    text: "Cancelar",
-                }
-            ],
-            { cancelable: true }
-
-        )
-    }
+    
 
 
     return (
@@ -93,7 +67,7 @@ export default function ProductList({ navigation: { navigate } }) {
                                     price={item.price}
                                     id={item.id}
                                     image={item.mainImage}
-                                    onPress={showConfirm}
+                                    
 
                                 />
                             );
