@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import {StyleSheet, Image, View, Text, TouchableOpacity} from 'react-native';
+import {StyleSheet, Image, View, Text, TouchableOpacity, Alert} from 'react-native';
 import {getDatabase, ref, set} from 'firebase/database';
 
 import {theme} from '../global/styles/theme';
@@ -72,7 +72,10 @@ const ProductCard = ({
                 onPress={() => {
                   try {
                     addBasket();
-                    console.log("Sucesso!");
+                    Alert.alert(
+                      "Mensagem de confirmação",
+                      "(apenas exibido na fase beta)",
+                    )
                   } catch (error) {
                     console.log(error);
                   }

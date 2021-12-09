@@ -33,7 +33,6 @@ export default function Admin({navigation: {navigate}}) {
         </View>
       </TopScreen>
 
-  
       <WhiteArea>
         {/* <Button title="Open" onPress={() => setOpen(true)} />
         <DatePicker
@@ -48,7 +47,7 @@ export default function Admin({navigation: {navigate}}) {
             setOpen(false);
           }}
         /> */}
-        <View style={{marginTop: 4  , alignItems: 'center'}}>
+        <View style={{marginTop: 4, alignItems: 'center'}}>
           <HighlightedText>Gerenciamento</HighlightedText>
         </View>
         <View style={{marginVertical: 8}} />
@@ -73,9 +72,17 @@ export default function Admin({navigation: {navigate}}) {
               color={theme.pallete.primary002}
             />
           </CardContainer>
+          <CardContainer
+            background={theme.pallete.primary004}
+            onPress={() => navigate('Orders')}>
+            <TextCard>Pedidos</TextCard>
+            <IconMedium
+              name="book-outline"
+              color={theme.pallete.primary002}
+            />
+          </CardContainer>
         </View>
       </WhiteArea>
-      
     </View>
   );
 }
