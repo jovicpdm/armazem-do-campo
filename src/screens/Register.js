@@ -47,7 +47,10 @@ export default function Register({navigation}) {
               status: 'aguardando',
               type: 'comprador',
             });
-            console.log('Concluído');
+            Alert.alert(
+              'Mensagem de confirmação',
+              '(apenas exibido na fase beta)',
+            );
           })
           .catch(err => {
             console.log(`message: ${err.message} code: ${err.code}`);
@@ -171,7 +174,7 @@ export default function Register({navigation}) {
         <ButtonPrimary onPress={() => writeUserData()}>CADASTRAR</ButtonPrimary>
         <ButtonSecondary
           onPress={() => {
-            navigation.navigate("Login");
+            navigation.navigate('Login');
           }}>
           ENTRAR
         </ButtonSecondary>

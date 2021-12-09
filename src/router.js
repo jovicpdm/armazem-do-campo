@@ -19,7 +19,7 @@ import Payment from './screens/Payment';
 import ProductInfo from './screens/ProductInfo';
 import Profile from './screens/Profile';
 import Basket from './screens/Basket';
-import { StatusBar } from 'react-native';
+import Orders from './screens/Orders';
 
 const {Navigator, Screen} = createNativeStackNavigator();
 
@@ -59,6 +59,7 @@ const Router = () => {
 
         <Screen name="Profile" component={Profile} />
         <Screen name="Basket" component={Basket} />
+        <Screen name="Orders" component={Orders} />
       </Navigator>
     </NavigationContainer>
   );

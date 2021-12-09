@@ -13,6 +13,7 @@ const RequestCard = ({name, photo, email, phone, presentation, id}) => {
     update(ref(db, 'users/' + id), {
       status: response === 'y' ? 'aprovado' : 'reprovado',
     });
+    Alert.alert('Mensagem de confirmação', '(apenas exibido na fase beta)');
   };
 
   return (

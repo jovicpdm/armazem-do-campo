@@ -55,7 +55,7 @@ export default function Basket({navigation, route}) {
       }
     });
     remove(ref(db, 'purchase/' + route.params.id));
-    console.log('show');
+    Alert.alert('Mensagem de confirmação', '(apenas exibido na fase beta)');
   };
 
   const listProducts = async () => {
