@@ -47,7 +47,7 @@ export default function Requests() {
   }, []);
 
   return (
-    <View>
+    <>
       <TopScreen>
         <TitleScreen>Solicitações</TitleScreen>
       </TopScreen>
@@ -70,7 +70,7 @@ export default function Requests() {
           }}
         />
       </WhiteAreaWithoutScrollView>
-    </View>
+    </>
   );
 }
 
