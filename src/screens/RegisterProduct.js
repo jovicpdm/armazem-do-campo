@@ -70,18 +70,6 @@ export default function RegisterProduct({ navigation: { navigate } }) {
       mainImage: mainImage,
       amount: amount,
     });
-
-    images.forEach(image => {
-      set(ref(db, 'products/' + id + '/images/' + uuid.v4()), {
-        image: image,
-      })
-        .then(() => {
-          console.log('Funcionou');
-        })
-        .catch(e => {
-          console.log(e);
-        });
-    });
   };
 
   useEffect(() => {
@@ -136,7 +124,7 @@ export default function RegisterProduct({ navigation: { navigate } }) {
           placeholder="Quantidade "
           placeholderTextColor={theme.pallete.primary}
           onChangeText={text => setAmount(text)}
-          value={description}
+          value={setAmount}
           keyboardType="numeric"
           style={styles.inputDescription}
         />
