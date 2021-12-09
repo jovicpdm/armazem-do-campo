@@ -14,6 +14,7 @@ import ButtonSecondary from '../components/ButtonSecondary';
 import WhiteArea from '../components/WhiteArea';
 import TitleSection from '../components/TitleSection';
 import ErrorMessage from '../components/ErrorMessage';
+import GrayText from '../components/GrayText';
 
 export default function Login({navigation}) {
   const [email, setEmail] = useState('');
@@ -86,7 +87,6 @@ export default function Login({navigation}) {
           onFocus={() => {
             setShowError(false);
           }}
-          
         />
 
         <View style={{marginTop: 32}} />
@@ -109,6 +109,10 @@ export default function Login({navigation}) {
             </ButtonSecondary>
           </>
         )}
+        <GrayText>
+          Está é uma versão de testes, erros e bugs podem aparecer com certa
+          frequência {"\n"}Por favor, tenha paciência
+        </GrayText>
       </WhiteArea>
     </View>
   );

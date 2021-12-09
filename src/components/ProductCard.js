@@ -8,6 +8,7 @@ import IconMedium from './IconMedium';
 import SmallButton from './SmallButton';
 
 const ProductCard = ({
+  id,
   name,
   price,
   image,
@@ -25,10 +26,12 @@ const ProductCard = ({
   const addBasket = () => {
     const dbRef = ref(db, 'purchase/' + userId + `/${name}`);
     set(dbRef , {
+      id: id,
       status: 'open',
       name: name,
       amountBuy: amountBuy,
       price: amountBuy * price,
+      amount: amount,
     });
   };
 

@@ -180,6 +180,7 @@ export default function Purchase({navigation, route}) {
                     placeOfSale={item.placeOfSale}
                     amount={item.amount}
                     userId={route.params.id}
+                    id={item.id}
                   />
                 );
               }}
