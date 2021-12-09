@@ -50,11 +50,11 @@ export default function ProductList({ navigation: { navigate } }) {
 
 
     return (
-        <View>
+        <>
             <TopScreen>
                 <TitleScreen> Remover Produtos</TitleScreen>
             </TopScreen>
-            <WhiteArea>
+            <WhiteAreaWithoutScrollView>
 
                 {!loading ? (
                     <FlatList
@@ -78,8 +78,8 @@ export default function ProductList({ navigation: { navigate } }) {
                 )}
 
 
-            </WhiteArea>
-        </View>
+            </WhiteAreaWithoutScrollView>
+        </>
     );
 }
 

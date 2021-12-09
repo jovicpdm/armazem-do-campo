@@ -11,7 +11,7 @@ import {theme} from '../global/styles/theme';
 
 export default function ParticipantManagement({navigation: {navigate}}) {
   return (
-    <View>
+    <>
       <TopScreen>
         <TitleScreen>Gerenciamento de Participantes</TitleScreen>
       </TopScreen>
@@ -26,7 +26,7 @@ export default function ParticipantManagement({navigation: {navigate}}) {
           <IconMedium name="chevron-right" color={theme.pallete.primary002} />
         </CardContainer>
       </WhiteAreaWithoutScrollView>
-    </View>
+    </>
   );
 }
 
