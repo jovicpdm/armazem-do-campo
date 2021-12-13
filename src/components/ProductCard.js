@@ -1,5 +1,12 @@
 import React, {useState} from 'react';
-import {StyleSheet, Image, View, Text, TouchableOpacity, Alert} from 'react-native';
+import {
+  StyleSheet,
+  Image,
+  View,
+  Text,
+  TouchableOpacity,
+  Alert,
+} from 'react-native';
 import {getDatabase, ref, set} from 'firebase/database';
 
 import {theme} from '../global/styles/theme';
@@ -21,11 +28,13 @@ const ProductCard = ({
   const [expand, setExpand] = useState(false);
   const [showInput, setShowInput] = useState(false);
   const [amountBuy, setAmountBuy] = useState(0);
+  const [nameMod, setNameMod] = useState(description);
+
   const db = getDatabase();
 
   const addBasket = () => {
     const dbRef = ref(db, 'purchase/' + userId + `/${name}`);
-    set(dbRef , {
+    set(dbRef, {
       id: id,
       status: 'open',
       name: name,
@@ -73,9 +82,9 @@ const ProductCard = ({
                   try {
                     addBasket();
                     Alert.alert(
-                      "Mensagem de confirmação",
-                      "(apenas exibido na fase beta)",
-                    )
+                      'Mensagem de confirmação',
+                      '(apenas exibido na fase beta)',
+                    );
                   } catch (error) {
                     console.log(error);
                   }
@@ -84,7 +93,8 @@ const ProductCard = ({
               <SmallButton
                 name="cancelar"
                 onPress={() => {
-                  setShowInput(!showInput);
+                  // setShowInput(!showInput);
+                  setNameMod('cancelado');
                 }}
               />
             </>
@@ -116,9 +126,10 @@ const ProductCard = ({
 
 const styles = StyleSheet.create({
   card: {
-    padding: 2,
+    paddingHorizontal: 16, 
+    paddingTop: 16, 
     marginTop: 8,
-    backgroundColor: '#eaeaea',
+    backgroundColor: theme.pallete.white,
     borderRadius: 8,
     elevation: 1,
     shadowOffset: {

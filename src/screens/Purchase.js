@@ -24,13 +24,15 @@ import TitleScreen from '../components/TitleScreen';
 import TopScreen from '../components/TopScreen';
 import ProfilePhoto from '../components/ProfilePhoto';
 import SmallButton from '../components/SmallButton';
+import TextGray from '../components/GrayText';
+import GrayText from '../components/GrayText';
 
 export default function Purchase({navigation, route}) {
   const [categories, setCategories] = useState([]);
-  const [selected, setSelected] = useState(0);
+  const [selected, setSelected] = useState('todos');
   const [products, setProducts] = useState();
   const [user, setUser] = useState({});
-  const [image, setImage] = useState();
+  const [refresh, setRefresh] = useState(false);
   const [loading, setLoading] = useState(false);
   const [open, setOpen] = useState(false);
 
@@ -74,6 +76,7 @@ export default function Purchase({navigation, route}) {
 
   const listProducts = async () => {
     setLoading(true);
+    setRefresh(true);
     setProducts();
     const dbRef = ref(db, 'products');
     await new Promise(resolve => {
@@ -149,9 +152,11 @@ export default function Purchase({navigation, route}) {
               return (
                 <CategoryLabel
                   description={item.description}
-                  onPress={() => setSelected(item.id)}
+                  onPress={() => {
+                    setSelected(item.description.toLowerCase());
+                  }}
                   color={
-                    item.id === selected
+                    item.description === selected
                       ? theme.pallete.primary004
                       : theme.pallete.black
                   }
@@ -163,25 +168,39 @@ export default function Purchase({navigation, route}) {
             }}
           />
         </View>
-        <HighlightedText>Produtos</HighlightedText>
-        <View style={{flex: 1}}>
+        <HighlightedText>Produtos: {"\n"} ({selected})</HighlightedText>
+        <View style={{flex: 1, alignItems: 'center'}}>
           {!loading ? (
             <FlatList
               showsVerticalScrollIndicator={false}
               data={products}
+              extraData={products}
+              keyExtractor={item => {
+                return item.id;
+              }}
+              refreshing={true}
               renderItem={({item}) => {
                 return (
-                  <ProductCard
-                    name={item.name}
-                    price={item.price}
-                    image={item.mainImage}
-                    description={item.description}
-                    formOfSale={item.formsOfSale.toLowerCase()}
-                    placeOfSale={item.placeOfSale}
-                    amount={item.amount}
-                    userId={route.params.id}
-                    id={item.id}
-                  />
+                  <>
+                    {selected === item.category || selected === 'todos' ? (
+                      <Text>
+                        {' '}
+                        <ProductCard
+                          name={item.name}
+                          price={item.price}
+                          image={item.mainImage}
+                          description={item.description}
+                          formOfSale={item.formsOfSale.toLowerCase()}
+                          placeOfSale={item.placeOfSale}
+                          amount={item.amount}
+                          userId={route.params.id}
+                          id={item.id}
+                        />{' '}
+                      </Text>
+                    ) : (
+                      <GrayText>Não há produtos nessa categoria</GrayText>
+                    )}
+                  </>
                 );
               }}
               keyExtractor={item => item.id}
@@ -204,7 +223,7 @@ export default function Purchase({navigation, route}) {
             icon={{name: 'basket', color: '#fff', type: 'material-community'}}
             title="Ir para cesta"
             onPress={() =>
-              navigation.navigate("Basket", {
+              navigation.navigate('Basket', {
                 id: route.params.id,
               })
             }
