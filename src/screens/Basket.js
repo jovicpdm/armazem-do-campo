@@ -1,5 +1,5 @@
 import React, {useState, useEffect} from 'react';
-import {StyleSheet, View, Text, FlatList, Switch} from 'react-native';
+import {StyleSheet, View, Text, FlatList, Alert} from 'react-native';
 import {
   getDatabase,
   ref,
@@ -14,9 +14,7 @@ import TitleScreen from '../components/TitleScreen';
 import TopScreen from '../components/TopScreen';
 import WhiteAreaWithoutScrollView from '../components/WhiteAreaWithoutScrollView';
 import HighlightedText from '../components/HighlightedText';
-import CardContainer from '../components/CardContainer';
 import {theme} from '../global/styles/theme';
-import IconMedium from '../components/IconMedium';
 import TitleSection from '../components/TitleSection';
 import ButtonPrimary from '../components/ButtonPrimary';
 import GrayText from '../components/GrayText';
@@ -24,7 +22,7 @@ import ButtonSecondary from '../components/ButtonSecondary';
 
 export default function Basket({navigation, route}) {
   const [products, setProducts] = useState([]);
-  const [auxArray, setAuxArray] = useState([]);
+  const [refresh, setRefresh] = useState(false);
   const [selected, setSelected] = useState(true);
   const [total, setTotal] = useState(0);
 
@@ -59,6 +57,7 @@ export default function Basket({navigation, route}) {
   };
 
   const listProducts = async () => {
+    setRefresh(true);
     const dbRef = ref(db, 'purchase/' + route.params.id);
     const dataArray = [];
     var prices = 0;
@@ -92,6 +91,9 @@ export default function Basket({navigation, route}) {
           <View>
             <FlatList
               data={products}
+              extraData={products}
+              key={item.id}
+              // onRefresh={}
               renderItem={({item}) => {
                 return (
                   <View>

@@ -126,7 +126,6 @@ export default function RegisterProduct({ navigation: { navigate } }) {
           onChangeText={text => setAmount(text)}
           value={setAmount}
           keyboardType="numeric"
-          style={styles.inputDescription}
         />
         <View style={styles.containerLabel}>
           <Text style={styles.titlePicker}>
