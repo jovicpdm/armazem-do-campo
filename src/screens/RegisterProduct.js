@@ -86,7 +86,10 @@ export default function RegisterProduct({ navigation: { navigate } }) {
           color={theme.pallete.textTitleScreen}
         />
         <Text style={styles.addProduct}>Cadastrar produto</Text>
+<<<<<<< HEAD
         
+=======
+>>>>>>> fd50340385659c05f908f8b2245fd9316331ddb4
       </View>
       <WhiteArea>
         <Input
