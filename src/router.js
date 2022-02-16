@@ -12,6 +12,8 @@ import Admin from './screens/Admin';
 import ParticipantManagement from './screens/ParticipantManagement';
 import ProductManagement from './screens/ProductManagement';
 import ProductList from './screens/ProductList';
+import EditProduct from './screens/EditProduct';
+import EditItem from './screens/EditItem';
 import ProductListDelete from './screens/ProductListDelete';
 import GeneralInformation from './screens/GeneralInformation';
 import Requests from './screens/Requests';
@@ -52,6 +54,8 @@ const Router = () => {
         />
         <Screen name="ProductManagement" component={ProductManagement} />
         <Screen name="ProductList" component={ProductList} />
+        <Screen name="EditProduct" component={EditProduct} />
+        <Screen name="EditItem" component={EditItem} />
         <Screen name="ProductListDelete" component={ProductListDelete} />
         <Screen name="GeneralInformation" component={GeneralInformation} />
         <Screen name="Requests" component={Requests} />

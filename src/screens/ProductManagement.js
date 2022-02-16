@@ -40,7 +40,7 @@ export default function ProductManagement({ navigation: { navigate } }) {
         <View style={{ marginTop: 8 }} />
         <CardContainer
           onPress={() => {
-            navigate('ProductList');
+            navigate('EditProduct');
           }}>
           <TextCard>Editar produto</TextCard>
           <IconMedium name="chevron-right" color={theme.pallete.primary002} />
