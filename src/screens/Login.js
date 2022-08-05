@@ -109,10 +109,10 @@ export default function Login({navigation}) {
             </ButtonSecondary>
           </>
         )}
-        <GrayText>
+        {/* <GrayText>
           Está é uma versão de testes, erros e bugs podem aparecer com certa
           frequência {"\n"}Por favor, tenha paciência
-        </GrayText>
+        </GrayText> */}
       </WhiteArea>
     </View>
   );
