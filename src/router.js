@@ -2,7 +2,6 @@ import * as React from 'react';
 import {NavigationContainer} from '@react-navigation/native';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import {theme} from './global/styles/theme';
-
 import Login from './screens/Login';
 import Register from './screens/Register';
 import Purchase from './screens/Purchase';
