@@ -20,9 +20,11 @@ import InputPhotoArea from '../components/InputPhotoArea';
 import ErrorMessage from '../components/ErrorMessage';
 
 export default function Register({navigation}) {
+
   const [name, setName] = useState();
   const [phone, setPhone] = useState();
   const [email, setEmail] = useState();
+  const [address, setAddress] = useState();
   const [presentation, setPresentation] = useState();
   const [password, setPassword] = useState();
   const [confirmPassword, setConfirmPassword] = useState();
@@ -33,13 +35,14 @@ export default function Register({navigation}) {
   const writeUserData = () => {
     const db = getDatabase();
     const auth = getAuth();
-    if (name || phone || email || presentation || password) {
+    if (name || phone || email || address || presentation || password) {
       if (password === confirmPassword) {
         createUserWithEmailAndPassword(auth, email, password)
           .then(userCredential => {
             set(ref(db, 'users/' + userCredential.user.uid), {
               name: name,
               email: email,
+              address: address,
               phone: phone,
               presentation: presentation,
               password: password,
@@ -47,16 +50,22 @@ export default function Register({navigation}) {
               status: 'aguardando',
               type: 'comprador',
             });
-            Alert.alert(
-              'Mensagem de confirmação',
-              '(apenas exibido na fase beta)',
-            );
+            Alert.alert("Confirmação", `Confirma a ação?`, [
+              {
+                text: 'Sim',
+                onPress: () => Alert.alert("Deletado!")
+              },
+              {
+                text: 'Não',
+                style: 'cancel'
+              }
+            ])
           })
           .catch(err => {
             console.log(`message: ${err.message} code: ${err.code}`);
             if (err.code === ' auth/email-already-in-use') {
               setShowError(true);
-              setError('Email já existente');
+              setError('E-mail já existente');
             } else if (err.code === 'auth/internal-error') {
               setShowError(true);
               setError('Campo vazio');
@@ -75,7 +84,7 @@ export default function Register({navigation}) {
   return (
     <ScrollView contentContainerStyle={{maxHeight: '100%'}}>
       <Text style={styles.presentation}>
-        Faça parte da Rede de Comercialização de produtos da reforma agrária
+        Faça parte da rede de comercialização de produtos da reforma agrária
         popular
       </Text>
       <WhiteArea>
@@ -107,6 +116,17 @@ export default function Register({navigation}) {
           onChangeText={text => setEmail(text)}
           value={email}
           keyboardType="email-address"
+          onFocus={() => {
+            setShowError(false);
+          }}
+        />
+         <Input
+          placeholder="Endereço"
+          placeholderTextColor={theme.pallete.primary}
+          onChangeText={text => setAddress(text)}
+          value={address}
+          keyboardType="default"
+          style={{marginTop: 16}}
           onFocus={() => {
             setShowError(false);
           }}
@@ -171,13 +191,17 @@ export default function Register({navigation}) {
         />
         {showError ? <ErrorMessage>{error}</ErrorMessage> : null}
         <View style={{marginTop: 41}} />
-        <ButtonPrimary onPress={() => writeUserData()}>CADASTRAR</ButtonPrimary>
-        <ButtonSecondary
+        <ButtonPrimary onPress={() => writeUserData()}
+        onFocus={() => {
+          navigation.navigate('Login');
+        }}>CADASTRAR</ButtonPrimary>
+
+        {/* <ButtonSecondary
           onPress={() => {
             navigation.navigate('Login');
           }}>
           ENTRAR
-        </ButtonSecondary>
+        </ButtonSecondary> */}
       </WhiteArea>
     </ScrollView>
   );

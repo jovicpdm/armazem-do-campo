@@ -7,7 +7,7 @@ import {getDatabase, ref, update} from 'firebase/database';
 
 import firebase from '../config/firebase';
 
-const RequestCard = ({name, photo, email, phone, presentation, id}) => {
+const RequestCard = ({name, photo, email, address, phone, presentation, id}) => {
   const approve = (id, response) => {
     const db = getDatabase();
     update(ref(db, 'users/' + id), {
@@ -41,6 +41,12 @@ const RequestCard = ({name, photo, email, phone, presentation, id}) => {
               Telefone:{' '}
             </Text>
             <Text style={styles.text}>{phone}</Text>
+          </View>
+          <View style={{flexDirection: 'row'}}>
+            <Text style={[styles.text, {color: theme.pallete.primary005}]}>
+              Endereço:{' '}
+            </Text>
+            <Text style={styles.text}>{address}</Text>
           </View>
         </View>
       </View>

@@ -50,7 +50,7 @@ export default function Login({navigation}) {
       .catch(err => {
         setLoading(false);
         if (err.code === 'auth/invalid-email') {
-          setError('Email inválido!');
+          setError('E-mail inválido!');
         } else if (err.code === 'auth/internal-error') {
           setError('Campo vazio');
         } else if (err.code === 'auth/user-not-found') {
@@ -65,10 +65,10 @@ export default function Login({navigation}) {
     <View>
       <Logo />
       <WhiteArea>
-        <TitleSection>Bem vindo</TitleSection>
+        <TitleSection>Bem-vindo</TitleSection>
         {showError === false ? null : <ErrorMessage> {error} </ErrorMessage>}
         <Input
-          placeholder={'Email'}
+          placeholder={'E-mail'}
           keyboardType="email-address"
           onChangeText={text => setEmail(text)}
           value={email}

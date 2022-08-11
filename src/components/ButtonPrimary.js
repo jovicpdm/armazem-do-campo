@@ -3,11 +3,12 @@ import {StyleSheet} from 'react-native';
 import Button from './Button';
 import {theme} from './../global/styles/theme';
 
-const ButtonPrimary = ({style, onPress, children}) => {
+const ButtonPrimary = ({style, onPress, onFocus, children}) => {
   return (
     <Button
       style={[styles.button, style]}
       onPress={onPress}
+      onFocus={onFocus}
       textColor={theme.pallete.white}>
       {children}
     </Button>

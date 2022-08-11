@@ -45,12 +45,13 @@ export default function Purchase({navigation, route}) {
     const dbRef = ref(db, 'users/' + route.params.id);
     await new Promise(resolve => {
       onValue(dbRef, snapshot => {
-        const {photo, name, email, phone, presentation} = snapshot.val();
+        const {photo, name, email, address, phone, presentation} = snapshot.val();
         data = {
           id: snapshot.key,
           photo: photo,
           name: name,
           email: email,
+          address: address,
           phone: phone,
           presentation: presentation,
         };

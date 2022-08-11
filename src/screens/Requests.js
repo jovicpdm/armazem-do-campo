@@ -24,12 +24,13 @@ export default function Requests() {
         snapshot.forEach(snap => {
           let {status} = snap.val();
           if (status == 'aguardando') {
-            const {photo, name, email, phone, presentation} = snap.val();
+            const {photo, name, email, address, phone, presentation} = snap.val();
             let user = {
               id: snap.key,
               photo,
               name,
               email,
+              address,
               phone,
               presentation,
             };
