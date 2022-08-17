@@ -4,7 +4,7 @@ import {DefaultTheme, NavigationContainer} from '@react-navigation/native';
 import {theme} from './global/styles/theme';
 import Router from './router';
 
-//YellowBox.ignoreWarnings();
+YellowBox.ignoreWarnings();
 
 export default function App() {
   const MyTheme = {

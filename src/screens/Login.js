@@ -1,7 +1,7 @@
 /* eslint-disable no-shadow */
 /* eslint-disable react-native/no-inline-styles */
 import React, {useState} from 'react';
-import {View, ActivityIndicator} from 'react-native';
+import {SafeAreaView, ActivityIndicator} from 'react-native';
 import {getAuth, signInWithEmailAndPassword} from 'firebase/auth';
 import {getDatabase, onValue, ref} from '@firebase/database';
 
@@ -14,9 +14,9 @@ import ButtonSecondary from '../components/ButtonSecondary';
 import WhiteArea from '../components/WhiteArea';
 import TitleSection from '../components/TitleSection';
 import ErrorMessage from '../components/ErrorMessage';
-import GrayText from '../components/GrayText';
 
 export default function Login({navigation}) {
+
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [showError, setShowError] = useState(false);
@@ -30,9 +30,11 @@ export default function Login({navigation}) {
     signInWithEmailAndPassword(auth, email, password)
       .then(userCredential => {
         const userRef = ref(db, 'users/' + userCredential.user.uid);
+
         onValue(userRef, snapshot => {
           const data = snapshot.val();
           setLoading(false);
+
           if (data.type == 'admin') {
             navigation.navigate('Admin');
           }
@@ -47,6 +49,7 @@ export default function Login({navigation}) {
           }
         });
       })
+
       .catch(err => {
         setLoading(false);
         if (err.code === 'auth/invalid-email') {
@@ -62,11 +65,15 @@ export default function Login({navigation}) {
       });
 
   return (
-    <View>
+
+    <SafeAreaView>
       <Logo />
+
       <WhiteArea>
         <TitleSection>Bem-vindo</TitleSection>
+
         {showError === false ? null : <ErrorMessage> {error} </ErrorMessage>}
+
         <Input
           placeholder={'E-mail'}
           keyboardType="email-address"
@@ -89,7 +96,8 @@ export default function Login({navigation}) {
           }}
         />
 
-        <View style={{marginTop: 32}} />
+        <SafeAreaView style={{marginTop: 32}} />
+
         {loading === true ? (
           <ActivityIndicator />
         ) : (
@@ -101,6 +109,7 @@ export default function Login({navigation}) {
               }}>
               ENTRAR
             </ButtonPrimary>
+            
             <ButtonSecondary
               onPress={() => {
                 navigation.navigate('Register');
@@ -109,11 +118,7 @@ export default function Login({navigation}) {
             </ButtonSecondary>
           </>
         )}
-        {/* <GrayText>
-          Está é uma versão de testes, erros e bugs podem aparecer com certa
-          frequência {"\n"}Por favor, tenha paciência
-        </GrayText> */}
       </WhiteArea>
-    </View>
+    </SafeAreaView>
   );
 }

@@ -7,7 +7,7 @@ const InputPhotoArea = ({openGallery, openCamera}) => {
   return (
     <View style={styles.container}>
       <Text style={styles.text}>
-        Para melhor identificação, por favor adicione uma foto sua:
+        Para melhor uma identificação, por favor, adicione uma foto sua:
       </Text>
       <View style={styles.subContainer}>
         <TouchableOpacity style={styles.button} onPress={openGallery}>
@@ -46,7 +46,7 @@ const styles = StyleSheet.create({
     fontFamily: 'Roboto-Regular',
     fontSize: 12,
     textAlign: 'left',
-    color: theme.pallete.gray
+    color: theme.pallete.black
   },
   subContainer: {
     alignItems: 'center',

@@ -2,7 +2,7 @@
 /* eslint-disable no-unused-vars */
 /* eslint-disable react-native/no-inline-styles */
 import React, {useState} from 'react';
-import {ScrollView, Text, StyleSheet, View} from 'react-native';
+import {ScrollView, Text, StyleSheet, View, Alert} from 'react-native';
 import {getDatabase, ref, set} from 'firebase/database';
 import {getAuth, createUserWithEmailAndPassword} from 'firebase/auth';
 import * as ImagePicker from 'react-native-image-picker';
@@ -32,10 +32,13 @@ export default function Register({navigation}) {
   const [showError, setShowError] = useState(false);
   const [error, setError] = useState('');
 
-  const writeUserData = () => {
+  function writeUserData () {
+
     const db = getDatabase();
     const auth = getAuth();
+
     if (name || phone || email || address || presentation || password) {
+
       if (password === confirmPassword) {
         createUserWithEmailAndPassword(auth, email, password)
           .then(userCredential => {
@@ -50,19 +53,10 @@ export default function Register({navigation}) {
               status: 'aguardando',
               type: 'comprador',
             });
-            Alert.alert("Confirmação", `Confirma a ação?`, [
-              {
-                text: 'Sim',
-                onPress: () => Alert.alert("Deletado!")
-              },
-              {
-                text: 'Não',
-                style: 'cancel'
-              }
-            ])
           })
+
           .catch(err => {
-            console.log(`message: ${err.message} code: ${err.code}`);
+            console.log(`mensagem: ${err.message} code: ${err.code}`);
             if (err.code === ' auth/email-already-in-use') {
               setShowError(true);
               setError('E-mail já existente');
@@ -71,15 +65,33 @@ export default function Register({navigation}) {
               setError('Campo vazio');
             }
           });
-      } else {
+      } 
+      
+      else {
         setShowError(true);
         setError('As senhas devem coincidir');
       }
-    } else {
+    }
+    
+    else {
       setShowError(true);
       setError('Todos os campos devem ser preenchidos');
     }
+    
+    console.log (name);
   };
+
+  function confirmRegistration (){
+
+    console.log (showError);
+
+    if (db.status){
+      Alert.alert("Cadastro de colaboradores",
+    "Colaborador cadastrado com sucesso",
+    [    
+      { text: "OK", onPress: () => navigation.navigate('Login') }
+    ]
+    );}}
 
   return (
     <ScrollView contentContainerStyle={{maxHeight: '100%'}}>
@@ -88,14 +100,14 @@ export default function Register({navigation}) {
         popular
       </Text>
       <WhiteArea>
-        <TitleSection>Cadastrar</TitleSection>
+        <TitleSection>Cadastro de colaboradores</TitleSection>
         <Input
           placeholder="Nome"
           placeholderTextColor={theme.pallete.primary}
           onChangeText={text => setName(text)}
           value={name}
           keyboardType="default"
-          style={{marginTop: 16}}
+          style={{marginTop: 16}} 
           onFocus={() => {
             setShowError(false);
           }}
@@ -190,18 +202,12 @@ export default function Register({navigation}) {
           }}
         />
         {showError ? <ErrorMessage>{error}</ErrorMessage> : null}
-        <View style={{marginTop: 41}} />
-        <ButtonPrimary onPress={() => writeUserData()}
-        onFocus={() => {
-          navigation.navigate('Login');
-        }}>CADASTRAR</ButtonPrimary>
 
-        {/* <ButtonSecondary
-          onPress={() => {
-            navigation.navigate('Login');
-          }}>
-          ENTRAR
-        </ButtonSecondary> */}
+        <View style={{marginTop: 41}} />
+        <ButtonPrimary onPress={() =>
+                                 {writeUserData();
+                                 confirmRegistration}}>CADASTRAR</ButtonPrimary>
+      
       </WhiteArea>
     </ScrollView>
   );
