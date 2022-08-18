@@ -122,11 +122,14 @@ export default function Login({navigation}) {
             </ButtonSecondary>
           </>
         )}
-          <View style ={{ flexDirection:'row',marginHorizontal:14,alignItems:'center'}} >
+
+
+        <SafeAreaView style ={{ flexDirection:'row',marginHorizontal:14,alignItems:'center'}} >
         <RowHorizontal></RowHorizontal>
         <Text style={{fontSize:11,paddingHorizontal:6}}>OU</Text>
         <RowHorizontal></RowHorizontal>
-      </View>
+      </SafeAreaView>
+
       <Text style={{marginTop:10,marginBottom:5,fontSize:16,textAlign:'center'}}>Entrar com:</Text>
       <SocialIcon
         title='GOOGLE'
