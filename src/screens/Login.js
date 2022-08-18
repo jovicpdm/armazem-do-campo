@@ -14,6 +14,10 @@ import ButtonSecondary from '../components/ButtonSecondary';
 import WhiteArea from '../components/WhiteArea';
 import TitleSection from '../components/TitleSection';
 import ErrorMessage from '../components/ErrorMessage';
+import {View} from 'react-native'
+import RowHorizontal from '../components/Rowhorizontal';
+import { SocialIcon } from 'react-native-elements'
+import {Text} from 'react-native'
 
 export default function Login({navigation}) {
 
@@ -118,6 +122,23 @@ export default function Login({navigation}) {
             </ButtonSecondary>
           </>
         )}
+          <View style ={{ flexDirection:'row',marginHorizontal:14,alignItems:'center'}} >
+        <RowHorizontal></RowHorizontal>
+        <Text style={{fontSize:11,paddingHorizontal:6}}>OU</Text>
+        <RowHorizontal></RowHorizontal>
+      </View>
+      <Text style={{marginTop:10,marginBottom:5,fontSize:16,textAlign:'center'}}>Entrar com:</Text>
+      <SocialIcon
+        title='GOOGLE'
+        button
+        type='google'
+        
+        />
+      <SocialIcon
+        title='FACEBOOK'
+        button
+        type='facebook'
+        />
       </WhiteArea>
     </SafeAreaView>
   );

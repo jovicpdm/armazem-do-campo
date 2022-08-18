@@ -29,7 +29,7 @@ const ProductCard = ({
   const [showInput, setShowInput] = useState(false);
   const [amountBuy, setAmountBuy] = useState(0);
   const [nameMod, setNameMod] = useState(description);
-
+  const [countRequest,setCountRequest] = useState(1)
   const db = getDatabase();
 
   const addBasket = () => {
@@ -41,6 +41,7 @@ const ProductCard = ({
       amountBuy: amountBuy,
       price: amountBuy * price,
       amount: amount,
+      countRequest:countRequest
     });
   };
 
@@ -81,10 +82,21 @@ const ProductCard = ({
                 onPress={() => {
                   try {
                     addBasket();
-                    Alert.alert(
-                      'Mensagem de confirmação',
-                      '(apenas exibido na fase beta)',
-                    );
+                    if(amountBuy != 0){
+                      Alert.alert(
+                        'Mensagem de confirmação',
+                        'Produto adicionado',
+                      );
+                      setCountRequest(countRequest + 0)
+                      addBasket();
+                      
+                    }
+                    else if(amountBuy == 0){
+                      Alert.alert(
+                        'Erro Produto',
+                        'Informe uma quantidade',
+                      );
+                    }
                   } catch (error) {
                     console.log(error);
                   }
