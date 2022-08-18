@@ -1,7 +1,7 @@
 /* eslint-disable no-shadow */
 /* eslint-disable react-native/no-inline-styles */
 import React, {useState} from 'react';
-import {SafeAreaView, ActivityIndicator} from 'react-native';
+import {SafeAreaView, ActivityIndicator, Alert} from 'react-native';
 import {getAuth, signInWithEmailAndPassword} from 'firebase/auth';
 import {getDatabase, onValue, ref} from '@firebase/database';
 
@@ -55,11 +55,11 @@ export default function Login({navigation}) {
         if (err.code === 'auth/invalid-email') {
           setError('E-mail inválido!');
         } else if (err.code === 'auth/internal-error') {
-          setError('Campo vazio');
+          setError('Senha inválida!');
         } else if (err.code === 'auth/user-not-found') {
-          setError('Usuário não encontrado');
+          setError('Usuário não encontrado!');
         } else if (err.code === 'auth/wrong-password') {
-          setError('Senha incorreta');
+          setError('Senha incorreta!');
         }
         setShowError(true);
       });
@@ -75,7 +75,7 @@ export default function Login({navigation}) {
         {showError === false ? null : <ErrorMessage> {error} </ErrorMessage>}
 
         <Input
-          placeholder={'E-mail'}
+          placeholder={'Digite seu e-mail'}
           keyboardType="email-address"
           onChangeText={text => setEmail(text)}
           value={email}
@@ -87,7 +87,7 @@ export default function Login({navigation}) {
         />
         <InputPassword
           placeholderTextColor={theme.pallete.primary}
-          placeholder={'Senha'}
+          placeholder={'Digite sua senha'}
           keyboardType="default"
           onChangeText={text => setPassword(text)}
           value={password}
