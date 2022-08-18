@@ -35,7 +35,7 @@ export default function Purchase({navigation, route}) {
   const [refresh, setRefresh] = useState(false);
   const [loading, setLoading] = useState(false);
   const [open, setOpen] = useState(false);
-
+  const [totalRequests,setTotalRequests] = useState(0)
   const containerStyle = {backgroundColor: 'white', padding: 20};
 
   const db = getDatabase();
@@ -75,6 +75,16 @@ export default function Purchase({navigation, route}) {
     setCategories(dataArray);
   };
 
+  const countRequestProdutcs = () => {
+  const dbRef = ref(db, 'purchase/' + route.params.id); 
+  var counts = 0;
+  onValue(dbRef, (snapshot) => {
+    snapshot.forEach(snap => {
+      counts += snap.val().countRequest;
+    });
+    setTotalRequests(counts)
+});
+}
   const listProducts = async () => {
     setLoading(true);
     setRefresh(true);
@@ -98,7 +108,9 @@ export default function Purchase({navigation, route}) {
     searchUser();
     listProducts();
   }, []);
-
+   useEffect(()=>{
+    countRequestProdutcs()
+   },[totalRequests])  
   return (
     <>
       <TopScreen>
@@ -203,8 +215,9 @@ export default function Purchase({navigation, route}) {
                     )}
                   </>
                 );
+                
               }}
-              keyExtractor={item => item.id}
+              /* keyExtractor={item  => item.id} */
             />
           ) : (
             <ActivityIndicator size={48} />
@@ -222,7 +235,7 @@ export default function Purchase({navigation, route}) {
             buttonStyle={{borderRadius: 8}}
             color={theme.pallete.primary004}
             icon={{name: 'basket', color: '#fff', type: 'material-community'}}
-            title="Ir para cesta"
+            title={`Pedido:${totalRequests}`}
             onPress={() =>
               navigation.navigate('Basket', {
                 id: route.params.id,
