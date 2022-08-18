@@ -92,7 +92,9 @@ export default function Basket({navigation, route}) {
             <FlatList
               data={products}
               extraData={products}
-              key={item.id}
+              key = {item=>{
+                return item.id
+              }}
               // onRefresh={}
               renderItem={({item}) => {
                 return (
