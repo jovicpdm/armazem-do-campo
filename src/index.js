@@ -1,12 +1,13 @@
 import React from 'react';
-import {YellowBox, StatusBar, SafeAreaView} from 'react-native';
+import {StatusBar, SafeAreaView, LogBox} from 'react-native';
 import {DefaultTheme, NavigationContainer} from '@react-navigation/native';
 import {theme} from './global/styles/theme';
 import Router from './router';
 
-YellowBox.ignoreWarnings();
+LogBox.ignoreAllLogs();
 
 export default function App() {
+
   const MyTheme = {
     ...DefaultTheme,
     colors: {

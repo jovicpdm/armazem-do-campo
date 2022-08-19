@@ -14,12 +14,12 @@ import ButtonSecondary from '../components/ButtonSecondary';
 import WhiteArea from '../components/WhiteArea';
 import TitleSection from '../components/TitleSection';
 import ErrorMessage from '../components/ErrorMessage';
-import {View} from 'react-native'
 import RowHorizontal from '../components/Rowhorizontal';
 import { SocialIcon } from 'react-native-elements'
 import {Text} from 'react-native'
 
 export default function Login({navigation}) {
+
 
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
