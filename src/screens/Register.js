@@ -4,18 +4,14 @@
 import React, {useState} from 'react';
 import {ScrollView, Text, StyleSheet, View, Alert} from 'react-native';
 import {getDatabase, ref, set} from 'firebase/database';
-import {getAuth, createUserWithEmailAndPassword} from 'firebase/auth';
+import {getAuth, createUserWithEmailAndPassword} from 'firebase/auth/react-native';
 import * as ImagePicker from 'react-native-image-picker';
-import {getFirestore, collection, addDoc} from 'firebase/firestore';
-
 import Input from '../components/Input';
 import InputPassword from '../components/InputPassword';
 import TitleSection from '../components/TitleSection';
 import WhiteArea from '../components/WhiteArea';
 import {theme} from '../global/styles/theme';
-import ButtonSecondary from '../components/ButtonSecondary';
 import ButtonPrimary from '../components/ButtonPrimary';
-import firebase from '../config/firebase';
 import InputPhotoArea from '../components/InputPhotoArea';
 import ErrorMessage from '../components/ErrorMessage';
 
@@ -78,14 +74,12 @@ export default function Register({navigation}) {
       setError('Todos os campos devem ser preenchidos');
     }
     
-    console.log (name);
+    return console.log (userCredential);
   };
 
   function confirmRegistration (){
 
-    console.log (showError);
-
-    if (db.status){
+    if (userCredential.user.uid){
       Alert.alert("Cadastro de colaboradores",
     "Colaborador cadastrado com sucesso",
     [    
@@ -94,6 +88,7 @@ export default function Register({navigation}) {
     );}}
 
   return (
+
     <ScrollView contentContainerStyle={{maxHeight: '100%'}}>
       <Text style={styles.presentation}>
         Faça parte da rede de comercialização de produtos da reforma agrária

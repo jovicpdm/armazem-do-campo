@@ -1,8 +1,6 @@
-/* eslint-disable no-shadow */
-/* eslint-disable react-native/no-inline-styles */
 import React, {useState} from 'react';
 import {SafeAreaView, ActivityIndicator, Alert} from 'react-native';
-import {getAuth, signInWithEmailAndPassword} from 'firebase/auth';
+import {getAuth, signInWithEmailAndPassword} from 'firebase/auth/react-native';
 import {getDatabase, onValue, ref} from '@firebase/database';
 
 import Logo from '../components/Logo';
@@ -16,9 +14,11 @@ import TitleSection from '../components/TitleSection';
 import ErrorMessage from '../components/ErrorMessage';
 import RowHorizontal from '../components/Rowhorizontal';
 import { SocialIcon } from 'react-native-elements'
-import {Text} from 'react-native'
+import {Text, LogBox} from 'react-native';
 
 export default function Login({navigation}) {
+
+  LogBox.ignoreLogs(['Warning: Async Storage has been extracted from react-native core']); 
 
 
   const [email, setEmail] = useState('');
@@ -86,7 +86,6 @@ export default function Login({navigation}) {
           onFocus={() => {
             setShowError(false);
           }}
-          //react-native/no-inline-styles
           style={{marginTop: 16}}
         />
         <InputPassword
@@ -102,9 +101,7 @@ export default function Login({navigation}) {
 
         <SafeAreaView style={{marginTop: 32}} />
 
-        {loading === true ? (
-          <ActivityIndicator />
-        ) : (
+        {loading === true ? (<ActivityIndicator />) : (
           <>
             <ButtonPrimary
               onPress={() => {
@@ -132,13 +129,13 @@ export default function Login({navigation}) {
 
       <Text style={{marginTop:10,marginBottom:5,fontSize:16,textAlign:'center'}}>Entrar com:</Text>
       <SocialIcon
-        title='GOOGLE'
+        title='Google'
         button
         type='google'
         
         />
       <SocialIcon
-        title='FACEBOOK'
+        title='Facebook'
         button
         type='facebook'
         />

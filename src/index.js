@@ -1,6 +1,6 @@
 import React from 'react';
 import {StatusBar, SafeAreaView, LogBox} from 'react-native';
-import {DefaultTheme, NavigationContainer} from '@react-navigation/native';
+import {DefaultTheme} from '@react-navigation/native';
 import {theme} from './global/styles/theme';
 import Router from './router';
 

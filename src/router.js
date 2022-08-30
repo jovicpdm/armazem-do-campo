@@ -47,10 +47,7 @@ const Router = () => {
         <Screen name="Feedback" component={Feedback} />
         <Screen name="Admin" component={Admin} />
         {/* <Screen name="Payment" component={Payment} /> */}
-        <Screen
-          name="ParticipantManagement"
-          component={ParticipantManagement}
-        />
+        <Screen name="ParticipantManagement" component={ParticipantManagement}/>
         <Screen name="ProductManagement" component={ProductManagement} />
         <Screen name="ProductList" component={ProductList} />
         <Screen name="EditProduct" component={EditProduct} />
