@@ -81,7 +81,6 @@ const ProductCard = ({
                 type="primary"
                 onPress={() => {
                   try {
-                    addBasket();
                     if(amountBuy != 0){
                       Alert.alert(
                         'Mensagem de confirmação',

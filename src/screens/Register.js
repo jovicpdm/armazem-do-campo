@@ -45,9 +45,7 @@ export default function Register({navigation}) {
               photo: profilePhoto,
               status: 'aguardando',
               type: 'comprador',
-            });
-          })
-
+        });})
           .catch(err => {
             console.log(`mensagem: ${err.message} code: ${err.code}`);
 
@@ -95,6 +93,7 @@ export default function Register({navigation}) {
       Alert.alert("Atenção",'Preencha o campo relacionado ao seu telefone');
       return;
     }
+<<<<<<< HEAD
      if (!email){
        setShowError(true);
        Alert.alert("Atenção",'Preencha o campo relacionado ao seu e-mail');
@@ -118,6 +117,11 @@ export default function Register({navigation}) {
        Alert.alert("Atenção",'Por favor, faça o upload de uma foto sua');
        return;
      }
+=======
+    
+    return console.log (userCredential); 
+  };
+>>>>>>> 374dc58a656aba61dc4e2d4500fc4a5fd68168ac
 
      if (!password){
       setShowError(true);

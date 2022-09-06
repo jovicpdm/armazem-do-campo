@@ -7,9 +7,10 @@ import {
   StyleSheet,
   FlatList,
   ActivityIndicator,
+  Alert,
 } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
-import {getDatabase, ref, onValue} from 'firebase/database';
+import {getDatabase, ref, onValue, set} from 'firebase/database';
 import {SpeedDial} from 'react-native-elements';
 
 import {theme} from '../global/styles/theme';
@@ -26,7 +27,7 @@ import ProfilePhoto from '../components/ProfilePhoto';
 import SmallButton from '../components/SmallButton';
 import TextGray from '../components/GrayText';
 import GrayText from '../components/GrayText';
-
+import { useIsFocused } from '@react-navigation/native';
 export default function Purchase({navigation, route}) {
   const [categories, setCategories] = useState([]);
   const [selected, setSelected] = useState('todos');
@@ -37,7 +38,7 @@ export default function Purchase({navigation, route}) {
   const [open, setOpen] = useState(false);
   const [totalRequests,setTotalRequests] = useState(0)
   const containerStyle = {backgroundColor: 'white', padding: 20};
-
+  const isFocused = useIsFocused();
   const db = getDatabase();
 
   const searchUser = async () => {
@@ -100,16 +101,17 @@ export default function Purchase({navigation, route}) {
         setProducts(dataArray);
       });
     });
-    setLoading(false);
+    setLoading(false);  
   };
-
   useEffect(() => {
     listCategories();
     searchUser();
-    listProducts();
-  }, []);
+    listProducts();          
+   countRequestProdutcs() 
+  }, [isFocused]);
+ 
    useEffect(()=>{
-    countRequestProdutcs()
+    countRequestProdutcs() 
    },[totalRequests])  
   return (
     <>
