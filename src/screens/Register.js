@@ -48,9 +48,7 @@ export default function Register({navigation}) {
               photo: profilePhoto,
               status: 'aguardando',
               type: 'comprador',
-            });
-          })
-
+        });})
           .catch(err => {
             console.log(`mensagem: ${err.message} code: ${err.code}`);
             if (err.code === ' auth/email-already-in-use') {
@@ -74,7 +72,7 @@ export default function Register({navigation}) {
       setError('Todos os campos devem ser preenchidos');
     }
     
-    return console.log (userCredential);
+    return console.log (userCredential); 
   };
 
   function confirmRegistration (){
