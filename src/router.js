@@ -21,7 +21,7 @@ import ProductInfo from './screens/ProductInfo';
 import Profile from './screens/Profile';
 import Basket from './screens/Basket';
 import Orders from './screens/Orders';
-
+import RequestConfirmed from './screens/RequestConfirmed';
 const {Navigator, Screen} = createNativeStackNavigator();
 
 const MyTheme = {
@@ -59,6 +59,7 @@ const Router = () => {
 
         <Screen name="Profile" component={Profile} />
         <Screen name="Basket" component={Basket} />
+        <Screen name="RequestConfirmed" component={RequestConfirmed}></Screen>
         <Screen name="Orders" component={Orders} />
       </Navigator>
     </NavigationContainer>

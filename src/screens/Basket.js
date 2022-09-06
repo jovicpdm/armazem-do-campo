@@ -7,6 +7,8 @@ import {
   update,
   set,
   remove,
+  push,
+  child
 } from 'firebase/database';
 import uuid from 'react-native-uuid';
 
@@ -20,20 +22,20 @@ import ButtonPrimary from '../components/ButtonPrimary';
 import GrayText from '../components/GrayText';
 import ButtonSecondary from '../components/ButtonSecondary';
 
-export default function Basket({navigation, route}) {
+export default function Basket({navigation,  route}) {
   const [products, setProducts] = useState([]);
   const [refresh, setRefresh] = useState(false);
   const [selected, setSelected] = useState(true);
   const [total, setTotal] = useState(0);
 
   const db = getDatabase();
-
   const updateProduct = (id, amount) => {
-    update(ref(db, 'products/' + id), {
+     update(ref(db, 'products/' + id), {
       amount: amount,
-    });
+    }); 
+    
   };
-
+  
   const buy = () => {
     const id = uuid.v4();
     const dbRef = ref(db, 'order/' + id);
@@ -49,7 +51,7 @@ export default function Basket({navigation, route}) {
           name: item.name,
           amount: item.amountBuy,
         });
-        updateProduct(item.id, item.amount - item.amountBuy);
+        updateProduct(item.id, item.amount - item.amountBuy); //erro 
       }
     });
     remove(ref(db, 'purchase/' + route.params.id));
@@ -73,7 +75,6 @@ export default function Basket({navigation, route}) {
     setProducts(dataArray);
     setTotal(prices);
   };
-
   useEffect(() => {
     listProducts();
   }, []);
@@ -133,12 +134,16 @@ export default function Basket({navigation, route}) {
         <ButtonPrimary
           onPress={() => {
             buy();
+            navigation.navigate('RequestConfirmed',{
+               id:route.params.id
+            })
           }}>
           CONCLUIR COMPRA
         </ButtonPrimary>
         <ButtonSecondary
           onPress={() => {
-            remove(ref(db, 'purchase/' + route.params.id));
+            navigation.goBack()
+            remove(ref(db, 'purchase/' + route.params.id));  
           }}>
           CANCELAR COMPRA
         </ButtonSecondary>
