@@ -1,7 +1,7 @@
 import React, {useState} from 'react';
 import {ScrollView, Text, StyleSheet, View, Alert} from 'react-native';
 import {getDatabase, ref, set} from 'firebase/database';
-import {getAuth, createUserWithEmailAndPassword} from 'firebase/auth/react-native';
+import {getAuth, createUserWithEmailAndPassword, onAuthStateChanged} from 'firebase/auth/react-native';
 import * as ImagePicker from 'react-native-image-picker';
 import Input from '../components/Input';
 import InputPassword from '../components/InputPassword';
@@ -45,7 +45,9 @@ export default function Register({navigation}) {
               photo: profilePhoto,
               status: 'aguardando',
               type: 'comprador',
-        });})
+            });
+          })
+
           .catch(err => {
             console.log(`mensagem: ${err.message} code: ${err.code}`);
 
@@ -93,7 +95,7 @@ export default function Register({navigation}) {
       Alert.alert("Atenção",'Preencha o campo relacionado ao seu telefone');
       return;
     }
-<<<<<<< HEAD
+    
      if (!email){
        setShowError(true);
        Alert.alert("Atenção",'Preencha o campo relacionado ao seu e-mail');
@@ -117,11 +119,6 @@ export default function Register({navigation}) {
        Alert.alert("Atenção",'Por favor, faça o upload de uma foto sua');
        return;
      }
-=======
-    
-    return console.log (userCredential); 
-  };
->>>>>>> 374dc58a656aba61dc4e2d4500fc4a5fd68168ac
 
      if (!password){
       setShowError(true);
@@ -137,7 +134,7 @@ export default function Register({navigation}) {
 
     if (auth.currentUser && !showError){
         Alert.alert("Cadastro de colaboradores",
-        "Colaborador cadastrado com sucesso, você será direcionado para a tela de login",
+        "Colaborador cadastrado com sucesso",
         [    
           { text: "OK", onPress: () => navigation.navigate('Login') }
         ]
