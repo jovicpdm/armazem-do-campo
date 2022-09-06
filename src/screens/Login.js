@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import {SafeAreaView, ActivityIndicator, Alert} from 'react-native';
+import {SafeAreaView, ActivityIndicator, Text, LogBox} from 'react-native';
 import {getAuth, signInWithEmailAndPassword} from 'firebase/auth/react-native';
 import {getDatabase, onValue, ref} from '@firebase/database';
 
@@ -14,12 +14,13 @@ import TitleSection from '../components/TitleSection';
 import ErrorMessage from '../components/ErrorMessage';
 import RowHorizontal from '../components/Rowhorizontal';
 import { SocialIcon } from 'react-native-elements'
-import {Text, LogBox} from 'react-native';
 
 export default function Login({navigation}) {
 
-  LogBox.ignoreLogs(['Warning: Async Storage has been extracted from react-native core']); 
-
+  LogBox.ignoreLogs([
+    'Warning: isMounted(...) is deprecated', 
+    'Module RCTImageLoader',
+    'Require cycle:', ]);  
 
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');

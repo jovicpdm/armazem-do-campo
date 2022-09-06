@@ -1,6 +1,3 @@
-/* eslint-disable no-catch-shadow */
-/* eslint-disable no-unused-vars */
-/* eslint-disable react-native/no-inline-styles */
 import React, {useState} from 'react';
 import {ScrollView, Text, StyleSheet, View, Alert} from 'react-native';
 import {getDatabase, ref, set} from 'firebase/database';
@@ -53,39 +50,95 @@ export default function Register({navigation}) {
 
           .catch(err => {
             console.log(`mensagem: ${err.message} code: ${err.code}`);
-            if (err.code === ' auth/email-already-in-use') {
+
+            if (err.code === 'auth/email-already-in-use') {
               setShowError(true);
-              setError('E-mail já existente');
+              Alert.alert("Atenção",'E-mail já existente');
+              return;
             } else if (err.code === 'auth/internal-error') {
               setShowError(true);
               setError('Campo vazio');
+              return;
+            }
+            else if (err.code === 'auth/invalid-email') {
+              setShowError(true);
+              Alert.alert("Atenção",'E-mail inválido, verifique espaços em branco ou caracteres inválidos');
+              return;
+            }
+            else if (err.code === 'auth/weak-password') {
+              setShowError(true);
+              Alert.alert("Atenção",'Sua senha deve ter no mínimo 6 caracteres');
+              return;
             }
           });
       } 
-      
       else {
         setShowError(true);
         setError('As senhas devem coincidir');
+        return;
       }
-    }
-    
-    else {
+    }    
+     else {
       setShowError(true);
       setError('Todos os campos devem ser preenchidos');
+      return;
+     }    
+
+     if (!name ){
+       setShowError(true);
+       Alert.alert("Atenção",'Preencha o campo relacionado ao seu nome');
+       return;
+     }
+
+     if (!phone){
+      setShowError(true);
+      Alert.alert("Atenção",'Preencha o campo relacionado ao seu telefone');
+      return;
     }
-    
-    return console.log (userCredential);
-  };
+     if (!email){
+       setShowError(true);
+       Alert.alert("Atenção",'Preencha o campo relacionado ao seu e-mail');
+       return;
+     }
+ 
+     if (!address){
+       setShowError(true);
+       Alert.alert("Atenção",'Preencha o campo relacionado ao seu endereço');
+       return;
+     }     
+ 
+     if (!presentation){
+       setShowError(true);
+       Alert.alert("Atenção",'Por favor, faça uma breve apresentação sobre você');
+       return;
+     }
+ 
+     if (!profilePhoto){
+       setShowError(true);
+       Alert.alert("Atenção",'Por favor, faça o upload de uma foto sua');
+       return;
+     }
 
-  function confirmRegistration (){
+     if (!password){
+      setShowError(true);
+      Alert.alert("Atenção",'Por favor, digite uma senha');
+      return;
+    }
 
-    if (userCredential.user.uid){
-      Alert.alert("Cadastro de colaboradores",
-    "Colaborador cadastrado com sucesso",
-    [    
-      { text: "OK", onPress: () => navigation.navigate('Login') }
-    ]
-    );}}
+    if (!confirmPassword){
+      setShowError(true);
+      Alert.alert("Atenção",'Por favor, confirme sua senha');
+      return;
+    }
+
+    if (auth.currentUser && !showError){
+        Alert.alert("Cadastro de colaboradores",
+        "Colaborador cadastrado com sucesso, você será direcionado para a tela de login",
+        [    
+          { text: "OK", onPress: () => navigation.navigate('Login') }
+        ]
+        );
+  }};
 
   return (
 
@@ -97,7 +150,7 @@ export default function Register({navigation}) {
       <WhiteArea>
         <TitleSection>Cadastro de colaboradores</TitleSection>
         <Input
-          placeholder="Nome"
+          placeholder="Digite seu nome completo"
           placeholderTextColor={theme.pallete.primary}
           onChangeText={text => setName(text)}
           value={name}
@@ -108,7 +161,7 @@ export default function Register({navigation}) {
           }}
         />
         <Input
-          placeholder="Telefone"
+          placeholder="Digite seu telefone"
           placeholderTextColor={theme.pallete.primary}
           onChangeText={text => setPhone(text)}
           value={phone}
@@ -118,7 +171,7 @@ export default function Register({navigation}) {
           }}
         />
         <Input
-          placeholder="E-mail"
+          placeholder="Digite seu e-mail"
           placeholderTextColor={theme.pallete.primary}
           onChangeText={text => setEmail(text)}
           value={email}
@@ -128,7 +181,7 @@ export default function Register({navigation}) {
           }}
         />
          <Input
-          placeholder="Endereço"
+          placeholder="Digite seu endereço"
           placeholderTextColor={theme.pallete.primary}
           onChangeText={text => setAddress(text)}
           value={address}
@@ -139,7 +192,7 @@ export default function Register({navigation}) {
           }}
         />
         <Input
-          placeholder="Apresentação (Fale sobre você)"
+          placeholder="Faça uma apresentação sobre você"
           placeholderTextColor={theme.pallete.primary}
           onChangeText={text => setPresentation(text)}
           value={presentation}
@@ -177,7 +230,7 @@ export default function Register({navigation}) {
         />
 
         <InputPassword
-          placeholder="Senha"
+          placeholder="Digite sua senha (6 caracteres)"
           placeholderTextColor={theme.pallete.primary}
           onChangeText={text => setPassword(text)}
           value={password}
@@ -187,7 +240,7 @@ export default function Register({navigation}) {
           }}
         />
         <InputPassword
-          placeholder="Confirmar senha"
+          placeholder="Confirme sua senha"
           placeholderTextColor={theme.pallete.primary}
           onChangeText={text => setConfirmPassword(text)}
           value={confirmPassword}
@@ -200,8 +253,7 @@ export default function Register({navigation}) {
 
         <View style={{marginTop: 41}} />
         <ButtonPrimary onPress={() =>
-                                 {writeUserData();
-                                 confirmRegistration}}>CADASTRAR</ButtonPrimary>
+                                 {writeUserData();}}>CADASTRAR</ButtonPrimary>
       
       </WhiteArea>
     </ScrollView>

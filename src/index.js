@@ -1,10 +1,8 @@
 import React from 'react';
-import {StatusBar, SafeAreaView, LogBox} from 'react-native';
+import {StatusBar, SafeAreaView} from 'react-native';
 import {DefaultTheme} from '@react-navigation/native';
 import {theme} from './global/styles/theme';
 import Router from './router';
-
-LogBox.ignoreAllLogs();
 
 export default function App() {
 
