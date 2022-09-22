@@ -1,7 +1,7 @@
 import React, {useState} from 'react';
 import {ScrollView, Text, StyleSheet, View, Alert} from 'react-native';
 import {getDatabase, ref, set} from 'firebase/database';
-import {getAuth, createUserWithEmailAndPassword, onAuthStateChanged} from 'firebase/auth/react-native';
+import {getAuth, createUserWithEmailAndPassword} from 'firebase/auth/react-native';
 import * as ImagePicker from 'react-native-image-picker';
 import Input from '../components/Input';
 import InputPassword from '../components/InputPassword';
@@ -11,6 +11,9 @@ import {theme} from '../global/styles/theme';
 import ButtonPrimary from '../components/ButtonPrimary';
 import InputPhotoArea from '../components/InputPhotoArea';
 import ErrorMessage from '../components/ErrorMessage';
+
+// import storage from '@react-native-firebase/storage';
+
 
 export default function Register({navigation}) {
 
@@ -24,6 +27,7 @@ export default function Register({navigation}) {
   const [profilePhoto, setProfilePhoto] = useState();
   const [showError, setShowError] = useState(false);
   const [error, setError] = useState('');
+
 
   function writeUserData () {
 
@@ -57,7 +61,7 @@ export default function Register({navigation}) {
               return;
             } else if (err.code === 'auth/internal-error') {
               setShowError(true);
-              setError('Campo vazio');
+              setError('Atenção, existem campos a serem preenchidos');
               return;
             }
             else if (err.code === 'auth/invalid-email') {
@@ -81,7 +85,6 @@ export default function Register({navigation}) {
      else {
       setShowError(true);
       setError('Todos os campos devem ser preenchidos');
-      return;
      }    
 
      if (!name ){
@@ -95,7 +98,7 @@ export default function Register({navigation}) {
       Alert.alert("Atenção",'Preencha o campo relacionado ao seu telefone');
       return;
     }
-    
+
      if (!email){
        setShowError(true);
        Alert.alert("Atenção",'Preencha o campo relacionado ao seu e-mail');
@@ -209,6 +212,9 @@ export default function Register({navigation}) {
             ImagePicker.launchImageLibrary({includeBase64: true}, data => {
               if (data.didCancel !== true) {
                 setProfilePhoto(data.assets[0].base64);
+
+                // console.log (data.assets[0].uri);
+                // storage().ref(data.assets[0].uri).put(profilePhoto);
               }
             });
           }}

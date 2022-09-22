@@ -1,19 +1,18 @@
-/* eslint-disable react-hooks/exhaustive-deps */
 import React, {useState, useEffect} from 'react';
-import {StyleSheet, View, FlatList} from 'react-native';
+import {StyleSheet, FlatList, Button} from 'react-native';
 import {getDatabase, ref, onValue} from 'firebase/database';
-import base64 from 'react-native-base64';
 
-import firebase from '../config/firebase';
 import RequestCard from '../components/RequestCard';
 import TitleScreen from '../components/TitleScreen';
 import TopScreen from '../components/TopScreen';
 import WhiteAreaWithoutScrollView from '../components/WhiteAreaWithoutScrollView';
-import HighlightedText from '../components/HighlightedText';
+import Logo from '../components/Logo';
+import GrayTextCenter from '../components/GrayTextCenter';
+
 
 export default function Requests() {
-  const [requests, setRequests] = useState([]);
 
+  const [requests, setRequests] = useState([]);
   const db = getDatabase();
   const dbRef = ref(db, 'users');
 
@@ -40,21 +39,24 @@ export default function Requests() {
         resolve();
       });
     });
-    setRequests(dataArray);
+    setRequests(dataArray);    
   };
 
   useEffect(() => {
-    listRequests();
-  }, []);
+    setInterval(() => {listRequests()}, 3000);
+  }, [])
+
 
   return (
     <>
+    <Logo/>
       <TopScreen>
         <TitleScreen>Solicitações</TitleScreen>
       </TopScreen>
       <WhiteAreaWithoutScrollView>
-        {/* <Button title="teste" onPress={() => listRequests()} /> */}
-        {requests ? <HighlightedText>Sem solicitações</HighlightedText> : null}
+
+       {requests.length === 0 ? <GrayTextCenter>Sem solicitações</GrayTextCenter> : null}
+       
         <FlatList
           data={requests}
           renderItem={({item}) => {
@@ -65,6 +67,7 @@ export default function Requests() {
                 email={item.email}
                 phone={item.phone}
                 presentation={item.presentation}
+                address={item.address}
                 id={item.id}
               />
             );

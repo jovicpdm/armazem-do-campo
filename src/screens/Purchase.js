@@ -1,5 +1,3 @@
-/* eslint-disable react-hooks/exhaustive-deps */
-/* eslint-disable react-native/no-inline-styles */
 import React, {useEffect, useState} from 'react';
 import {
   View,
@@ -9,12 +7,12 @@ import {
   ActivityIndicator,
   Alert,
 } from 'react-native';
+
 import Icon from 'react-native-vector-icons/FontAwesome';
 import {getDatabase, ref, onValue, set} from 'firebase/database';
 import {SpeedDial} from 'react-native-elements';
 
 import {theme} from '../global/styles/theme';
-// eslint-disable-next-line no-unused-vars
 import firebase from '../config/firebase';
 import MySearchBar from '../components/MySearchBar';
 import WhiteAreaWithoutScrollView from '../components/WhiteAreaWithoutScrollView';
@@ -28,6 +26,7 @@ import SmallButton from '../components/SmallButton';
 import TextGray from '../components/GrayText';
 import GrayText from '../components/GrayText';
 import { useIsFocused } from '@react-navigation/native';
+
 export default function Purchase({navigation, route}) {
   const [categories, setCategories] = useState([]);
   const [selected, setSelected] = useState('todos');

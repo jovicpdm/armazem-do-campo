@@ -1,25 +1,24 @@
 import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import { StyleSheet, SafeAreaView } from 'react-native';
 import CardContainer from '../components/CardContainer';
-import HighlightedText from '../components/HighlightedText';
 import IconMedium from '../components/IconMedium';
 import TextCard from '../components/TextCard';
 import TitleScreen from '../components/TitleScreen';
 import TopScreen from '../components/TopScreen';
-import WhiteAreaWithoutScrollView from '../components/WhiteAreaWithoutScrollView';
 import WhiteArea from '../components/WhiteArea';
 import { theme } from '../global/styles/theme';
+import Logo from '../components/Logo';
 
 export default function ProductManagement({ navigation: { navigate } }) {
   return (
-    <View>
+    <SafeAreaView>
+      <Logo/>
       <TopScreen>
-        <TitleScreen>Gerenciamento de Produtos</TitleScreen>
+        <TitleScreen>Gerenciamento de produtos</TitleScreen>
       </TopScreen>
-      <WhiteArea>
-        <HighlightedText>Gerenciar</HighlightedText>
 
-        <View style={{ marginTop: 8 }} />
+      <WhiteArea>
+        <SafeAreaView style={{ marginTop: 8 }} />
         <CardContainer
           onPress={() => {
             navigate('ProductList');
@@ -28,46 +27,44 @@ export default function ProductManagement({ navigation: { navigate } }) {
           <IconMedium name="chevron-right" color={theme.pallete.primary002} />
         </CardContainer>
 
-        <View style={{ marginTop: 8 }} />
+        <SafeAreaView style={{ marginTop: 8 }} />
         <CardContainer
           onPress={() => {
             navigate('ProductListDelete');
           }}>
-          <TextCard>Remover produto</TextCard>
+          <TextCard>Remover produtos</TextCard>
           <IconMedium name="chevron-right" color={theme.pallete.primary002} />
         </CardContainer>
 
-        <View style={{ marginTop: 8 }} />
+        <SafeAreaView style={{ marginTop: 8 }} />
         <CardContainer
           onPress={() => {
             navigate('EditProduct');
             navigate('ProductList');
           }}>
-          <TextCard>Editar produto</TextCard>
+          <TextCard>Editar produtos</TextCard>
           <IconMedium name="chevron-right" color={theme.pallete.primary002} />
         </CardContainer>
 
-        <View style={{ marginTop: 8 }} />
+        <SafeAreaView style={{ marginTop: 8 }} />
         <CardContainer
           onPress={() => {
             navigate('RegisterProduct');
           }}>
-          <TextCard>Cadastrar produto </TextCard>
+          <TextCard>Cadastrar produtos</TextCard>
           <IconMedium name="chevron-right" color={theme.pallete. primary002} />
         </CardContainer>
 
-        <View style={{ marginTop: 8 }} />
+        <SafeAreaView style={{ marginTop: 8 }} />
         <CardContainer
           onPress={() => {
             navigate('GeneralInformation');
           }}>
-          <TextCard>Informações gerais </TextCard>
+          <TextCard>Informações gerais</TextCard>
           <IconMedium name="chevron-right" color={theme.pallete. primary002} />
         </CardContainer>
-
-
       </WhiteArea>
-    </View>
+    </SafeAreaView>
   );
 }
 

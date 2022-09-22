@@ -1,26 +1,27 @@
-/* eslint-disable react-native/no-inline-styles */
 import React from 'react';
-import {View, Text} from 'react-native';
-import ButtonSecondary from '../components/ButtonSecondary';
+import {SafeAreaView} from 'react-native';
 
+import ButtonPrimary from '../components/ButtonPrimary';
 import FeedbackLogin from '../components/FeedbackLogin';
 import TitleScreen from '../components/TitleScreen';
 import TopScreen from '../components/TopScreen';
-import WhiteAreaWithoutScrollView from '../components/WhiteAreaWithoutScrollView';
 import {theme} from '../global/styles/theme';
+import Logo from '../components/Logo';
+
 
 export default function Waiting({navigation: {goBack}, route}) {
   const {params} = route;
 
   return (
-    <View>
+    <SafeAreaView>
+      <Logo />
       <TopScreen>
-        <View style={{alignItems: 'center'}}>
-          <TitleScreen>Oops</TitleScreen>
-        </View>
+        <SafeAreaView style={{alignItems: 'center'}}>
+          <TitleScreen>Atenção</TitleScreen>
+        </SafeAreaView>
       </TopScreen>
-      <WhiteAreaWithoutScrollView>
-        <View
+      <SafeAreaView>
+        <SafeAreaView
           style={{
             justifyContent: 'space-between',
             height: 550,
@@ -32,12 +33,12 @@ export default function Waiting({navigation: {goBack}, route}) {
                 : theme.pallete.red
             }>
             {params.status === 'aguardando'
-              ? 'Seu cadastro ainda está em análise, por favor, aguarde!'
-              : 'Infelizmente seu cadastro não foi aprovado, agradecemos o interesse em participar do Armazém'}
+              ? 'Seu cadastro ainda está em análise pelo administrador, por favor tente mais tarde!'
+              : 'Infelizmente seu cadastro não foi aprovado, agradecemos o interesse em participar!'}
           </FeedbackLogin>
-          <ButtonSecondary onPress={() => goBack()}>Voltar</ButtonSecondary>
-        </View>
-      </WhiteAreaWithoutScrollView>
-    </View>
+          <ButtonPrimary onPress={() => goBack()}>Voltar</ButtonPrimary>
+        </SafeAreaView>
+      </SafeAreaView>
+    </SafeAreaView>
   );
 }

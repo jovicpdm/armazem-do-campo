@@ -1,19 +1,22 @@
-/* eslint-disable react-native/no-inline-styles */
 import React from 'react';
-import {StyleSheet, View, Image, Text, TouchableOpacity} from 'react-native';
+import {StyleSheet, View, Image, Text, TouchableOpacity, Alert} from 'react-native';
 import {Icon} from 'react-native-elements';
 import {theme} from '../global/styles/theme';
 import {getDatabase, ref, update} from 'firebase/database';
 
-import firebase from '../config/firebase';
-
 const RequestCard = ({name, photo, email, address, phone, presentation, id}) => {
-  const approve = (id, response) => {
+
+    const approve = (id, response) => {
     const db = getDatabase();
     update(ref(db, 'users/' + id), {
       status: response === 'y' ? 'aprovado' : 'reprovado',
     });
-    Alert.alert('Mensagem de confirmação', '(apenas exibido na fase beta)');
+    if (response === 'y'){
+    Alert.alert('Atenção', 'Colaborador aprovado com sucesso');
+    }
+    else {
+      Alert.alert('Atenção', 'Colaborador reprovado com sucesso');
+    }
   };
 
   return (
@@ -25,23 +28,27 @@ const RequestCard = ({name, photo, email, address, phone, presentation, id}) => 
             uri: photo,
           }}
         />
+
         <View style={styles.labelInfo}>
           <Text
             style={[styles.text, {fontSize: 16, fontFamily: 'Roboto-Bold'}]}>
             {name}
           </Text>
+
           <View style={{flexDirection: 'row'}}>
             <Text style={[styles.text, {color: theme.pallete.primary005}]}>
               Email:{' '}
             </Text>
             <Text style={styles.text}>{email}</Text>
           </View>
+
           <View style={{flexDirection: 'row'}}>
             <Text style={[styles.text, {color: theme.pallete.primary005}]}>
               Telefone:{' '}
             </Text>
             <Text style={styles.text}>{phone}</Text>
           </View>
+
           <View style={{flexDirection: 'row'}}>
             <Text style={[styles.text, {color: theme.pallete.primary005}]}>
               Endereço:{' '}
@@ -50,10 +57,12 @@ const RequestCard = ({name, photo, email, address, phone, presentation, id}) => 
           </View>
         </View>
       </View>
-      <View style={{marginTop: 24}}>
+
+      <View style={{marginTop: 5}}>
         <Text style={[styles.text, {color: theme.pallete.primary005}]}>
           Apresentação:{' '}
         </Text>
+
         <Text style={styles.text}>{presentation + ' '} </Text>
         <View style={styles.buttonArea}>
           <TouchableOpacity
@@ -72,6 +81,7 @@ const RequestCard = ({name, photo, email, address, phone, presentation, id}) => 
               Aprovar
             </Text>
           </TouchableOpacity>
+
           <TouchableOpacity
             style={styles.button}
             onPress={() => {

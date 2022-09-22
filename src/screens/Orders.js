@@ -1,11 +1,13 @@
-import React from 'react';
-import {StyleSheet, Text, View} from 'react-native';
+import React, {useState, useEffect}from 'react';
+import {StyleSheet, Text, SafeAreaView} from 'react-native';
 import {getDatabase, onValue, ref} from 'firebase/database';
 
 import TitleScreen from '../components/TitleScreen';
 import TopScreen from '../components/TopScreen';
-import WhiteAreaWithoutScrollView from '../components/WhiteAreaWithoutScrollView';
-import GrayText from '../components/GrayText';
+import WhiteArea from '../components/WhiteArea';
+import GrayTextCenter from '../components/GrayTextCenter';
+import Logo from '../components/Logo';
+
 
 export default function Orders() {
   const [orders, setOrders] = useState();
@@ -24,14 +26,15 @@ export default function Orders() {
   };
 
   return (
-    <>
+    <SafeAreaView>
+      <Logo/>
       <TopScreen>
-        <TitleScreen>Pedidos</TitleScreen>
+        <TitleScreen>Gerenciamento de pedidos</TitleScreen>
       </TopScreen>
-      <WhiteAreaWithoutScrollView>
-          <GrayText>Em breve... {'\n'} Aqui ficará a lista de pedidos</GrayText>
-      </WhiteAreaWithoutScrollView>
-    </>
+      <WhiteArea>
+          <GrayTextCenter>Em construção...</GrayTextCenter>
+      </WhiteArea>
+    </SafeAreaView>
   );
 }
 

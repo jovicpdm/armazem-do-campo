@@ -2,6 +2,7 @@ import React, {useState} from 'react';
 import {SafeAreaView, ActivityIndicator, Text, LogBox} from 'react-native';
 import {getAuth, signInWithEmailAndPassword} from 'firebase/auth/react-native';
 import {getDatabase, onValue, ref} from '@firebase/database';
+import { SocialIcon } from 'react-native-elements';
 
 import Logo from '../components/Logo';
 import Input from '../components/Input';
@@ -13,7 +14,6 @@ import WhiteArea from '../components/WhiteArea';
 import TitleSection from '../components/TitleSection';
 import ErrorMessage from '../components/ErrorMessage';
 import RowHorizontal from '../components/Rowhorizontal';
-import { SocialIcon } from 'react-native-elements'
 
 export default function Login({navigation}) {
 
@@ -33,6 +33,7 @@ export default function Login({navigation}) {
 
   const authentication = () =>
     signInWithEmailAndPassword(auth, email, password)
+    
       .then(userCredential => {
         const userRef = ref(db, 'users/' + userCredential.user.uid);
 
@@ -41,16 +42,14 @@ export default function Login({navigation}) {
           setLoading(false);
 
           if (data.type == 'admin') {
-            navigation.navigate('Admin');
+            navigation.navigate('Admin',{id: snapshot.key,});
           }
           if (data.status == 'aguardando') {
             navigation.navigate('Feedback', {status: 'aguardando'});
           } else if (data.status == 'reprovado') {
             navigation.navigate('Feedback', {status: 'reprovado'});
           } else if (data.status == 'aprovado') {
-            navigation.navigate('Purchase', {
-              id: snapshot.key,
-            });
+            navigation.navigate('Purchase', {id: snapshot.key,});
           }
         });
       })
@@ -58,13 +57,13 @@ export default function Login({navigation}) {
       .catch(err => {
         setLoading(false);
         if (err.code === 'auth/invalid-email') {
-          setError('E-mail inválido!');
+          setError('E-mail incorreto, verifique espaços em branco ou caracteres inválidos!');
         } else if (err.code === 'auth/internal-error') {
           setError('Senha inválida!');
         } else if (err.code === 'auth/user-not-found') {
           setError('Usuário não encontrado!');
         } else if (err.code === 'auth/wrong-password') {
-          setError('Senha incorreta!');
+          setError('Atenção, senha incorreta!');
         }
         setShowError(true);
       });
@@ -73,7 +72,6 @@ export default function Login({navigation}) {
 
     <SafeAreaView>
       <Logo />
-
       <WhiteArea>
         <TitleSection>Bem-vindo</TitleSection>
 
@@ -84,9 +82,7 @@ export default function Login({navigation}) {
           keyboardType="email-address"
           onChangeText={text => setEmail(text)}
           value={email}
-          onFocus={() => {
-            setShowError(false);
-          }}
+          onFocus={() => {setShowError(false);}}
           style={{marginTop: 16}}
         />
         <InputPassword
@@ -95,13 +91,10 @@ export default function Login({navigation}) {
           keyboardType="default"
           onChangeText={text => setPassword(text)}
           value={password}
-          onFocus={() => {
-            setShowError(false);
-          }}
+          onFocus={() => {setShowError(false);}}
         />
 
         <SafeAreaView style={{marginTop: 32}} />
-
         {loading === true ? (<ActivityIndicator />) : (
           <>
             <ButtonPrimary
