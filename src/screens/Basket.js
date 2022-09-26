@@ -21,21 +21,32 @@ import TitleSection from '../components/TitleSection';
 import ButtonPrimary from '../components/ButtonPrimary';
 import GrayText from '../components/GrayText';
 import ButtonSecondary from '../components/ButtonSecondary';
-
+import RequestConfirmed from './RequestConfirmed';
 export default function Basket({navigation,  route}) {
   const [products, setProducts] = useState([]);
   const [refresh, setRefresh] = useState(false);
   const [selected, setSelected] = useState(true);
   const [total, setTotal] = useState(0);
-
+  const [phone,setPhone] = useState('');
   const db = getDatabase();
-  const updateProduct = (id, amount) => {
+  const updateProduct = (id, amount) => { // erro 
      update(ref(db, 'products/' + id), {
       amount: amount,
     }); 
     
   };
   
+  const getNumber = () => {
+    const dbRef = ref(db, 'users/' + route.params.id); 
+    let counts = ''
+    onValue(dbRef,(snapshot)=>{
+        let datasPhone = snapshot.val().phone
+        counts = datasPhone
+        
+    })
+    setPhone(counts.substring(counts.length - 4))
+  }
+
   const buy = () => {
     const id = uuid.v4();
     const dbRef = ref(db, 'order/' + id);
@@ -44,6 +55,7 @@ export default function Basket({navigation,  route}) {
       date: Date.now(),
       total: total,
       formPay: 'Dinheiro',
+      codeNumber:phone
     });
     products.map(item => {
       if (item.amountBuy != 0) {
@@ -55,7 +67,6 @@ export default function Basket({navigation,  route}) {
       }
     });
     remove(ref(db, 'purchase/' + route.params.id));
-    Alert.alert('Mensagem de confirmação', '(apenas exibido na fase beta)');
   };
 
   const listProducts = async () => {
@@ -77,10 +88,12 @@ export default function Basket({navigation,  route}) {
   };
   useEffect(() => {
     listProducts();
+    getNumber()  
   }, []);
-
+ 
   return (
     <>
+
       <TopScreen>
         <TitleScreen>Cesta</TitleScreen>
       </TopScreen>
@@ -126,17 +139,16 @@ export default function Basket({navigation,  route}) {
             </View>
           </View>
         )}
-        <GrayText>
-          Por enquanto, só estamos aceitando pagamentos com dinheiro físico,{' '}
-          {'\n'}Em breve mais formas de pagamento
-        </GrayText>
-        <View style={{marginTop: 60}} />
+       
+        <View style={{marginTop: 60}} />    
         <ButtonPrimary
           onPress={() => {
-            buy();
-            navigation.navigate('RequestConfirmed',{
-               id:route.params.id
-            })
+           
+              buy();   
+              navigation.navigate('RequestConfirmed',{
+               id:route.params.id,
+               codePhone:phone
+             })  
           }}>
           CONCLUIR COMPRA
         </ButtonPrimary>
@@ -147,6 +159,7 @@ export default function Basket({navigation,  route}) {
           }}>
           CANCELAR COMPRA
         </ButtonSecondary>
+       
       </WhiteAreaWithoutScrollView>
     </>
   );
