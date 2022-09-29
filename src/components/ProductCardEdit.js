@@ -143,7 +143,7 @@ const ProductCardEdit = ({
             </>
           ) : (
             <SmallButton
-              name="editar"
+              name="Editar"
               type="primary"
               onPress={props}
             />

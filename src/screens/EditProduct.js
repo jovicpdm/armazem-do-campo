@@ -1,21 +1,15 @@
-/* eslint-disable react-hooks/exhaustive-deps */
 import React, { useState, useEffect } from 'react';
 import {
-    View,
-    Text,
     StyleSheet,
     FlatList,
     ActivityIndicator,
 } from 'react-native';
-import { getDatabase, ref, onValue, update } from 'firebase/database';
-import ProductCard from '../components/ProductCard';
+import { getDatabase, ref, onValue} from 'firebase/database';
 import ProductCardEdit from '../components/ProductCardEdit';
 import TitleScreen from '../components/TitleScreen';
 import TopScreen from '../components/TopScreen';
 import WhiteAreaWithoutScrollView from '../components/WhiteAreaWithoutScrollView';
-import SmallButton from '../components/SmallButton';
-import ButtonPrimary from '../components/ButtonPrimary';
-import WhiteArea from '../components/WhiteArea';
+import Logo from '../components/Logo';
 
 export default function EditProduct({ navigation }) {
 
@@ -23,7 +17,6 @@ export default function EditProduct({ navigation }) {
 
     const [products, setProducts] = useState();
     const [loading, setLoading] = useState(false);
-
 
     const listProducts = async () => {
         setLoading(true);
@@ -38,7 +31,7 @@ export default function EditProduct({ navigation }) {
             });
         })
             .then(() => {
-                console.log('show');
+                
             })
             .catch(e => {
                 console.log(e);
@@ -49,11 +42,16 @@ export default function EditProduct({ navigation }) {
 
     useEffect(() => {
         listProducts();
+        return () => {
+            setProducts({}); 
+            setLoading(false);
+          };
     }, []);
 
 
     return (
         <>
+        <Logo/>
             <TopScreen>
                 <TitleScreen>Atualizar Itens</TitleScreen>
             </TopScreen>
@@ -73,7 +71,7 @@ export default function EditProduct({ navigation }) {
                                         image={item.mainImage}
                                         placeOfSale={item.placeOfSale}
                                         description={item.description}
-                                        formsOfSale={item.formsOfSale.toLowerCase()}
+                                        formsOfSale={item.formsOfSale}
                                         amount={item.amount}
                                         props={() => {
                                             navigation.navigate('EditItem', {
@@ -81,8 +79,6 @@ export default function EditProduct({ navigation }) {
                                             });  
                                         }}
                                     />
-
-
                                 </>
                             );
                         }}

@@ -11,6 +11,8 @@ import {theme} from '../global/styles/theme';
 import ButtonPrimary from '../components/ButtonPrimary';
 import InputPhotoArea from '../components/InputPhotoArea';
 import ErrorMessage from '../components/ErrorMessage';
+import Logo from '../components/Logo';
+
 
 // import storage from '@react-native-firebase/storage';
 
@@ -147,6 +149,7 @@ export default function Register({navigation}) {
   return (
 
     <ScrollView contentContainerStyle={{maxHeight: '100%'}}>
+      <Logo/>
       <Text style={styles.presentation}>
         Faça parte da rede de comercialização de produtos da reforma agrária
         popular
@@ -273,7 +276,7 @@ const styles = StyleSheet.create({
     fontSize: 16,
     color: theme.pallete.white,
     textAlign: 'center',
-    marginVertical: 24,
+    marginVertical: 10,
     paddingHorizontal: 28,
   },
   inputPresentation: {

@@ -4,12 +4,8 @@ import {
   Image,
   View,
   Text,
-  TouchableOpacity,
 } from 'react-native';
 import {theme} from '../global/styles/theme';
-import { TextInput } from 'react-native-paper';
-import IconMedium from './IconMedium';
-import SmallButton from './SmallButton';
 
 const ProductCardView = ({
   name,
@@ -17,10 +13,8 @@ const ProductCardView = ({
   image,
   description,
   formOfSale,
-  placeOfSale,
+  amount,
 }) => {
-  const [expand, setExpand] = useState(false);
-  const [showInput, setShowInput] = useState(false);
 
   return (
     <View style={styles.card}>
@@ -34,6 +28,9 @@ const ProductCardView = ({
           <Text style={styles.subtitle}>
             R$ {price} {formOfSale}
           </Text>
+          <Text style={styles.subtitle}>{description}</Text>
+          <Text style={styles.subtitle}>Quantidade: {amount}</Text>
+
         </View>
       </View>
     </View>
@@ -43,10 +40,10 @@ const ProductCardView = ({
 const styles = StyleSheet.create({
   card: {
     padding: 2,
-    marginTop: 8,
+    marginTop: 12,
     backgroundColor: '#eaeaea',
-    borderRadius: 8,
-    elevation: 1,
+    borderRadius: 10,
+    elevation: 2,
     shadowOffset: {
       width: 0.1,
       height: 0.1,
@@ -60,7 +57,7 @@ const styles = StyleSheet.create({
   },
   image: {
     height: 80,
-    width: 80,
+    width: 100,
     borderRadius: 8,
   },
   titleSubtitle: {

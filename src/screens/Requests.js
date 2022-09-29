@@ -43,7 +43,7 @@ export default function Requests() {
   };
 
   useEffect(() => {
-    setInterval(() => {listRequests()}, 3000);
+    setInterval(() => {listRequests()}, 2000);
   }, [])
 
 

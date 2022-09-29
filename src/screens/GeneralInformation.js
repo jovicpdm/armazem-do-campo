@@ -1,6 +1,6 @@
-import React, { useState, useEffect } from 'react';
-import { View, Text, StyleSheet, Platform } from 'react-native';
-import { onValue, getDatabase, ref, set } from 'firebase/database';
+import React, { useState } from 'react';
+import { View, Text, StyleSheet, Platform, SafeAreaView, Alert } from 'react-native';
+import { getDatabase, ref, set } from 'firebase/database';
 
 
 import uuid from 'react-native-uuid';
@@ -12,6 +12,7 @@ import Input from '../components/Input';
 import ButtonSecondary from '../components/ButtonSecondary';
 import ButtonPrimary from '../components/ButtonPrimary';
 import InputDate from '../components/InputDate';
+import Logo from '../components/Logo';
 
 export default function GeneralInformation({ navigation: { navigate } }) {
   const [closingDate, setClosingDate] = useState(new Date());
@@ -62,22 +63,45 @@ export default function GeneralInformation({ navigation: { navigate } }) {
  const db = getDatabase();
 
   const addGeneralInformation = () => {
+
+    if (textClosingDate == 'Selecione a data de fechamento'){
+      Alert.alert("Atenção",'Preencha o campo relacionado a data de fechamento');
+      return;
+    }
+    if (!textDeliveryDate == 'Selecione a data de entrega'){
+      Alert.alert("Atenção",'Preencha o campo relacionado a data de entrega');
+      return;
+    }
+
+    if (!deliveryPlace){
+      Alert.alert("Atenção",'Preencha o campo relacionado ao local de entrega');
+      return;
+    }
+
     const id = uuid.v4();
     set(ref(db, 'generalInformation/' + id), {
       closingDate: textClosingDate,
       deliveryDate: textDeliveryDate,
       deliveryPlace: deliveryPlace,
     });
+
+    Alert.alert("Cadastro de prazos",
+    "Informações cadastradas com sucesso",
+    [    
+      { text: "OK", onPress: () => navigate('ProductManagement') }
+    ]
+    );
   };
 
   return (
     <>
-      <View style={styles.container}>
+    <Logo/>
+      <SafeAreaView style={styles.container}>
         <Text style={styles.addProduct}>Informações gerais</Text>
-      </View>
+      </SafeAreaView>
       <WhiteArea>
 
-        <View style={styles.containerLabel}>
+        <SafeAreaView style={styles.containerLabel}>
           <Text style={styles.titlePicker}>
             {textClosingDate}
           </Text>
@@ -97,10 +121,10 @@ export default function GeneralInformation({ navigation: { navigate } }) {
               onChange={onChangeClosingDate}
             />)}
 
-        </View>
+        </SafeAreaView>
 
 
-        <View style={styles.containerLabel}>
+        <SafeAreaView style={styles.containerLabel}>
           <Text style={styles.titlePicker}>
             {textDeliveryDate}
           </Text>
@@ -117,7 +141,7 @@ export default function GeneralInformation({ navigation: { navigate } }) {
               display='default'
               onChange={onChangeDeliveryDate}
             />)}
-        </View>
+        </SafeAreaView>
 
 
         <Input

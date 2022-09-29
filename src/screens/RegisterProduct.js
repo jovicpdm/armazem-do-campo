@@ -1,20 +1,21 @@
 import React, {useState, useEffect} from 'react';
-import {View, Text, StyleSheet} from 'react-native';
+import {View, Text, StyleSheet, SafeAreaView, Alert} from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome5';
 import {onValue, getDatabase, ref, set} from 'firebase/database';
 import * as ImagePicker from 'react-native-image-picker';
 import {Picker} from '@react-native-picker/picker';
 import uuid from 'react-native-uuid';
 
-import firebase from '../config/firebase';
 import {theme} from '../global/styles/theme';
 import WhiteArea from '../components/WhiteArea';
 import Input from '../components/Input';
 import InputImage from '../components/InputImage';
 import ButtonSecondary from '../components/ButtonSecondary';
 import ButtonPrimary from '../components/ButtonPrimary';
+import Logo from '../components/Logo';
 
 export default function RegisterProduct({ navigation: { navigate } }) {
+
   const [productName, setProductName] = useState();
   const [price, setPrice] = useState();
   const [placeOfSale, setPlaceOfSale] = useState();
@@ -22,22 +23,24 @@ export default function RegisterProduct({ navigation: { navigate } }) {
   const [categories, setCategories] = useState([]);
   const [selectedCategory, setSelectedCategory] = useState(0);
   const [formsOfSale, setFormsOfSale] = useState([]);
-  const [selectedFormOfSale, setSelectedFormOfSale] = useState();
+  const [selectedFormOfSale, setSelectedFormOfSale] = useState(0);
   const [mainImage, setMainImage] = useState();
-  const [amount, setAmount] = useState();
+  const [amount, setAmount] = useState('');
 
   const db = getDatabase();
   const dbRefForm = ref(db, 'formsOfSale');
   const dbRef = ref(db, 'categories');
-  const dbRefDay = ref(db, 'deliveryDay');
 
   const listCategories = async () => {
+
     const dataArray = [];
     await new Promise(resolve => {
+
       onValue(dbRef, snapshot => {
         snapshot.forEach(snap => {
           dataArray.push(snap.val());
         });
+
         resolve();
       });
     });
@@ -45,6 +48,7 @@ export default function RegisterProduct({ navigation: { navigate } }) {
   };
 
   const listFormsOfSale = async () => {
+
     const dataArray = [];
     await new Promise(resolve => {
       onValue(dbRefForm, snapshot => {
@@ -57,7 +61,48 @@ export default function RegisterProduct({ navigation: { navigate } }) {
     setFormsOfSale(dataArray);
   };
 
-  const addProduct = () => {
+  function addProduct () {
+
+    if (!productName){
+      Alert.alert("Atenção",'Preencha o campo relacionado ao nome do produto');
+      return;
+    }
+
+    if (!price){
+      Alert.alert("Atenção",'Preencha o campo relacionado ao preço do produto');
+      return;
+    }
+
+    if (!placeOfSale){
+      Alert.alert("Atenção",'Preencha o campo relacionado ao local de venda do produto');
+      return;
+    }
+
+    if (!description){
+      Alert.alert("Atenção",'Preencha o campo relacionado a descrição do produto');
+      return;
+    }
+
+    if (!amount){
+      Alert.alert("Atenção",'Preencha o campo relacionado a quantidade do produto');
+      return;
+    }
+
+    if (!mainImage){
+      Alert.alert("Atenção",'Selecione uma imagem do produto');
+      return;
+    }
+
+    if (!selectedCategory){
+      Alert.alert("Atenção",'Selecione a categoria do produto');
+      return;
+    }
+
+    if (!selectedFormOfSale){
+      Alert.alert("Atenção",'Selecione a unidade de medida do produto');
+      return;
+    }
+
     const id = uuid.v4();
     set(ref(db, 'products/' + id), {
       id: id,
@@ -69,25 +114,41 @@ export default function RegisterProduct({ navigation: { navigate } }) {
       formsOfSale: selectedFormOfSale,
       mainImage: mainImage,
       amount: amount,
-    });
-  };
+    });  
+
+    Alert.alert("Cadastro de produtos",
+    "Produto cadastrado com sucesso",
+    [    
+      { text: "OK", onPress: () => navigate('ProductManagement') }
+    ]
+    );
+  
+};
 
   useEffect(() => {
     listCategories();
     listFormsOfSale();
+    return () => {
+      setCategories([]);
+      setFormsOfSale([]);
+    };
   }, []);
 
   return (
     <>
-      <View style={styles.container}>
+    <Logo/>
+      <SafeAreaView style={styles.container}>
         <Icon
           name="plus-circle"
           size={26}
           color={theme.pallete.textTitleScreen}
         />
         <Text style={styles.addProduct}>Cadastrar produto</Text>
-      </View>
+      </SafeAreaView>
+
+
       <WhiteArea>
+
         <Input
           placeholder="Nome do produto"
           placeholderTextColor={theme.pallete.primary}
@@ -96,14 +157,17 @@ export default function RegisterProduct({ navigation: { navigate } }) {
           keyboardType="default"
           style={{marginTop: 12}}
         />
+
         <Input
           placeholder="Preço"
           placeholderTextColor={theme.pallete.primary}
           onChangeText={text => setPrice(text)}
           value={price}
-          keyboardType="numeric"
+          keyboardType="default"
+          type="phone-pad"
           style={{marginTop: 16}}
         />
+
         <Input
           placeholder="Local de venda"
           placeholderTextColor={theme.pallete.primary}
@@ -112,6 +176,7 @@ export default function RegisterProduct({ navigation: { navigate } }) {
           keyboardType="default"
           style={{marginTop: 16}}
         />
+
         <Input
           placeholder="Descrição"
           placeholderTextColor={theme.pallete.primary}
@@ -120,19 +185,22 @@ export default function RegisterProduct({ navigation: { navigate } }) {
           keyboardType="default"
           style={styles.inputDescription}
         />
+
         <Input
           placeholder="Quantidade "
           placeholderTextColor={theme.pallete.primary}
           onChangeText={text => setAmount(text)}
-          value={setAmount}
-          keyboardType="numeric"
+          value={amount}
+          type="phone-pad"
+          keyboardType="default"
         />
+
         <View style={styles.containerLabel}>
           <Text style={styles.titlePicker}>
-            Selecione uma foto para o produto
+            Selecione uma imagem para o produto
           </Text>
           <InputImage
-            name="Escolher Imagem"
+            name="Escolher imagem"
             style={{marginTop: 44}}
             onPress={() => {
               ImagePicker.launchImageLibrary(
@@ -145,14 +213,16 @@ export default function RegisterProduct({ navigation: { navigate } }) {
               );
             }}
           />
+
         </View>
+
         <Text style={styles.titlePicker}>Categoria</Text>
         <Picker
           dropdownIconColor={theme.pallete.primary004}
           mode="dropdown"
           style={{color: theme.pallete.black}}
           selectedValue={selectedCategory}
-          onValueChange={(itemValue, item) => setSelectedCategory(itemValue)}>
+          onValueChange={(itemValue) => setSelectedCategory(itemValue)}>
           <Picker.Item
             color={theme.pallete.black}
             label="Selecione a categoria"
@@ -162,8 +232,8 @@ export default function RegisterProduct({ navigation: { navigate } }) {
             return (
               <Picker.Item
                 color={theme.pallete.black}
-                label={category.description.toLowerCase()}
-                value={category.description.toLowerCase()}
+                label={category.description}
+                value={category.description}
                 key={category.description}
               />
             );
@@ -171,7 +241,6 @@ export default function RegisterProduct({ navigation: { navigate } }) {
         </Picker>
 
         <Text style={styles.titlePicker}>Unidade de medida</Text>
-
         <Picker
           dropdownIconColor={theme.pallete.primary004}
           selectedValue={selectedFormOfSale}
@@ -187,15 +256,17 @@ export default function RegisterProduct({ navigation: { navigate } }) {
             return (
               <Picker.Item
                 color={theme.pallete.black}
-                label={forms.description.toLowerCase()}
-                value={forms.description.toLowerCase()}
+                label={forms.description}
+                value={forms.description}
                 key={forms.description}
               />
             );
           })}
         </Picker>
+
         <View style={{marginTop: 24}} />
-        <ButtonPrimary onPress={() => addProduct()}>CADASTRAR</ButtonPrimary>
+        <ButtonPrimary onPress={() =>{ addProduct()}}>
+                                      CADASTRAR</ButtonPrimary>
         <ButtonSecondary
           onPress={() => {
             navigate('ProductManagement');

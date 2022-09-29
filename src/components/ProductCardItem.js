@@ -9,6 +9,7 @@ import * as ImagePicker from 'react-native-image-picker';
 import { Picker } from '@react-native-picker/picker';
 import InputImage from '../components/InputImage';
 
+
 const ProductCardItem = ({
   id,
   name,
@@ -30,7 +31,7 @@ const ProductCardItem = ({
   const [categories, setCategories] = useState([]);
   const [selectedCategory, setSelectedCategory] = useState(0);
   const [unitOfMeasurement, setUnitOfMeasurement] = useState([]);
-  const [selectedUnitOfMeasurement, setSelectedUnitOfMeasurement] = useState();
+  const [selectedUnitOfMeasurement, setSelectedUnitOfMeasurement] = useState(0);
 
   const db = getDatabase();
   const dbRef = ref(db, 'categories');
@@ -62,62 +63,109 @@ const ProductCardItem = ({
     setUnitOfMeasurement(dataArray);
   };
 
+  function itemUpdated (){    
+      Alert.alert("Atenção", 'Item atualizado com sucesso');
+      return;
+    
+  }
+
   const updateMainImage = (id, mainImage) => {
+    if (!mainImage){
+      Alert.alert("Atenção",'Por favor, selecione uma imagem');
+      return;
+    } else {
     update(ref(db, 'products/' + id), {
       mainImage: mainImage,
     });
+    itemUpdated ();
+  }
   };
 
   const updateProductName = (id, name) => {
+    if (!name){
+      Alert.alert("Atenção",'Por favor, preencha o campo relacionado ao nome do produto');
+      return;
+    }
     update(ref(db, 'products/' + id), {
       name: name,
     });
+    itemUpdated ();
   };
 
   const updatePrice = (id, price) => {
+    if (!price){
+      Alert.alert("Atenção",'Por favor, preencha o campo relacionado ao preço do produto');
+      return;
+    }
     update(ref(db, 'products/' + id), {
       price: price,
     });
+    itemUpdated ();
   };
 
   const updatePlaceOfSale = (id, placeOfSale) => {
+    if (!placeOfSale){
+      Alert.alert("Atenção",'Por favor, preencha o campo relacionado ao local de venda do produto');
+      return;
+    }
     update(ref(db, 'products/' + id), {
       placeOfSale: placeOfSale,
     });
+    itemUpdated ();
   };
 
   const updateDescription = (id, description) => {
+    if (!description){
+      Alert.alert("Atenção",'Por favor, preencha o campo relacionada a descrição do produto');
+      return;
+    }
     update(ref(db, 'products/' + id), {
       description: description,
     });
+    itemUpdated ();
   };
 
   const updateAmount = (id, amount) => {
+    if (!amount){
+      Alert.alert("Atenção",'Por favor, preencha o campo relacionada ao estoque do produto');
+      return;
+    }
     update(ref(db, 'products/' + id), {
       amount: amount,
     });
+    itemUpdated ();
   };
 
   const updateCategory = (id, category) => {
+    if (!category){
+      Alert.alert("Atenção",'Por favor, selecione a categoria do produto');
+      return;
+    }
     update(ref(db, 'products/' + id), {
       category: category,
     });
+    itemUpdated ();
   };
 
   const updateFormOfSale = (id, formsOfSale) => {
+    if (!formsOfSale){
+      Alert.alert("Atenção",'Por favor, selecione a unidade de medida do produto');
+      return;
+    }
     update(ref(db, 'products/' + id), {
       formsOfSale: formsOfSale,
     });
+    itemUpdated ();
   };
 
   useEffect(() => {
     listCategories();
     listFormsOfSale();
+    return () => {
+      setCategories([]); 
+      setUnitOfMeasurement ([]);
+    };
   }, []);
-
-
-
-
 
   return (
     <View style={styles.card}>
@@ -138,7 +186,7 @@ const ProductCardItem = ({
           Selecione uma nova foto para o produto
         </Text>
         <InputImage
-          name="escolher imagem"
+          name="Escolher imagem"
           style={{ marginTop: 44 }}
           onPress={() => {
             ImagePicker.launchImageLibrary(
@@ -152,7 +200,7 @@ const ProductCardItem = ({
           }}
         />
         <SmallButton
-          name="atualizar imagem"
+          name="Atualizar imagem"
           type="primary"
           onPress={() => { updateMainImage(id, newMainImage) }}
         />
@@ -161,61 +209,61 @@ const ProductCardItem = ({
       <View style={{ marginTop: 16 }} />
 
       <TextInput
-        label={`nome: ${name}`}
+        label={`Nome: ${name}`}
         placeholder="nome"
         onChangeText={text => setNewProductName(text)}
         keyboardType="default"
       />
       <SmallButton
-        name="atualizar nome"
+        name="Atualizar nome"
         type="primary"
         onPress={() => { updateProductName(id, newProductName) }}
       />
 
       <TextInput
-        label={`preço: ${price}`}
+        label={`Preço: ${price}`}
         placeholder="preço"
         onChangeText={text => setNewPrice(text)}
         keyboardType="numeric"
       />
       <SmallButton
-        name="atualizar preço"
+        name="Atualizar preço"
         type="primary"
         onPress={() => { updatePrice(id, newPrice) }}
       />
 
       <TextInput
         label={`local de venda: ${placeOfSale}`}
-        placeholder="local de venda"
+        placeholder="Local de venda"
         onChangeText={text => setNewPlaceOfSale(text)}
         keyboardType="default"
       />
       <SmallButton
-        name="atualizar local de venda"
+        name="Atualizar local de venda"
         type="primary"
         onPress={() => { updatePlaceOfSale(id, newPlaceOfSale) }}
       />
 
       <TextInput
         label={`descrição: ${description}`}
-        placeholder="descrição"
+        placeholder="Descrição"
         onChangeText={text => setNewDescription(text)}
         keyboardType="default"
       />
       <SmallButton
-        name="atualizar descrição"
+        name="Atualizar descrição"
         type="primary"
         onPress={() => { updateDescription(id, newDescription) }}
       />
 
       <TextInput
         label={`estoque: ${amount}`}
-        placeholder="estoque"
+        placeholder="Estoque"
         onChangeText={text => setNewAmount(text)}
         keyboardType="numeric"
       />
       <SmallButton
-        name="atualizar estoque"
+        name="Atualizar estoque"
         type="primary"
         onPress={() => { updateAmount(id, newAmount) }}
       />
@@ -236,8 +284,8 @@ const ProductCardItem = ({
           return (
             <Picker.Item
               color={theme.pallete.black}
-              label={category.description.toLowerCase()}
-              value={category.description.toLowerCase()}
+              label={category.description}
+              value={category.description}
               key={category.description}
             />
           );
@@ -245,7 +293,7 @@ const ProductCardItem = ({
       </Picker>
 
       <SmallButton
-        name="atualizar categoria"
+        name="Atualizar categoria"
         type="primary"
         onPress={() => { updateCategory(id, selectedCategory) }}
       />
@@ -266,8 +314,8 @@ const ProductCardItem = ({
           return (
             <Picker.Item
               color={theme.pallete.black}
-              label={forms.description.toLowerCase()}
-              value={forms.description.toLowerCase()}
+              label={forms.description}
+              value={forms.description}
               key={forms.description}
             />
           );
@@ -275,7 +323,7 @@ const ProductCardItem = ({
       </Picker>
 
       <SmallButton
-        name="atualizar forma de venda"
+        name="Atualizar forma de venda"
         type="primary"
         onPress={() => { updateFormOfSale(id, selectedUnitOfMeasurement) }}
       />
