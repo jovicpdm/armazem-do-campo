@@ -1,31 +1,29 @@
-/* eslint-disable react-hooks/exhaustive-deps */
 import React, { useState, useEffect } from 'react';
 import {
-  View,
-  Text,
   StyleSheet,
   FlatList,
   ActivityIndicator,
 } from 'react-native';
 import { getDatabase, ref, onValue } from 'firebase/database';
-import ProductCard from '../components/ProductCard';
 import ProductCardView from '../components/ProductCardView';
 import TitleScreen from '../components/TitleScreen';
 import TopScreen from '../components/TopScreen';
 import WhiteAreaWithoutScrollView from '../components/WhiteAreaWithoutScrollView';
-import WhiteArea from '../components/WhiteArea';
+import Logo from '../components/Logo';
+import GrayTextCenter from '../components/GrayTextCenter';
 
 export default function ProductList({ navigation: { navigate } }) {
 
   const db = getDatabase();
 
-  const [products, setProducts] = useState();
+  const [products, setProducts] = useState([]);
   const [loading, setLoading] = useState(false);
 
   const listProducts = async () => {
+
+    const dataArray = [];
     setLoading(true);
     const dbRef = ref(db, 'products');
-    const dataArray = [];
     await new Promise(resolve => {
       onValue(dbRef, snapshot => {
         snapshot.forEach(snap => {
@@ -35,7 +33,6 @@ export default function ProductList({ navigation: { navigate } }) {
       });
     })
       .then(() => {
-        console.log('show');
       })
       .catch(e => {
         console.log(e);
@@ -45,16 +42,24 @@ export default function ProductList({ navigation: { navigate } }) {
   };
 
   useEffect(() => {
-    listProducts();
-  }, []);
 
+    listProducts();
+    return () => {
+      setProducts({}); 
+      setLoading(false);
+    };
+
+  }, []);
 
   return (
     <>
+      <Logo/>
       <TopScreen>
-        <TitleScreen>Produtos</TitleScreen>
+        <TitleScreen>Produtos disponíveis</TitleScreen>
       </TopScreen>
       <WhiteAreaWithoutScrollView>
+
+        {products.length === 0 ? <GrayTextCenter>Sem produtos</GrayTextCenter> : null}
 
         {!loading ? (
           <FlatList
@@ -66,6 +71,9 @@ export default function ProductList({ navigation: { navigate } }) {
                   name={item.name}
                   price={item.price}
                   image={item.mainImage}
+                  description={item.description}
+                  amount={item.amount}
+
                   onPress={() => {
                     navigate(" ", {
                       id: item.id
@@ -78,8 +86,6 @@ export default function ProductList({ navigation: { navigate } }) {
         ) : (
           <ActivityIndicator size={48} />
         )}
-
-
       </WhiteAreaWithoutScrollView>
     </>
   );

@@ -1,7 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import {
-    View,
-    Alert,
+import {  
     StyleSheet,
     FlatList,
     ActivityIndicator,
@@ -11,19 +9,20 @@ import ProductCardDelete from '../components/ProductCardDelete';
 import TitleScreen from '../components/TitleScreen';
 import TopScreen from '../components/TopScreen';
 import WhiteAreaWithoutScrollView from '../components/WhiteAreaWithoutScrollView';
-import WhiteArea from '../components/WhiteArea';
+import Logo from '../components/Logo';
+import GrayTextCenter from '../components/GrayTextCenter';
 
 export default function ProductList({ navigation: { navigate } }) {
 
     const db = getDatabase();
 
-    const [products, setProducts] = useState();
+    const [products, setProducts] = useState([]);
     const [loading, setLoading] = useState(false);
 
     const listProducts = async () => {
+        const dataArray = [];
         setLoading(true);
         const dbRef = ref(db, 'products');
-        const dataArray = [];
         await new Promise(resolve => {
             onValue(dbRef, snapshot => {
                 snapshot.forEach(snap => {
@@ -33,7 +32,6 @@ export default function ProductList({ navigation: { navigate } }) {
             });
         })
             .then(() => {
-                console.log('show');
             })
             .catch(e => {
                 console.log(e);
@@ -41,20 +39,25 @@ export default function ProductList({ navigation: { navigate } }) {
         setProducts(dataArray);
         setLoading(false);
     };
-
-    useEffect(() => {
-        listProducts();
-    }, []);
-
     
+    useEffect(() => {
+        setInterval(() => {listProducts()}, 2000);
+        return () => {
+            setProducts({}); 
+            setLoading(false);
+          };
+      }, [])
 
 
     return (
         <>
+            <Logo/>
             <TopScreen>
                 <TitleScreen> Remover Produtos</TitleScreen>
             </TopScreen>
             <WhiteAreaWithoutScrollView>
+
+            {products.length === 0 ? <GrayTextCenter>Sem produtos</GrayTextCenter> : null}
 
                 {!loading ? (
                     <FlatList
@@ -66,8 +69,8 @@ export default function ProductList({ navigation: { navigate } }) {
                                     name={item.name}
                                     price={item.price}
                                     id={item.id}
-                                    image={item.mainImage}
-                                    
+                                    image={item.mainImage}     
+                                    description={item.description}                          
 
                                 />
                             );

@@ -1,17 +1,16 @@
 import React from 'react';
-import { StyleSheet, Image, View, TouchableOpacity, Text, Alert, } from 'react-native';
+import { StyleSheet, Image, SafeAreaView, TouchableOpacity, Alert, } from 'react-native';
 import { Card, Paragraph, Title } from 'react-native-paper';
 import { theme } from '../global/styles/theme';
 import IconMedium from './IconMedium';
-import { getDatabase, ref, onValue, remove } from 'firebase/database';
+import { getDatabase, ref, remove } from 'firebase/database';
 
 
-const ProductCardDelete = ({ name, price, id, image, onPress, props }) => {
+const ProductCardDelete = ({ name, price, id, image, description, props }) => {
 
     const deleteProd = (id) => {
         const db = getDatabase();
-        remove(ref(db, 'products/' + id), {
-            
+        remove(ref(db, 'products/' + id), {            
         })
     }
 
@@ -24,11 +23,11 @@ const ProductCardDelete = ({ name, price, id, image, onPress, props }) => {
             [
                 {
                     text: "Remover",
-                    onPress: () => deleteProd(id)
-                    
+                    onPress: () => deleteProd(id),                    
                 },
                 {
                     text: "Cancelar",
+                    style: "cancel"
                 }
             ],
             { cancelable: true }
@@ -37,10 +36,10 @@ const ProductCardDelete = ({ name, price, id, image, onPress, props }) => {
     }
 
     return (
-        <View>
+        <SafeAreaView>
             <Card style={styles.card} elevation={1} mode="outlined">
 
-                <View>
+                <SafeAreaView>
                     <Card.Content style={styles.container}>
                         <Image
                             style={styles.image}
@@ -50,11 +49,14 @@ const ProductCardDelete = ({ name, price, id, image, onPress, props }) => {
                         <Card.Content>
                             <Title>{name}</Title>
                             <Paragraph>R$ {price}</Paragraph>
+                            <Paragraph>{description}</Paragraph>
+
+
                         </Card.Content>
                     </Card.Content>
-                </View>
+                </SafeAreaView>
 
-                <View style={styles.button}>
+                <SafeAreaView style={styles.button}>
                     <TouchableOpacity
                         {...props}
                         onPress={showConfirm}
@@ -64,10 +66,10 @@ const ProductCardDelete = ({ name, price, id, image, onPress, props }) => {
                             color={theme.pallete.primary002}
                         />
                     </TouchableOpacity>
-                </View>
+                </SafeAreaView>
 
             </Card>
-        </View>
+        </SafeAreaView>
     );
 };
 

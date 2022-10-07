@@ -1,5 +1,5 @@
 import React, {useState, useEffect} from 'react';
-import {StyleSheet, FlatList, Button} from 'react-native';
+import {StyleSheet, FlatList} from 'react-native';
 import {getDatabase, ref, onValue} from 'firebase/database';
 
 import RequestCard from '../components/RequestCard';
@@ -43,7 +43,10 @@ export default function Requests() {
   };
 
   useEffect(() => {
-    setInterval(() => {listRequests()}, 3000);
+    setInterval(() => {listRequests()}, 2000);
+    return () => {
+      setRequests([]); 
+    };
   }, [])
 
 

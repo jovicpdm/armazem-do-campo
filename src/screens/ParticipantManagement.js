@@ -23,7 +23,7 @@ export default function ParticipantManagement({navigation: {navigate}}) {
           onPress={() => {
             navigate('Requests');
           }}>
-          <TextCard>Solicitações</TextCard>
+          <TextCard>Listar solicitações</TextCard>
           <IconMedium name="chevron-right" color={theme.pallete.primary002} />
         </CardContainer>
       </WhiteArea>

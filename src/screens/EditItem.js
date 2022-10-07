@@ -4,6 +4,8 @@ import ProductCardItem from '../components/ProductCardItem';
 import TitleScreen from '../components/TitleScreen';
 import TopScreen from '../components/TopScreen';
 import WhiteArea from '../components/WhiteArea';
+import Logo from '../components/Logo';
+
 
 export default function EditItem({ navigation, route }) {
 
@@ -40,11 +42,16 @@ export default function EditItem({ navigation, route }) {
 
     useEffect(() => {
         searchProduct();
+        return () => {
+            setProduct({}); 
+            setLoading(false);
+          };
     }, []);
 
 
     return (
         <>
+        <Logo/>
             <TopScreen>
                 <TitleScreen>Editar Produto</TitleScreen>
             </TopScreen>
@@ -63,8 +70,6 @@ export default function EditItem({ navigation, route }) {
                         mainImage={product.mainImage}
                         formsOfSale={product.formsOfSale}
                     />
-
-
                 </>
             </WhiteArea>
         </>

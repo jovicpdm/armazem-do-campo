@@ -1,7 +1,6 @@
 import React, {useState, useEffect} from 'react';
 import {SafeAreaView, StyleSheet} from 'react-native';
 import {getDatabase, ref, onValue} from 'firebase/database';
-import { useIsFocused } from '@react-navigation/native';
 
 import ProfilePhoto from '../components/ProfilePhoto';
 import {theme} from '../global/styles/theme';
@@ -19,7 +18,6 @@ export default function Admin({navigation: {navigate}, route}) {
   
 const [user, setUser] = useState({});
 const db = getDatabase();
-const isFocused = useIsFocused();
 
 const searchUser = async () => {
   let data = {};
@@ -43,8 +41,11 @@ const searchUser = async () => {
 };
 
 useEffect(()=>{
-  searchUser() 
- },[isFocused])
+  searchUser();
+  return () => {
+    setUser({}); 
+  };
+ },[])
 
   return (    
     <SafeAreaView>

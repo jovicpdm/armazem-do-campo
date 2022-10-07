@@ -30,17 +30,16 @@ export default function ProductManagement({ navigation: { navigate } }) {
         <SafeAreaView style={{ marginTop: 8 }} />
         <CardContainer
           onPress={() => {
-            navigate('ProductListDelete');
+            navigate('RegisterProduct');
           }}>
-          <TextCard>Remover produtos</TextCard>
-          <IconMedium name="chevron-right" color={theme.pallete.primary002} />
+          <TextCard>Cadastrar produtos</TextCard>
+          <IconMedium name="chevron-right" color={theme.pallete. primary002} />
         </CardContainer>
 
         <SafeAreaView style={{ marginTop: 8 }} />
         <CardContainer
           onPress={() => {
             navigate('EditProduct');
-            navigate('ProductList');
           }}>
           <TextCard>Editar produtos</TextCard>
           <IconMedium name="chevron-right" color={theme.pallete.primary002} />
@@ -49,12 +48,12 @@ export default function ProductManagement({ navigation: { navigate } }) {
         <SafeAreaView style={{ marginTop: 8 }} />
         <CardContainer
           onPress={() => {
-            navigate('RegisterProduct');
+            navigate('ProductListDelete');
           }}>
-          <TextCard>Cadastrar produtos</TextCard>
-          <IconMedium name="chevron-right" color={theme.pallete. primary002} />
-        </CardContainer>
-
+          <TextCard>Remover produtos</TextCard>
+          <IconMedium name="chevron-right" color={theme.pallete.primary002} />
+        </CardContainer>  
+        
         <SafeAreaView style={{ marginTop: 8 }} />
         <CardContainer
           onPress={() => {
