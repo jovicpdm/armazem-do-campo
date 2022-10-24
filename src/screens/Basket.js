@@ -1,5 +1,6 @@
 import React, {useState, useEffect} from 'react';
 import {StyleSheet, View, Text, FlatList, Alert} from 'react-native';
+
 import {
   getDatabase,
   ref,
@@ -28,6 +29,8 @@ export default function Basket({navigation,  route}) {
   const [selected, setSelected] = useState(true);
   const [total, setTotal] = useState(0);
   const [phone,setPhone] = useState('');
+  let storageName = []
+ 
   const db = getDatabase();
   const updateProduct = (id, amount) => { // erro 
      update(ref(db, 'products/' + id), {
@@ -46,22 +49,36 @@ export default function Basket({navigation,  route}) {
     })
     setPhone(counts.substring(counts.length - 4))
   }
-
+  function dateFormat  () {
+    let data = new Date();
+	  let dia = data.getDate();
+        if (dia.toString().length == 1){
+          dia = "0"+dia;
+        }
+	  let mes = data.getMonth()+1;
+        if (mes.toString().length == 1){
+          mes = "0"+mes;
+        }
+	  let ano = data.getFullYear();  
+	
+	  return dia+"/"+mes+"/"+ano;
+}
   const buy = () => {
     const id = uuid.v4();
     const dbRef = ref(db, 'order/' + id);
+
     set(dbRef, {
       id: id,
-      date: Date.now(),
+      date: dateFormat(),
       total: total,
       formPay: 'Dinheiro',
       codeNumber:phone
-    });
+    }); 
     products.map(item => {
-      if (item.amountBuy != 0) {
-        set(ref(db, 'order/' + id + `/${item.name}`), {
-          name: item.name,
-          amount: item.amountBuy,
+      if (item.amountBuy != 0) { 
+        storageName.push('Pedido',item.name + ',Qtd:' + item.amountBuy + '\n') 
+        set(ref(db, 'order/' + id  + `/requests`), {
+           products:storageName
         });
         updateProduct(item.id, item.amount - item.amountBuy); //erro 
       }
