@@ -18,12 +18,11 @@ const {codePhone} = route.params
          </View>
        </TopScreen>
        <WhiteAreaWithoutScrollView> 
-            <TitleSection>Informe o codigo abaixo para retirada do produto na loja.</TitleSection>
+       <TitleSection>Informe o codigo abaixo para retirada do produto na loja.</TitleSection>
             <View style={{flex:1,justifyContent:'center',alignContent:'center'}}>
                <TitleSection><Text style={{fontSize:40}}>{codePhone}</Text></TitleSection>
             </View>
             <View style={{flex:1,justifyContent:'flex-end'}}>
-               
                <ButtonPrimary style={{marginTop:5}} onPress={()=>{navigation.navigate('Purchase',{
                  id:route.params.id
                })}}>PRODUTOS</ButtonPrimary>

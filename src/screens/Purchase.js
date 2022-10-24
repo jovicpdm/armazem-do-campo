@@ -218,7 +218,7 @@ export default function Purchase({navigation, route}) {
                 );
                 
               }}
-              /* keyExtractor={item  => item.id} */
+/*               keyExtractor={item  => {item.id}}  */
             />
           ) : (
             <ActivityIndicator size={48} />
