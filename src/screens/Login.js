@@ -3,7 +3,6 @@ import {SafeAreaView, ActivityIndicator, Text, LogBox} from 'react-native';
 import {getAuth, signInWithEmailAndPassword} from 'firebase/auth/react-native';
 import {getDatabase, onValue, ref} from '@firebase/database';
 import { SocialIcon } from 'react-native-elements';
-
 import Logo from '../components/Logo';
 import Input from '../components/Input';
 import InputPassword from '../components/InputPassword';
@@ -14,13 +13,10 @@ import WhiteArea from '../components/WhiteArea';
 import TitleSection from '../components/TitleSection';
 import ErrorMessage from '../components/ErrorMessage';
 import RowHorizontal from '../components/Rowhorizontal';
-
+LogBox.ignoreLogs(['Warning: ...']);
+LogBox.ignoreAllLogs();
 export default function Login({navigation}) {
 
-  LogBox.ignoreLogs([
-    'Warning: isMounted(...) is deprecated', 
-    'Module RCTImageLoader',
-    'Require cycle:', ]);  
 
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
