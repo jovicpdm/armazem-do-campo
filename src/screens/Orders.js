@@ -7,6 +7,7 @@ import {
   onValue,
   remove,
 } from 'firebase/database';
+import { Database } from 'firebase/database';
 import { LogBox } from 'react-native';
 import TitleScreen from '../components/TitleScreen';
 import TopScreen from '../components/TopScreen';
@@ -20,10 +21,12 @@ import { white } from 'react-native-paper/lib/typescript/styles/colors';
 LogBox.ignoreLogs(['Warning: ...']);
 LogBox.ignoreAllLogs();
 export default function Orders() {
-  const [orders, setOrders] = useState();
+  const [orders, setOrders] = useState([]);
   const [count,setCount] = useState(0)
+  const [nameProducts,setnameProducts] = useState([])
   const db = getDatabase();
-  /*    const listOrders = async () => {
+  let storageName = []
+  const listOrders = async () => {
     setOrders()
     const dbRef = ref(db, 'order');
      const dataArray = []; 
@@ -34,23 +37,14 @@ export default function Orders() {
         });
         resolve();
            setOrders(dataArray);  
+           
       });
     });
   };  
-  */
-  const listOrders = () => {
-    setOrders()
-    const dbRef = ref(db, 'order');
-    const dataArray = [];  
-    onValue(dbRef, snapshot => {
-        snapshot.forEach(snap => {
-        dataArray.push(snap.val())
-        });
-        setOrders(dataArray);  
-      });
-  };  
+ 
+
         
- useEffect(()=>{listOrders()},[count]) 
+ useEffect(()=>{listOrders()},[]) 
   return (
     <SafeAreaView>
       <Logo/>
@@ -65,6 +59,7 @@ export default function Orders() {
               return item.id;
             }}
             renderItem={({item}) => {
+            
               return (
                <View style={{margin:7}}>
              

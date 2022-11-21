@@ -75,12 +75,12 @@ export default function Basket({navigation,  route}) {
       codeNumber:phone
     }); 
     products.map(item => {
-      if (item.amountBuy != 0) { 
-        storageName.push('Pedido',item.name + ',Qtd:' + item.amountBuy + '\n') 
+      if (item.amountBuy != 0) {
+        storageName.push(`Pedido:${item.name},Qtd:${item.amountBuy}\n`)
         set(ref(db, 'order/' + id  + `/requests`), {
-           products:storageName
+           products:storageName.join("")
         });
-        updateProduct(item.id, item.amount - item.amountBuy); //erro 
+        updateProduct(item.id, item.amount - item.amountBuy);
       }
     });
     remove(ref(db, 'purchase/' + route.params.id));
