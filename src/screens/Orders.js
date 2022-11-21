@@ -23,9 +23,7 @@ LogBox.ignoreAllLogs();
 export default function Orders() {
   const [orders, setOrders] = useState([]);
   const [count,setCount] = useState(0)
-  const [nameProducts,setnameProducts] = useState([])
   const db = getDatabase();
-  let storageName = []
   const listOrders = async () => {
     setOrders()
     const dbRef = ref(db, 'order');
