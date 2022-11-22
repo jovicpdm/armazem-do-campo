@@ -1,22 +1,30 @@
 import React, {useState, useEffect}from 'react';
 import {StyleSheet, Text, SafeAreaView, View,  TouchableOpacity, FlatList, Alert} from 'react-native';
+
 import {
   getDatabase,
   ref,
   onValue,
   remove,
 } from 'firebase/database';
-
+import { Database } from 'firebase/database';
+import { LogBox } from 'react-native';
 import TitleScreen from '../components/TitleScreen';
 import TopScreen from '../components/TopScreen';
 import Logo from '../components/Logo';
 import ButtonPrimary from '../components/ButtonPrimary';
 import WhiteAreaFlatList from '../components/WhiteAreaFlatList'
 import ButtonRequests from '../components/ButtonRequests'
+import { white } from 'react-native-paper/lib/typescript/styles/colors';
+
+
+LogBox.ignoreLogs(['Warning: ...']);
+LogBox.ignoreAllLogs();
 export default function Orders() {
-  const [orders, setOrders] = useState();
+  const [orders, setOrders] = useState([]);
+  const [count,setCount] = useState(0)
   const db = getDatabase();
-     const listOrders = async () => {
+  const listOrders = async () => {
     setOrders()
     const dbRef = ref(db, 'order');
      const dataArray = []; 
@@ -27,10 +35,11 @@ export default function Orders() {
         });
         resolve();
            setOrders(dataArray);  
+           
       });
     });
   };  
-
+ 
 
         
  useEffect(()=>{listOrders()},[]) 
@@ -47,17 +56,17 @@ export default function Orders() {
             keyExtractor={item => {
               return item.id;
             }}
-          
             renderItem={({item}) => {
+            
               return (
                <View style={{margin:7}}>
              
-                  <ButtonRequests onPress={ () =>  
+                  <ButtonRequests  onPress={ () =>  
                     Alert.alert('Confirmação Pedido',
                    `Data:${item.date}\n${item.requests.products}Total:${item.total}R$
                    `,
                    [
-                    { text: "Finalizar Pedido", onPress: () => {Alert.alert('Pedido Finalizado com sucesso','Recarregue a pagina'),remove(ref(db, 'order/' + item.id));} },
+                    { text: "Finalizar Pedido", onPress: () => {Alert.alert('Pedido Finalizado com sucesso'),remove(ref(db, 'order/' + item.id));setCount(count + 1)} },
                     {
                       text: "Cancelar",
                       onPress: () => console.log("Pedido Cancelado"),
@@ -65,11 +74,12 @@ export default function Orders() {
                     }
                     
                   ]
-                   )}>{item.codeNumber}</ButtonRequests> 
+                   )}><Text style={{color:'white',fontSize:20,fontWeight:'bold'}}>{item.codeNumber}</Text></ButtonRequests> 
                </View>
-                 )
-            }}
+                 ) 
+            }
           
+          }
           />  
        
       </WhiteAreaFlatList>

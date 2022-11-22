@@ -1,4 +1,5 @@
 import React, {useEffect, useState} from 'react';
+import { LogBox } from 'react-native';
 import {
   View,
   Text,
@@ -26,7 +27,8 @@ import SmallButton from '../components/SmallButton';
 import TextGray from '../components/GrayText';
 import GrayText from '../components/GrayText';
 import { useIsFocused } from '@react-navigation/native';
-
+LogBox.ignoreLogs(['Warning: ...']);
+LogBox.ignoreAllLogs();
 export default function Purchase({navigation, route}) {
   const [categories, setCategories] = useState([]);
   const [selected, setSelected] = useState('todos');
@@ -105,10 +107,12 @@ export default function Purchase({navigation, route}) {
   useEffect(() => {
     listCategories();
     searchUser();
-    listProducts();          
-   countRequestProdutcs() 
+    listProducts(); 
+    countRequestProdutcs()      
+    setOpen(false)    
   }, [isFocused]);
- 
+
+
    useEffect(()=>{
     countRequestProdutcs() 
    },[totalRequests])  

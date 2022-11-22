@@ -1,5 +1,5 @@
 import {View, Text} from 'react-native';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import WhiteAreaWithoutScrollView from '../components/WhiteAreaWithoutScrollView';
 import TopScreen from '../components/TopScreen';
 import TitleScreen from '../components/TitleScreen';
@@ -7,6 +7,10 @@ import TitleSection from '../components/TitleSection';
 import ButtonPrimary from '../components/ButtonPrimary';
 import { getDatabase, onValue, ref } from 'firebase/database';
 export default function RequestConfirmed({navigation,route}){
+const [count,setCount] = useState(0)
+useEffect(()=>{
+   
+},[count])
 const {codePhone} = route.params
    return (
     <> 
