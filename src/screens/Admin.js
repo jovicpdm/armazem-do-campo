@@ -50,7 +50,7 @@ useEffect(()=>{
   return (    
     <SafeAreaView>
       <Logo />
-        <SafeAreaView style={{flexDirection: 'row', justifyContent: 'center'}}>
+        <SafeAreaView style={{flexDirection: 'row', justifyContent: 'space-around',flexWrap:'wrap'}}>
           <TitleScreen>Bem-vindo {user.name}</TitleScreen>
            <ProfilePhoto photo={`data:image/gif;base64,${user.photo}`}/>
         </SafeAreaView> 
