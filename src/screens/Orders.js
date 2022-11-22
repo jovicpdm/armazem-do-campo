@@ -25,7 +25,7 @@ export default function Orders() {
   const [count,setCount] = useState(0)
   const db = getDatabase();
   const listOrders = async () => {
-    setOrders()
+    setOrders([])
     const dbRef = ref(db, 'order');
      const dataArray = []; 
     await new Promise(resolve => {
@@ -35,7 +35,6 @@ export default function Orders() {
         });
         resolve();
            setOrders(dataArray);  
-           
       });
     });
   };  
