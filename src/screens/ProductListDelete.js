@@ -41,7 +41,7 @@ export default function ProductList({ navigation: { navigate } }) {
     };
     
     useEffect(() => {
-        setInterval(() => {listProducts()}, 2000);
+        setInterval(() => {listProducts()}, 1000);
         return () => {
             setProducts({}); 
             setLoading(false);
