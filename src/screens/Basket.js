@@ -72,7 +72,9 @@ export default function Basket({navigation,  route}) {
       date: dateFormat(),
       total: total,
       formPay: 'Dinheiro',
+      status: 'aguardando',
       codeNumber:phone
+
     }); 
     products.map(item => {
       if (item.amountBuy != 0) {

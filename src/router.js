@@ -20,8 +20,12 @@ import Payment from './screens/Payment';
 import ProductInfo from './screens/ProductInfo';
 import Profile from './screens/Profile';
 import Basket from './screens/Basket';
+import OrdersManagement from './screens/OrdersManagement';
+import OrdersApproved from './screens/OrdersApproved';
+import OrdersDisapproved from './screens/OrdersDisapproved';
 import Orders from './screens/Orders';
 import RequestConfirmed from './screens/RequestConfirmed';
+
 
 
 const {Navigator, Screen} = createNativeStackNavigator();
@@ -61,7 +65,11 @@ const Router = () => {
         <Screen name="Profile" component={Profile} />
         <Screen name="Basket" component={Basket} />
         <Screen name="RequestConfirmed" component={RequestConfirmed}></Screen>
+        <Screen name="OrdersManagement" component={OrdersManagement} />
+        <Screen name="OrdersApproved" component={OrdersApproved} />
+        <Screen name="OrdersDisapproved" component={OrdersDisapproved} />
         <Screen name="Orders" component={Orders} />
+
       </Navigator>
     </NavigationContainer>
   );
