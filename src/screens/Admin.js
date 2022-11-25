@@ -50,6 +50,7 @@ useEffect(()=>{
   return (    
     <SafeAreaView>
       <Logo />
+
         <SafeAreaView style={{flexDirection: 'row', justifyContent: 'center'}}>
           <TitleScreen>Olá, {user.name}</TitleScreen>
            <ProfilePhoto photo={`data:image/gif;base64,${user.photo}`}/>

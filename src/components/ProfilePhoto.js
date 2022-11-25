@@ -19,9 +19,9 @@ export default ProfilePhoto;
 
 const styles = StyleSheet.create({
   profilePhoto: {
-    width: 60,
-    height: 60,
+    width: 75,
+    height: 75,
     borderRadius: 100,
-    marginLeft: 1,
+    marginLeft:20,
   },
 });

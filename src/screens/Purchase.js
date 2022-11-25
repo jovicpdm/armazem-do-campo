@@ -104,6 +104,7 @@ export default function Purchase({navigation, route}) {
     });
     setLoading(false);  
   };
+  
   useEffect(() => {
     listCategories();
     searchUser();
@@ -260,7 +261,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   welcomeSubtitle: {
-    fontSize: 12,
+    fontSize: 15,
     color: theme.pallete.textTitleScreen,
     letterSpacing: 0.4,
     fontFamily: 'Roboto-Regular',

@@ -42,14 +42,16 @@ const SmallButton = ({type, name, onPress}) => {
 const styles = StyleSheet.create({
   button: {
     marginTop: 8,
-    paddingVertical: 4,
+    paddingVertical: 7,
     paddingHorizontal: 8,
     borderRadius: 8,
     justifyContent: 'center',
     alignItems: 'center',
   },
   text: {
-    textAlign: 'center'
+    textAlign: 'center',
+    fontSize:17
+    
   },
 });
 

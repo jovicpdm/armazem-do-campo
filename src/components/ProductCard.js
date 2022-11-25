@@ -29,7 +29,7 @@ const ProductCard = ({
   const [showInput, setShowInput] = useState(false);
   const [amountBuy, setAmountBuy] = useState(0);
   const [nameMod, setNameMod] = useState(description);
-  const [countRequest,setCountRequest] = useState(1)
+  const [countRequest,setCountRequest] = useState(0)
   const db = getDatabase();
 
   const addBasket = () => {
@@ -65,19 +65,20 @@ const ProductCard = ({
       {expand ? (
         <>
           <View style={{marginTop: 16}} />
-          <Text style={[styles.subtitle, {marginLeft: 88}]}>{description}</Text>
+          <Text style={[styles.subtitle, {textAlign:'left',fontSize:17}]}>{description}</Text>
           <View style={{marginTop: 16}} />
           {showInput ? (
             <>
               <TextInput
                 maxLength={3}
-                label={`total: R$ ${amountBuy * price}`}
+                label={`Total:R$ ${amountBuy * price}`}
                 placeholder="0"
                 onChangeText={text => setAmountBuy(Number(text))}
                 keyboardType="decimal-pad"
+                style={styles.textInput}
               />
               <SmallButton
-                name="adicionar à cesta"
+                name="Adicionar à cesta"
                 type="primary"
                 onPress={() => {
                   try {
@@ -86,7 +87,7 @@ const ProductCard = ({
                         'Mensagem de confirmação',
                         'Produto adicionado',
                       );
-                      setCountRequest(countRequest + 0)
+                      setCountRequest(countRequest + 1)
                       addBasket();
                       
                     }
@@ -104,7 +105,7 @@ const ProductCard = ({
               <SmallButton
                 name="cancelar"
                 onPress={() => {
-                  // setShowInput(!showInput);
+                  setShowInput(!showInput);
                   setNameMod('cancelado');
                 }}
               />
@@ -137,12 +138,14 @@ const ProductCard = ({
 
 const styles = StyleSheet.create({
   card: {
+   
     paddingHorizontal: 16, 
     paddingTop: 16, 
     marginTop: 8,
     backgroundColor: theme.pallete.white,
     borderRadius: 8,
     elevation: 1,
+    
     shadowOffset: {
       width: 0.1,
       height: 0.1,
@@ -151,12 +154,13 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
   },
   container: {
+    width:'100%',
     flexDirection: 'row',
     alignItems: 'center',
   },
   image: {
-    height: 80,
-    width: 80,
+    height: 120,
+    width: 120,
     borderRadius: 8,
   },
   titleSubtitle: {
@@ -167,12 +171,12 @@ const styles = StyleSheet.create({
   title: {
     color: theme.pallete.black,
     fontFamily: 'Roboto-Bold',
-    fontSize: 18,
+    fontSize: 23,
   },
   subtitle: {
     color: theme.pallete.gray001,
     fontFamily: 'Roboto-Regular',
-    fontSize: 12,
+    fontSize: 15,
   },
 });
 
