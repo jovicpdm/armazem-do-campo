@@ -1,5 +1,5 @@
 import React from 'react';
-import {View, StyleSheet} from 'react-native';
+import {View, StyleSheet,ScrollView} from 'react-native';
 
 import {theme} from '../global/styles/theme';
 
@@ -14,6 +14,7 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: theme.pallete.white,
     height: '100%',
+    maxHeight:'100%',
     borderTopLeftRadius: 30,
     borderTopRightRadius: 30,
     paddingHorizontal: 16,

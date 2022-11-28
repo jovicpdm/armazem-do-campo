@@ -138,8 +138,8 @@ export default function Register({navigation}) {
     }
 
     if (auth.currentUser && !showError){
-        Alert.alert("Cadastro de colaboradores",
-        "Colaborador cadastrado com sucesso",
+        Alert.alert("Cadastro de consumidores",
+        "Consumidor cadastrado com sucesso",
         [    
           { text: "OK", onPress: () => navigation.navigate('Login') }
         ]
@@ -155,7 +155,7 @@ export default function Register({navigation}) {
         popular
       </Text>
       <WhiteArea>
-        <TitleSection>Cadastro de colaboradores</TitleSection>
+        <TitleSection>Cadastro de consumidores</TitleSection>
         <Input
           placeholder="Digite seu nome completo"
           placeholderTextColor={theme.pallete.primary}
@@ -273,7 +273,7 @@ export default function Register({navigation}) {
 const styles = StyleSheet.create({
   presentation: {
     fontFamily: 'Roboto-Medium',
-    fontSize: 16,
+    fontSize: 20,
     color: theme.pallete.white,
     textAlign: 'center',
     marginVertical: 10,

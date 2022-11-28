@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from 'react';
-import { LogBox } from 'react-native';
+import { KeyboardAvoidingView, LogBox } from 'react-native';
 import {
   View,
   Text,
@@ -25,8 +25,10 @@ import TopScreen from '../components/TopScreen';
 import ProfilePhoto from '../components/ProfilePhoto';
 import SmallButton from '../components/SmallButton';
 import TextGray from '../components/GrayText';
+import ButtonPurchase from '../components/ButtonPurchase'
 import GrayText from '../components/GrayText';
 import { useIsFocused } from '@react-navigation/native';
+import ButtonPrimary from '../components/ButtonPrimary';
 LogBox.ignoreLogs(['Warning: ...']);
 LogBox.ignoreAllLogs();
 export default function Purchase({navigation, route}) {
@@ -77,13 +79,16 @@ export default function Purchase({navigation, route}) {
     setCategories(dataArray);
   };
 
-  const countRequestProdutcs = () => {
+  const countRequestProdutcs = async () => {
   const dbRef = ref(db, 'purchase/' + route.params.id); 
   var counts = 0;
+  await new Promise(resolve => {
   onValue(dbRef, (snapshot) => {
     snapshot.forEach(snap => {
       counts += snap.val().countRequest;
     });
+    resolve()
+  });
     setTotalRequests(counts)
 });
 }
@@ -162,7 +167,7 @@ export default function Purchase({navigation, route}) {
       </TopScreen>
       <WhiteAreaWithoutScrollView>
         <HighlightedText>Categorias</HighlightedText>
-        <View style={{marginBottom: 16}}>
+        <View style={{marginBottom: 10}}>
           <FlatList
             showsHorizontalScrollIndicator={false}
             horizontal
@@ -187,8 +192,8 @@ export default function Purchase({navigation, route}) {
             }}
           />
         </View>
-        <HighlightedText>Produtos: {"\n"} ({selected})</HighlightedText>
-        <View style={{flex: 1, alignItems: 'center'}}>
+       {/*  <HighlightedText>Produtos: {"\n"} ({selected})</HighlightedText> */}
+        <View style={{flex: 1, alignItems: 'center',marginBottom:15}}>
           {!loading ? (
             <FlatList
               showsVerticalScrollIndicator={false}
@@ -228,8 +233,9 @@ export default function Purchase({navigation, route}) {
           ) : (
             <ActivityIndicator size={48} />
           )}
+          
         </View>
-        <SpeedDial
+      {/*   <SpeedDial
           color={theme.pallete.primary}
           isOpen={open}
           buttonStyle={{borderRadius: 8}}
@@ -248,8 +254,22 @@ export default function Purchase({navigation, route}) {
               })
             }
           />
-        </SpeedDial>
+        </SpeedDial> */}
+           <View style={styles.Final}>  
+       
+       <ButtonPurchase onPress={()=> 
+              navigation.navigate('Basket', {
+              
+               id: route.params.id,
+             })}>
+         <View style={styles.contentButton}>
+           <Text style={styles.fontButton}>IR PARA A CESTA</Text>
+         
+        </View>
+       </ButtonPurchase>
+     </View>
       </WhiteAreaWithoutScrollView>
+ 
     </>
   );
 }
@@ -270,4 +290,24 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between',
   },
+  Final:{
+   width:'100%',
+  },
+  contentButton:{
+    display:'flex',flexDirection:'row',justifyContent:'space-between'
+  },
+  fontButton:{
+    fontSize:18,
+    color:theme.pallete.white,
+    fontWeight:'bold',
+    marginRight:10
+  },
+  icon:{
+    marginRight:10
+  },
+  request:{
+    fontSize:18,
+    color:theme.pallete.white,
+    fontWeight:'bold'
+  }
 });
