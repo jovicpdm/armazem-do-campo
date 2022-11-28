@@ -127,7 +127,7 @@ export default function Purchase({navigation, route}) {
       <TopScreen>
         <View style={styles.welcomeContainer}>
           <View>
-            <TitleScreen textAlign="center">{user.name}</TitleScreen>
+            <TitleScreen textAlign="center">Olá {user.name}</TitleScreen>
             <View style={{marginTop: 8}}>
               <View style={styles.dateArea}>
                 <Text style={styles.welcomeSubtitle}>

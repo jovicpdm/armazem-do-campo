@@ -50,8 +50,9 @@ useEffect(()=>{
   return (    
     <SafeAreaView>
       <Logo />
-        <SafeAreaView style={{flexDirection: 'row', justifyContent: 'space-around',flexWrap:'wrap'}}>
-          <TitleScreen>Bem-vindo {user.name}</TitleScreen>
+
+        <SafeAreaView style={{flexDirection: 'row', justifyContent: 'center'}}>
+          <TitleScreen>Olá, {user.name}</TitleScreen>
            <ProfilePhoto photo={`data:image/gif;base64,${user.photo}`}/>
         </SafeAreaView> 
         <TopScreen/> 
@@ -87,7 +88,7 @@ useEffect(()=>{
 
           <CardContainer
             background={theme.pallete.primary004}
-            onPress={() => navigate('Orders')}>
+            onPress={() => navigate('OrdersManagement')}>
             <TextCard>Pedidos</TextCard>
             <IconMedium
               name="book-outline"
