@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {
   StyleSheet,
   Image,
@@ -30,6 +30,7 @@ const ProductCard = ({
   const [amountBuy, setAmountBuy] = useState(0);
   const [nameMod, setNameMod] = useState(description);
   const [countRequest,setCountRequest] = useState(0)
+  const [showRequest,setShowRequest] = useState(false);
   const db = getDatabase();
 
   const addBasket = () => {
@@ -45,8 +46,11 @@ const ProductCard = ({
     });
   };
 
+useEffect(()=>{
+},[countRequest])
   return (
     <View style={styles.card}>
+      {showRequest &&  <Text style={styles.notificatioRequest}>{countRequest}:PEDIDO</Text>}
       <View style={styles.container}>
         <Image
           style={styles.image}
@@ -64,7 +68,7 @@ const ProductCard = ({
       </View>
       {expand ? (
         <>
-          <View style={{marginTop: 16}} />
+          <View style={{marginTop: 10}} />
           <Text style={[styles.subtitle, {textAlign:'left',fontSize:17}]}>{description}</Text>
           <View style={{marginTop: 16}} />
           {showInput ? (
@@ -78,7 +82,7 @@ const ProductCard = ({
                 style={styles.textInput}
               />
               <SmallButton
-                name="Adicionar à cesta"
+                name="ADICIONAR À CESTA"
                 type="primary"
                 onPress={() => {
                   try {
@@ -87,15 +91,18 @@ const ProductCard = ({
                         'Mensagem de confirmação',
                         'Produto adicionado',
                       );
+                      setExpand(false)
+                      setShowRequest(true)
                       setCountRequest(countRequest + 1)
                       addBasket();
                       
                     }
-                    else if(amountBuy == 0){
+                    else if(amountBuy == 0 || amountBuy == ''){
                       Alert.alert(
-                        'Erro Produto',
+                        'Quantidade não informada',
                         'Informe uma quantidade',
                       );
+                  
                     }
                   } catch (error) {
                     console.log(error);
@@ -105,6 +112,7 @@ const ProductCard = ({
               <SmallButton
                 name="cancelar"
                 onPress={() => {
+                  setExpand(false)
                   setShowInput(!showInput);
                   setNameMod('cancelado');
                 }}
@@ -112,7 +120,7 @@ const ProductCard = ({
             </>
           ) : (
             <SmallButton
-              name="comprar"
+              name="COMPRAR"
               type="primary"
               onPress={() => {
                 setShowInput(!showInput);
@@ -138,14 +146,12 @@ const ProductCard = ({
 
 const styles = StyleSheet.create({
   card: {
-   
     paddingHorizontal: 16, 
     paddingTop: 16, 
-    marginTop: 8,
+    marginTop: 4,
     backgroundColor: theme.pallete.white,
     borderRadius: 8,
     elevation: 1,
-    
     shadowOffset: {
       width: 0.1,
       height: 0.1,
@@ -154,7 +160,7 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
   },
   container: {
-    width:'100%',
+   
     flexDirection: 'row',
     alignItems: 'center',
   },
@@ -178,6 +184,10 @@ const styles = StyleSheet.create({
     fontFamily: 'Roboto-Regular',
     fontSize: 15,
   },
+  notificatioRequest:{
+    textAlign:'right',
+    fontWeight:'bold'
+  }
 });
 
 export default ProductCard;

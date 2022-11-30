@@ -42,7 +42,7 @@ const SmallButton = ({type, name, onPress}) => {
 const styles = StyleSheet.create({
   button: {
     marginTop: 8,
-    paddingVertical: 7,
+    paddingVertical: 10,
     paddingHorizontal: 8,
     borderRadius: 8,
     justifyContent: 'center',
@@ -50,8 +50,8 @@ const styles = StyleSheet.create({
   },
   text: {
     textAlign: 'center',
-    fontSize:17
-    
+    fontSize:17,
+    fontWeight:'bold'
   },
 });
 
