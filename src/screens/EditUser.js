@@ -21,7 +21,7 @@ export default function EditUser({ navigation, route }) {
 
         await new Promise(resolve => {
             onValue(dbRef, snapshot => {
-                const { name, email, address, photo, presentation, phone, password,status } = snapshot.val();
+                const { name, email, address, photo, presentation, phone, password } = snapshot.val();
                 data = {
                     id: snapshot.key,
                     name: name,
@@ -30,8 +30,7 @@ export default function EditUser({ navigation, route }) {
                     photo: photo,
                     presentation: presentation,
                     phone: phone,
-                    password: password,
-                    status: status
+                    password: password
                 };
                 resolve();
                 setUser(data);
@@ -67,8 +66,7 @@ export default function EditUser({ navigation, route }) {
                         photo={user.photo}
                         presentation={user.presentation} 
                         phone={user.phone}  
-                        password={user.password} 
-                        status={user.status}                       
+                        password={user.password}            
                     />
                 </>
             </WhiteArea>

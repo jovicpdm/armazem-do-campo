@@ -1,12 +1,11 @@
-import React, { useState, useEffect} from 'react';
-import { StyleSheet, Image, View, Text,  Alert } from 'react-native';
-import { onValue, getDatabase, ref, update } from 'firebase/database';
+import React, { useState} from 'react';
+import { StyleSheet, Image, View, Text, Alert } from 'react-native';
+import { getDatabase, ref, update } from 'firebase/database';
 
 import { theme } from '../global/styles/theme';
 import { TextInput} from 'react-native-paper';
 import SmallButton from './SmallButton';
 import * as ImagePicker from 'react-native-image-picker';
-import { Picker } from '@react-native-picker/picker';
 import InputImage from './InputImage';
 
 
@@ -19,7 +18,6 @@ const UserCardItem = ({
   presentation, 
   phone, 
   password,
-  status,
 }) => {
 
   const [newName, setNewName] = useState();
@@ -29,25 +27,8 @@ const UserCardItem = ({
   const [newPresentation, setNewPresentation] = useState();
   const [newPhone, setNewPhone] = useState();
   const [newPassword, setNewPassword] = useState();
-  const [statuss, setStatus] = useState([]);
-  const [selectedStatus, setSelectedStatus] = useState(0);
 
   const db = getDatabase();
-
-  const dbRef = ref(db, 'status');
-
-  const listStatus = async () => {
-    const dataArray = [];
-    await new Promise(resolve => {
-      onValue(dbRef, snapshot => {
-        snapshot.forEach(snap => {
-          dataArray.push(snap.val());
-        });
-        resolve();
-      });
-    });
-    setStatus(dataArray);
-  };
 
   function itemUpdated (){    
       Alert.alert("Atenção", 'Item atualizado com sucesso');
@@ -133,26 +114,10 @@ const UserCardItem = ({
     itemUpdated ();
   };
   
-  const updateStatus = (id, status) => {
-    if (!status){
-      Alert.alert("Atenção",'Por favor, selecione o status');
-      return;
-    }
-    update(ref(db, 'users/' + id), {
-      status: status,
-    });
-    itemUpdated ();
-  };
-
-  useEffect(() => {
-    listStatus();
-    return () => {
-      setStatus([]); 
-    };
-  }, []);
 
   return (
     <View style={styles.card}>
+
       <View style={styles.container}>
         <Image
           style={styles.image}
@@ -263,37 +228,6 @@ const UserCardItem = ({
         type="primary"
         onPress={() => { updatePassword(id, newPassword) }}
       />
-
-<Text style={styles.titlePicker}> {`Status: ${status}`} </Text>
-      <Picker
-        dropdownIconColor={theme.pallete.primary004}
-        mode="dropdown"
-        style={{ color: theme.pallete.black }}
-        selectedValue={selectedStatus}
-        onValueChange={(itemValue, item) => setSelectedStatus(itemValue)}>
-        <Picker.Item
-          color={theme.pallete.black}
-          label="Selecione o status"
-          value={0}
-        />
-        {statuss.map(status => {
-          return (
-            <Picker.Item
-              color={theme.pallete.black}
-              label={status.description}
-              value={status.description}
-              key={status.description}
-            />
-          );
-        })}
-      </Picker>
-
-      <SmallButton
-        name="Atualizar status"
-        type="primary"
-        onPress={() => { updateStatus(id, selectedStatus) }}
-      />
-
 
     </View>
   );
