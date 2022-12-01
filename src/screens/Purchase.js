@@ -31,6 +31,7 @@ import { useIsFocused } from '@react-navigation/native';
 import ButtonPrimary from '../components/ButtonPrimary';
 LogBox.ignoreLogs(['Warning: ...']);
 LogBox.ignoreAllLogs();
+
 export default function Purchase({navigation, route}) {
   const [categories, setCategories] = useState([]);
   const [selected, setSelected] = useState('todos');
@@ -127,7 +128,7 @@ export default function Purchase({navigation, route}) {
       <TopScreen>
         <View style={styles.welcomeContainer}>
           <View>
-            <TitleScreen textAlign="center">Olá {user.name}</TitleScreen>
+            <TitleScreen textAlign="center">Olá, {user.name}</TitleScreen>
             <View style={{marginTop: 8}}>
               <View style={styles.dateArea}>
                 <Text style={styles.welcomeSubtitle}>
@@ -161,8 +162,9 @@ export default function Purchase({navigation, route}) {
               </View>
             </View>
           </View>
-          <ProfilePhoto photo={`data:image/gif;base64,${user.photo}`} />
-        </View>
+          <ProfilePhoto photo={`data:image/gif;base64,${user.photo}`} 
+            onPress={() => { navigation.navigate('EditUser', { id: route.params.id });}}/>
+          </View>
         {/* <SmallButton name="ir para cesta"/> */}
       </TopScreen>
       <WhiteAreaWithoutScrollView>

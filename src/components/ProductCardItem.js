@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from 'react';
-import { StyleSheet, Image, View, Text, TouchableOpacity, Alert, ProgressViewIOSComponent } from 'react-native';
+import { StyleSheet, Image, View, Text, Alert } from 'react-native';
 import { onValue, getDatabase, ref, update } from 'firebase/database';
 
 import { theme } from '../global/styles/theme';
-import { TextInput, ImageInput } from 'react-native-paper';
+import { TextInput } from 'react-native-paper';
 import SmallButton from './SmallButton';
 import * as ImagePicker from 'react-native-image-picker';
 import { Picker } from '@react-native-picker/picker';
@@ -21,7 +21,7 @@ const ProductCardItem = ({
   mainImage,
   amount,
 }) => {
-
+  
   const [newProductName, setNewProductName] = useState();
   const [newPrice, setNewPrice] = useState();
   const [newPlaceOfSale, setNewPlaceOfSale] = useState();

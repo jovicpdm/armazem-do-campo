@@ -14,7 +14,7 @@ export default function ParticipantManagement({navigation: {navigate}}) {
     <SafeAreaView>
       <Logo />
       <SafeAreaView style={{flexDirection: 'row', justifyContent: 'center'}}>
-        <TitleScreen>Gerenciamento de participantes</TitleScreen>
+        <TitleScreen>Gerenciamento de colaboradores</TitleScreen>
         </SafeAreaView>
         <TopScreen/>
       <WhiteArea>
@@ -24,6 +24,15 @@ export default function ParticipantManagement({navigation: {navigate}}) {
             navigate('Requests');
           }}>
           <TextCard>Listar solicitações</TextCard>
+          <IconMedium name="chevron-right" color={theme.pallete.primary002} />
+        </CardContainer>
+
+        <SafeAreaView style={{marginTop: 8}} />
+        <CardContainer
+          onPress={() => {
+            navigate('EditUsers');
+          }}>
+          <TextCard>Editar colaboradores</TextCard>
           <IconMedium name="chevron-right" color={theme.pallete.primary002} />
         </CardContainer>
       </WhiteArea>

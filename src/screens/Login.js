@@ -112,12 +112,12 @@ export default function Login({navigation}) {
 
 
         <SafeAreaView style ={{ flexDirection:'row',marginHorizontal:14,alignItems:'center'}} >
-        <RowHorizontal></RowHorizontal>
+        {/* <RowHorizontal></RowHorizontal>
         <Text style={{fontSize:11,paddingHorizontal:6}}>OU</Text>
-        <RowHorizontal></RowHorizontal>
+        <RowHorizontal></RowHorizontal> */}
       </SafeAreaView>
 
-      <Text style={{marginTop:10,marginBottom:5,fontSize:16,textAlign:'center'}}>Entrar com:</Text>
+      {/* <Text style={{marginTop:10,marginBottom:5,fontSize:16,textAlign:'center'}}>Entrar com:</Text>
       <SocialIcon
         title='Google'
         button
@@ -128,7 +128,7 @@ export default function Login({navigation}) {
         title='Facebook'
         button
         type='facebook'
-        />
+        /> */}
       </WhiteArea>
     </SafeAreaView>
   );

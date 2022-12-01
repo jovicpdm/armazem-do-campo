@@ -5,22 +5,22 @@ import {
     ActivityIndicator,
 } from 'react-native';
 import { getDatabase, ref, onValue} from 'firebase/database';
-import ProductCardEdit from '../components/ProductCardEdit';
+import UsersCardEdit from '../components/UsersCardEdit';
 import TitleScreen from '../components/TitleScreen';
 import TopScreen from '../components/TopScreen';
 import WhiteAreaWithoutScrollView from '../components/WhiteAreaWithoutScrollView';
 import Logo from '../components/Logo';
 
-export default function EditProduct({ navigation }) {
+export default function EditUsers({ navigation }) {
 
     const db = getDatabase();
 
-    const [products, setProducts] = useState();
+    const [users, setUsers] = useState();
     const [loading, setLoading] = useState(false);
 
-    const listProducts = async () => {
+    const listUsers = async () => {
         setLoading(true);
-        const dbRef = ref(db, 'products');
+        const dbRef = ref(db, 'users');
         const dataArray = [];
         await new Promise(resolve => {
             onValue(dbRef, snapshot => {
@@ -36,14 +36,14 @@ export default function EditProduct({ navigation }) {
             .catch(e => {
                 console.log(e);
             });
-        setProducts(dataArray);
+        setUsers(dataArray);
         setLoading(false);
     };
 
     useEffect(() => {
-        listProducts();
+        listUsers();
         return () => {
-            setProducts({}); 
+            setUsers({}); 
             setLoading(false);
           };
     }, []);
@@ -53,28 +53,27 @@ export default function EditProduct({ navigation }) {
         <>
         <Logo/>
             <TopScreen>
-                <TitleScreen>Atualizar produtos</TitleScreen>
+                <TitleScreen>Atualizar colaboradores</TitleScreen>
             </TopScreen>
             <WhiteAreaWithoutScrollView>
 
                 {!loading ? (
                     <FlatList
-                        data={products}
+                        data={users}
                         key={item => item.id}
                         renderItem={({ item }) => {
                             return (
                                 <>
-                                    <ProductCardEdit
+                                    <UsersCardEdit
                                         id={item.id}
+                                        address={item.address}
+                                        email={item.email}
                                         name={item.name}
-                                        price={item.price}
-                                        image={item.mainImage}
-                                        placeOfSale={item.placeOfSale}
-                                        description={item.description}
-                                        formsOfSale={item.formsOfSale}
-                                        amount={item.amount}
+                                        phone={item.phone}
+                                        photo={item.photo}
+                                        presentation={item.presentation}
                                         props={() => {
-                                            navigation.navigate('EditItem', {
+                                            navigation.navigate('EditUser', {
                                                 id: item.id
                                             });  
                                         }}

@@ -5,14 +5,16 @@ import { theme } from '../global/styles/theme';
 import IconMedium from './IconMedium';
 import SmallButton from './SmallButton';
 
-const ProductCardEdit = ({
-  props,
+const UsersCardEdit = ({
+  props, 
+  address,
+  email,
   name,
-  price,
-  image,
-  formOfSale,
-  amount,
+  phone,
+  photo,
+  presentation,
 }) => {
+
   const [expand, setExpand] = useState(false);
   const [showInput, setShowInput] = useState(false); 
 
@@ -21,15 +23,21 @@ const ProductCardEdit = ({
       <View style={styles.container}>
         <Image
           style={styles.image}
-          source={{ uri: `data:image/gif;base64,${image}` }}
+          source={{ uri: `data:image/gif;base64,${photo}` }}
         />
         <View style={styles.titleSubtitle}>
           <Text style={styles.title}>{name}</Text>
           <Text style={styles.subtitle}>
-            R$ {price}
+            {email}
           </Text>
           <Text style={styles.subtitle}>
-            {amount} {formOfSale}(s) restantes
+            {address} 
+          </Text>
+          <Text style={styles.subtitle}>
+            {presentation} 
+          </Text>
+          <Text style={styles.subtitle}>
+            {phone} 
           </Text>
         </View>
       </View>
@@ -104,4 +112,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default ProductCardEdit;
+export default UsersCardEdit;

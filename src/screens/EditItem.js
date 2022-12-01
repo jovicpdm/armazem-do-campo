@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { getDatabase, ref, onValue, update } from 'firebase/database';
+import { getDatabase, ref, onValue } from 'firebase/database';
 import ProductCardItem from '../components/ProductCardItem';
 import TitleScreen from '../components/TitleScreen';
 import TopScreen from '../components/TopScreen';
@@ -19,6 +19,7 @@ export default function EditItem({ navigation, route }) {
         setLoading(true);
         let data = {};
         const dbRef = ref(db, 'products/' + route.params.id);
+        
         await new Promise(resolve => {
             onValue(dbRef, snapshot => {
                 const { name, price, mainImage, description, category, formsOfSale, amount, placeOfSale } = snapshot.val();
@@ -53,7 +54,7 @@ export default function EditItem({ navigation, route }) {
         <>
         <Logo/>
             <TopScreen>
-                <TitleScreen>Editar Produto</TitleScreen>
+                <TitleScreen>Editar produto</TitleScreen>
             </TopScreen>
             <WhiteArea>
 
