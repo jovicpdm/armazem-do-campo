@@ -30,7 +30,6 @@ export default function Register({navigation}) {
   const [showError, setShowError] = useState(false);
   const [error, setError] = useState('');
 
-
   function writeUserData () {
 
     const db = getDatabase();
@@ -42,6 +41,7 @@ export default function Register({navigation}) {
         createUserWithEmailAndPassword(auth, email, password)
           .then(userCredential => {
             set(ref(db, 'users/' + userCredential.user.uid), {
+              id: userCredential.user.uid,
               name: name,
               email: email,
               address: address,

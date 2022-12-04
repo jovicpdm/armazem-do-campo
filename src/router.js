@@ -25,8 +25,8 @@ import OrdersApproved from './screens/OrdersApproved';
 import OrdersDisapproved from './screens/OrdersDisapproved';
 import Orders from './screens/Orders';
 import RequestConfirmed from './screens/RequestConfirmed';
-
-
+import EditUsers from './screens/EditUsers';
+import EditUser from './screens/EditUser';
 
 const {Navigator, Screen} = createNativeStackNavigator();
 
@@ -69,6 +69,8 @@ const Router = () => {
         <Screen name="OrdersApproved" component={OrdersApproved} />
         <Screen name="OrdersDisapproved" component={OrdersDisapproved} />
         <Screen name="Orders" component={Orders} />
+        <Screen name="EditUsers" component={EditUsers} />
+        <Screen name="EditUser" component={EditUser} />
 
       </Navigator>
     </NavigationContainer>

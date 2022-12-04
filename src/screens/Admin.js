@@ -1,5 +1,5 @@
 import React, {useState, useEffect} from 'react';
-import {SafeAreaView, StyleSheet} from 'react-native';
+import {Alert, SafeAreaView, StyleSheet} from 'react-native';
 import {getDatabase, ref, onValue} from 'firebase/database';
 
 import ProfilePhoto from '../components/ProfilePhoto';
@@ -50,10 +50,10 @@ useEffect(()=>{
   return (    
     <SafeAreaView>
       <Logo />
-
         <SafeAreaView style={{flexDirection: 'row', justifyContent: 'center'}}>
           <TitleScreen>Olá, {user.name}</TitleScreen>
-           <ProfilePhoto photo={`data:image/gif;base64,${user.photo}`}/>
+           <ProfilePhoto photo={`data:image/gif;base64,${user.photo}`} 
+            onPress={() => { navigate('EditUser', { id: route.params.id });}}/>
         </SafeAreaView> 
         <TopScreen/> 
 
@@ -79,7 +79,7 @@ useEffect(()=>{
           <CardContainer
             background={theme.pallete.primary004}
             onPress={() => navigate('ParticipantManagement')}>
-            <TextCard>Participantes</TextCard>
+            <TextCard>Colaboradores</TextCard>
             <IconMedium
               name="account-group-outline"
               color={theme.pallete.primary002}
