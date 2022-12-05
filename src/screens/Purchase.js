@@ -194,7 +194,7 @@ export default function Purchase({navigation, route}) {
             }}
           />
         </View>
-       {/*  <HighlightedText>Produtos: {"\n"} ({selected})</HighlightedText> */}
+       {/*  <HighlightedText>Produtos: {"\n"} ({selected})</HighlightedText> */} 
         <View style={{flex: 1, alignItems: 'center',marginBottom:15}}>
           {!loading ? (
             <FlatList
@@ -209,8 +209,9 @@ export default function Purchase({navigation, route}) {
                 return (
                   <>
                     {selected === item.category || selected === 'todos' ? (
+                      
                       <Text>
-                        {' '}
+                        {' '}  
                         <ProductCard
                           name={item.name}
                           price={item.price}
@@ -223,6 +224,7 @@ export default function Purchase({navigation, route}) {
                           id={item.id}
                         />{' '}
                       </Text>
+                      
                     ) : (
                       <GrayText>Não há produtos nessa categoria</GrayText>
                     )}
@@ -237,36 +239,14 @@ export default function Purchase({navigation, route}) {
           )}
           
         </View>
-      {/*   <SpeedDial
-          color={theme.pallete.primary}
-          isOpen={open}
-          buttonStyle={{borderRadius: 8}}
-          icon={{name: 'list', color: '#fff'}}
-          openIcon={{name: 'close', color: '#fff'}}
-          onOpen={() => setOpen(!open)}
-          onClose={() => setOpen(!open)}>
-          <SpeedDial.Action
-            buttonStyle={{borderRadius: 8}}
-            color={theme.pallete.primary004}
-            icon={{name: 'basket', color: '#fff', type: 'material-community'}}
-            title={`Pedido:${totalRequests}`}
-            onPress={() =>
+     
+      <View style={styles.Final}>
+         <ButtonPurchase onPress={()=> 
               navigation.navigate('Basket', {
-                id: route.params.id,
-              })
-            }
-          />
-        </SpeedDial> */}
-           <View style={styles.Final}>  
-       
-       <ButtonPurchase onPress={()=> 
-              navigation.navigate('Basket', {
-              
                id: route.params.id,
              })}>
          <View style={styles.contentButton}>
-           <Text style={styles.fontButton}>IR PARA A CESTA</Text>
-         
+         <Text style={styles.fontButton}>IR PARA A CESTA</Text>
         </View>
        </ButtonPurchase>
      </View>

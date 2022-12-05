@@ -27,6 +27,7 @@ export default function Basket({navigation,  route}) {
   const [products, setProducts] = useState([]);
   const [refresh, setRefresh] = useState(false);
   const [selected, setSelected] = useState(true);
+  const [control,setControl] = useState(0)
   const [total, setTotal] = useState(0);
   const [phone,setPhone] = useState('');
   let storageName = []
@@ -63,11 +64,11 @@ export default function Basket({navigation,  route}) {
 	
 	  return dia+"/"+mes+"/"+ano;
 }
-  const buy = () => {
+  const buy =  () => {
     const id = uuid.v4();
     const dbRef = ref(db, 'order/' + id);
 
-    set(dbRef, {
+      set(dbRef, {
       id: id,
       date: dateFormat(),
       total: total,
@@ -77,7 +78,7 @@ export default function Basket({navigation,  route}) {
 
     }); 
     products.map(item => {
-      if (item.amountBuy != 0) {
+      if (item.amountBuy != 0) {  
         storageName.push(`Pedido:${item.name},Qtd:${item.amountBuy}\n`)
         set(ref(db, 'order/' + id  + `/requests`), {
            products:storageName.join("")
@@ -93,17 +94,21 @@ export default function Basket({navigation,  route}) {
     const dbRef = ref(db, 'purchase/' + route.params.id);
     const dataArray = [];
     var prices = 0;
+    var amounts = 0
     await new Promise(resolve => {
       onValue(dbRef, snapshot => {
         snapshot.forEach(snap => {
           dataArray.push(snap.val());
           prices += snap.val().price;
+          amounts += snap.val().amountBuy
         });
         resolve();
       });
     });
     setProducts(dataArray);
     setTotal(prices);
+    setControl(amounts)
+    
   };
   useEffect(() => {
     listProducts();
@@ -162,12 +167,17 @@ export default function Basket({navigation,  route}) {
         <View style={{marginTop: 60}} />    
         <ButtonPrimary
           onPress={() => {
-           
-              buy();   
+            if(control !== 0){
+            buy();
               navigation.navigate('RequestConfirmed',{
                id:route.params.id,
                codePhone:phone
-             })  
+             })
+            }
+            else if(control === 0) {
+              Alert.alert('Error','Adicione no mínimo um produto na cesta')
+              navigation.goBack()
+            }
           }}>
           CONCLUIR COMPRA
         </ButtonPrimary>
