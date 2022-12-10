@@ -88,7 +88,7 @@ useEffect(()=>{
 
           <CardContainer
             background={theme.pallete.primary004}
-            onPress={() => navigate('OrdersManagement')}>
+            onPress={() => navigate('OrdersManagement', { id: route.params.id })}>
             <TextCard>Pedidos</TextCard>
             <IconMedium
               name="book-outline"
