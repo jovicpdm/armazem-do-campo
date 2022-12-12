@@ -21,7 +21,7 @@ export default function ProductManagement({ navigation: { navigate }, route }) {
         <SafeAreaView style={{ marginTop: 8 }} />
         <CardContainer
           onPress={() => {
-            navigate('Orders', route.params.id);
+            navigate('Orders');
           }}>
           <TextCard>Autorizar pedidos</TextCard>
           <IconMedium name="chevron-right" color={theme.pallete.primary002} />
@@ -31,7 +31,7 @@ export default function ProductManagement({ navigation: { navigate }, route }) {
 
         <CardContainer
           onPress={() => {
-            navigate('OrdersApproved', route.params.id);
+            navigate('OrdersApproved');
           }}>
           <TextCard>Pedidos aprovados</TextCard>
           <IconMedium name="chevron-right" color={theme.pallete. primary002} />
@@ -40,7 +40,7 @@ export default function ProductManagement({ navigation: { navigate }, route }) {
         <SafeAreaView style={{ marginTop: 8 }} />
         <CardContainer
           onPress={() => {
-            navigate('OrdersDisapproved', route.params.id);
+            navigate('OrdersDisapproved');
           }}>
           <TextCard>Pedidos reprovados</TextCard>
           <IconMedium name="chevron-right" color={theme.pallete.primary002} />

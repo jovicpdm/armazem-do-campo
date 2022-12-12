@@ -1,5 +1,5 @@
 import React, {useState, useEffect} from 'react';
-import {Alert, SafeAreaView, StyleSheet} from 'react-native';
+import {SafeAreaView, StyleSheet} from 'react-native';
 import {getDatabase, ref, onValue} from 'firebase/database';
 
 import ProfilePhoto from '../components/ProfilePhoto';
@@ -88,7 +88,7 @@ useEffect(()=>{
 
           <CardContainer
             background={theme.pallete.primary004}
-            onPress={() => navigate('OrdersManagement', { id: route.params.id })}>
+            onPress={() => navigate('OrdersManagement')}>
             <TextCard>Pedidos</TextCard>
             <IconMedium
               name="book-outline"
