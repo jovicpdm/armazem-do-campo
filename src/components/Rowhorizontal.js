@@ -8,7 +8,7 @@ const RowHorizontal = () => {
 }
 const styles = StyleSheet.create({
    row:{
-    flex:1,
+    marginTop:5,
     height:1.4,
     backgroundColor:theme.pallete.black
    }

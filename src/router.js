@@ -27,7 +27,8 @@ import Orders from './screens/Orders';
 import RequestConfirmed from './screens/RequestConfirmed';
 import EditUsers from './screens/EditUsers';
 import EditUser from './screens/EditUser';
-
+import MethodPix from './screens/MethodPix'
+ 
 const {Navigator, Screen} = createNativeStackNavigator();
 
 const MyTheme = {
@@ -64,6 +65,7 @@ const Router = () => {
         <Screen name="ProductInfo" component={ProductInfo} />
         <Screen name="Profile" component={Profile} />
         <Screen name="Basket" component={Basket} />
+        <Screen name="MethodPix" component={MethodPix} />
         <Screen name="RequestConfirmed" component={RequestConfirmed}></Screen>
         <Screen name="OrdersManagement" component={OrdersManagement} />
         <Screen name="OrdersApproved" component={OrdersApproved} />

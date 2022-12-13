@@ -23,6 +23,10 @@ import ButtonPrimary from '../components/ButtonPrimary';
 import GrayText from '../components/GrayText';
 import ButtonSecondary from '../components/ButtonSecondary';
 import RequestConfirmed from './RequestConfirmed';
+import FormTitle from '../components/FormTitle';
+import RowHorizontal from '../components/Rowhorizontal';
+import { CheckBox } from 'react-native-elements';
+import WhiteArea from '../components/WhiteArea';
 export default function Basket({navigation,  route}) {
   const [products, setProducts] = useState([]);
   const [refresh, setRefresh] = useState(false);
@@ -30,7 +34,11 @@ export default function Basket({navigation,  route}) {
   const [control,setControl] = useState(0)
   const [total, setTotal] = useState(0);
   const [phone,setPhone] = useState('');
+  const [isCheckedMoney,setisCheckedMoney] = useState(false)
+  const [isCheckedPix,setisCheckedPix] = useState(false)
+  const [nameMethod,setNameMethod] = useState('')
   let storageName = []
+  
  
   const db = getDatabase();
   const updateProduct = (id, amount) => { // erro 
@@ -72,7 +80,7 @@ export default function Basket({navigation,  route}) {
       id: id,
       date: dateFormat(),
       total: total,
-      formPay: 'Dinheiro',
+      formPay: nameMethod,
       status: 'aguardando',
       codeNumber:phone
 
@@ -121,7 +129,7 @@ export default function Basket({navigation,  route}) {
       <TopScreen>
         <TitleScreen>Cesta</TitleScreen>
       </TopScreen>
-      <WhiteAreaWithoutScrollView>
+      <WhiteArea>
         <HighlightedText>Lista de itens</HighlightedText>
         {products === null ? (
           <HighlightedText>Não há itens</HighlightedText>
@@ -164,20 +172,33 @@ export default function Basket({navigation,  route}) {
           </View>
         )}
        
-        <View style={{marginTop: 60}} />    
+        <View style={{marginTop: 45}} />    
         <ButtonPrimary
           onPress={() => {
-            if(control !== 0){
+            if(control !== 0 && isCheckedMoney === true){
+              
             buy();
               navigation.navigate('RequestConfirmed',{
                id:route.params.id,
                codePhone:phone
              })
             }
+            else if(control !== 0 && isCheckedPix === true){
+               
+               buy()
+               navigation.navigate('MethodPix',{
+                id:route.params.id,
+                codePhone:phone
+              })
+            }
             else if(control === 0) {
-              Alert.alert('Error','Adicione no mínimo um produto na cesta')
+              Alert.alert('Atenção','Adicione no mínimo um produto na cesta')
               navigation.goBack()
             }
+            else if(isCheckedPix === false && isCheckedMoney === false){
+              Alert.alert('Atenção','Selecione um Método de pagamento')
+            }
+            
           }}>
           CONCLUIR COMPRA
         </ButtonPrimary>
@@ -188,8 +209,43 @@ export default function Basket({navigation,  route}) {
           }}>
           CANCELAR COMPRA
         </ButtonSecondary>
-       
-      </WhiteAreaWithoutScrollView>
+        <RowHorizontal></RowHorizontal>
+       <View style={styles.ContainerCheckbox}>
+         <FormTitle>Formas de Pagamento</FormTitle>
+         <View style={styles.checkBoxs}>
+         <CheckBox
+            title='Dinheiro'
+            checkedIcon='check'
+            uncheckedIcon='square-o'
+            checkedColor='green'
+            uncheckedColor='red'
+            checked={isCheckedMoney}
+            onPress={()=>{setisCheckedMoney(!isCheckedMoney)
+              setNameMethod('Dinheiro')
+              
+             if(isCheckedPix === true) {
+                setisCheckedPix(!isCheckedPix)
+             }
+            }}
+         />
+          <CheckBox
+            title='Pix'
+            checkedIcon='check'
+            uncheckedIcon='square-o'
+            checkedColor='green'
+            uncheckedColor='red'
+            checked={isCheckedPix}
+            onPress={()=>{setisCheckedPix(!isCheckedPix)
+              setNameMethod('Pix')
+              
+             if(isCheckedMoney === true){
+               setisCheckedMoney(!isCheckedMoney)
+             }
+            }}
+         />
+         </View>
+       </View>
+      </WhiteArea>
     </>
   );
 }
@@ -205,11 +261,11 @@ const styles = StyleSheet.create({
   text: {
     color: theme.pallete.primary002,
     fontFamily: 'Roboto-Medium',
-    fontSize: 16,
+    fontSize: 20,
     textAlign: 'left',
   },
   subText: {
-    fontSize: 10,
+    fontSize: 15,
     color: theme.pallete.gray001,
     fontFamily: 'Roboto-Regular',
   },
@@ -218,4 +274,10 @@ const styles = StyleSheet.create({
     marginTop: 16,
     borderColor: theme.pallete.gray,
   },
+  ContainerCheckbox:{
+     marginTop:10
+  },
+  checkBoxs:{
+    marginTop:10
+  }
 });
