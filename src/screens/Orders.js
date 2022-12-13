@@ -10,11 +10,12 @@ import Logo from '../components/Logo';
 import GrayTextCenter from '../components/GrayTextCenter';
 
 
-export default function Orders() {
+export default function Orders () {
 
   const [orders, setOrders] = useState([]);
   const db = getDatabase();
   const dbRef = ref(db, 'order');
+  const idUser = '';
 
   const listOrders = async () => {
     const dataArray = [];
@@ -25,9 +26,10 @@ export default function Orders() {
           
           if (status == 'aguardando') {
 
-          const {date, codeNumber, formPay, requests, total} = snap.val();
+          const {date, codeNumber, formPay, requests, total, idUser} = snap.val();
             let orders = {
               id: snap.key,
+              idUser: idUser,
               date,
               codeNumber,
               formPay,
@@ -49,7 +51,7 @@ export default function Orders() {
       setOrders([]); 
     };
   }, [])
- 
+
   return (
     <>
     <Logo/>
@@ -75,6 +77,7 @@ export default function Orders() {
                 formPay={item.formPay}
                 id={item.id}
                 total={item.total}
+                idUser={item.idUser}
               />
             );
           }}

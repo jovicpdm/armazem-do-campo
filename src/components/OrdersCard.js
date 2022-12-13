@@ -1,10 +1,15 @@
-import React from 'react';
-import {StyleSheet, View, Image, Text, TouchableOpacity, Alert} from 'react-native';
+import React, {useEffect, useState} from 'react';
+import {StyleSheet, View, SafeAreaView, Text, TouchableOpacity, Alert} from 'react-native';
 import {Icon} from 'react-native-elements';
 import {theme} from '../global/styles/theme';
-import {getDatabase, ref, update} from 'firebase/database';
+import {getDatabase, ref, update, onValue} from 'firebase/database';
+import ProfilePhoto from '../components/ProfilePhoto';
 
-const OrdersCard = ({date, codeNumber, formPay, id, requests, total}) => {
+
+const OrdersCard = ({date, codeNumber, formPay, id, requests, total, idUser}) => {
+
+  const [user, setUser] = useState({});
+  const db = getDatabase();
 
     const approve = (id, response) => {
     const db = getDatabase();
@@ -19,16 +24,38 @@ const OrdersCard = ({date, codeNumber, formPay, id, requests, total}) => {
     }
   };
 
+  const searchUser = async () => {
+    let data = {};
+    const dbRef = ref(db, 'users/' + idUser);
+    await new Promise(resolve => {
+      onValue(dbRef, snapshot => {
+        const {photo, name, email, address, phone} = snapshot.val();
+        data = {
+          id: snapshot.key,
+          photo: photo,
+          name: name,
+          email: email,
+          address: address,
+          phone: phone,
+        };
+        resolve();
+        setUser(data);
+      });
+    });
+  };
+
+  useEffect(() => {
+    searchUser();
+    return () => {
+      setUser ([]);
+    };
+  }, [])
+
   return (
     
-    <View style={styles.container}>
-      <View style={styles.label}>
-        {/* <Image
-          style={styles.profilePhoto}
-          source={{
-            uri: photo,
-          }}
-        /> */}
+    <SafeAreaView style={styles.container}>
+      <View style={{flexDirection: 'row', marginLeft: -20}}>
+            <ProfilePhoto photo={`data:image/gif;base64,${user.photo}`}/>      
 
         <View style={styles.labelInfo}>
           <Text
@@ -38,7 +65,28 @@ const OrdersCard = ({date, codeNumber, formPay, id, requests, total}) => {
 
           <View style={{flexDirection: 'row'}}>
             <Text style={[styles.text, {color: theme.pallete.primary005}]}>
-              Data:{' '}
+              Colaborador:{' '}
+            </Text>
+            <Text style={styles.text}>{user.name}</Text>
+          </View>
+
+          <View style={{flexDirection: 'row'}}>
+            <Text style={[styles.text, {color: theme.pallete.primary005}]}>
+              Endereço:{' '}
+            </Text>
+            <Text style={styles.text}>{user.address}</Text>
+          </View>
+
+          <View style={{flexDirection: 'row'}}>
+            <Text style={[styles.text, {color: theme.pallete.primary005}]}>
+              Telefone:{' '}
+            </Text>
+            <Text style={styles.text}>{user.phone}</Text>
+          </View>
+
+          <View style={{flexDirection: 'row'}}>
+            <Text style={[styles.text, {color: theme.pallete.primary005}]}>
+              Data do pedido:{' '}
             </Text>
             <Text style={styles.text}>{date}</Text>
           </View>
@@ -51,18 +99,27 @@ const OrdersCard = ({date, codeNumber, formPay, id, requests, total}) => {
           </View>
 
           <View style={{flexDirection: 'row'}}>
-            <Text style={[styles.text, {color: theme.pallete.primary005}]}>
-      
+            <Text style={[styles.text, {color: theme.pallete.primary005}]}>  
+           Descrição:{' '}    
             </Text>
             <Text style={styles.text}>{requests}</Text>
           </View>
 
           <View style={{flexDirection: 'row'}}>
             <Text style={[styles.text, {color: theme.pallete.primary005}]}>
-              Valor a pagar:{' '}
+              Valor a pagar: {' '}
             </Text>
-            <Text style={styles.text}>{total}</Text>
+            <Text style={styles.text}>R$ {total}</Text>
           </View>
+
+          <View style={{flexDirection: 'row'}}>
+            <Text style={[styles.text, {color: theme.pallete.primary005}]}>
+              Comprovante: {' '}
+            </Text>
+            <Text style={styles.text}> { }</Text>
+          </View>
+
+        
 
         </View>
       </View>
@@ -104,7 +161,7 @@ const OrdersCard = ({date, codeNumber, formPay, id, requests, total}) => {
           </TouchableOpacity>
         </View>
       </View>
-    </View>
+    </SafeAreaView>
   );
 };
 

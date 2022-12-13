@@ -80,6 +80,7 @@ export default function GeneralInformation({ navigation: { navigate } }) {
 
     const id = uuid.v4();
     set(ref(db, 'generalInformation/' + id), {
+      id: id,
       closingDate: textClosingDate,
       deliveryDate: textDeliveryDate,
       deliveryPlace: deliveryPlace,

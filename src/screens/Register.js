@@ -155,7 +155,7 @@ export default function Register({navigation}) {
         popular
       </Text>
       <WhiteArea>
-        <TitleSection>Cadastro de consumidores</TitleSection>
+        <TitleSection>Cadastro de colaboradores</TitleSection>
         <Input
           placeholder="Digite seu nome completo"
           placeholderTextColor={theme.pallete.primary}
