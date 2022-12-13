@@ -58,6 +58,7 @@ export default function Basket({navigation,  route}) {
     })
     setPhone(counts.substring(counts.length - 4))
   }
+
   function dateFormat  () {
     let data = new Date();
 	  let dia = data.getDate();
@@ -80,6 +81,7 @@ export default function Basket({navigation,  route}) {
       id: id,
       date: dateFormat(),
       total: total,
+      idUser: route.params.id,
       formPay: nameMethod,
       status: 'aguardando',
       codeNumber:phone
@@ -87,7 +89,7 @@ export default function Basket({navigation,  route}) {
     }); 
     products.map(item => {
       if (item.amountBuy != 0) {  
-        storageName.push(`Pedido:${item.name},Qtd:${item.amountBuy}\n`)
+        storageName.push(`${item.amountBuy} ${item.name}\n`)
         set(ref(db, 'order/' + id  + `/requests`), {
            products:storageName.join("")
         });

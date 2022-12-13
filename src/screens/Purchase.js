@@ -34,6 +34,7 @@ LogBox.ignoreAllLogs();
 
 export default function Purchase({navigation, route}) {
   const [categories, setCategories] = useState([]);
+  const [information, setInformation] = useState([]);
   const [selected, setSelected] = useState('todos');
   const [products, setProducts] = useState();
   const [user, setUser] = useState({});
@@ -110,19 +111,44 @@ export default function Purchase({navigation, route}) {
     });
     setLoading(false);  
   };
+
+  const listGeneralInformation = async () => {
+    let data = {};
+    const dbRef = ref(db, 'generalInformation/' + '2c53944b-af29-489c-8fd0-f1dbea3479a1');
+    await new Promise(resolve => {
+      onValue(dbRef, snapshot => {
+        const {closingDate, deliveryDate, deliveryPlace} = snapshot.val();
+        data = {
+          id: snapshot.key,
+          closingDate: closingDate,
+          deliveryDate: deliveryDate,
+          deliveryPlace: deliveryPlace,
+        };
+        resolve();
+        setInformation(data);
+      });
+    });
+  };
+ 
   
   useEffect(() => {
     listCategories();
     searchUser();
     listProducts(); 
-    countRequestProdutcs()      
-    setOpen(false)    
-  }, [isFocused]);
+    countRequestProdutcs();
+    listGeneralInformation ();
+    setOpen(false);  
+    return () => {
+      setCategories([]); 
+      setUser ([]);
+      setProducts([]);
+      setTotalRequests (totalRequests);
+      setInformation ([]);
+    };
+  }, [])
 
+  console.log(route)
 
-   useEffect(()=>{
-    countRequestProdutcs() 
-   },[totalRequests])  
   return (
     <>
       <TopScreen>
@@ -130,9 +156,10 @@ export default function Purchase({navigation, route}) {
           <View>
             <TitleScreen textAlign="center">Olá, {user.name}</TitleScreen>
             <View style={{marginTop: 8}}>
+
               <View style={styles.dateArea}>
                 <Text style={styles.welcomeSubtitle}>
-                  Fechamento da compra:
+                  Fechamento da compra: 
                 </Text>
                 <Text
                   style={[
@@ -141,13 +168,13 @@ export default function Purchase({navigation, route}) {
                       fontFamily: 'Roboto-Bold',
                       color: theme.pallete.primary007,
                     },
-                  ]}>
-                  {' '}
-                  18/12
+                  ]}>    
+                    {information.closingDate}
                 </Text>
               </View>
+
               <View style={styles.dateArea}>
-                <Text style={styles.welcomeSubtitle}>Entrega:</Text>
+                <Text style={styles.welcomeSubtitle}>Entrega do pedido:</Text>
                 <Text
                   style={[
                     styles.welcomeSubtitle,
@@ -155,13 +182,13 @@ export default function Purchase({navigation, route}) {
                       fontFamily: 'Roboto-Bold',
                       color: theme.pallete.primary007,
                     },
-                  ]}>
-                  {' '}
-                  22/12
-                </Text>
-              </View>
+                  ]}>     
+                    {information.deliveryDate}
+                </Text>                
+              </View>            
             </View>
           </View>
+
           <ProfilePhoto photo={`data:image/gif;base64,${user.photo}`} 
             onPress={() => { navigation.navigate('EditUser', { id: route.params.id });}}/>
           </View>
