@@ -1,9 +1,8 @@
 import React, { useState } from 'react';
 import { View, Text, StyleSheet, Platform, SafeAreaView, Alert } from 'react-native';
-import { getDatabase, ref, set } from 'firebase/database';
+import { getDatabase, ref, update } from 'firebase/database';
 
 
-import uuid from 'react-native-uuid';
 import DateTimePicker from '@react-native-community/datetimepicker'
 import { theme } from '../global/styles/theme';
 import WhiteArea from '../components/WhiteArea';
@@ -78,18 +77,16 @@ export default function GeneralInformation({ navigation: { navigate } }) {
       return;
     }
 
-    const id = uuid.v4();
-    set(ref(db, 'generalInformation/' + id), {
-      id: id,
+    update(ref(db, 'generalInformation/'+ '218ef621-692f-41bb-83a1-fe83a7abdf40'), {
       closingDate: textClosingDate,
       deliveryDate: textDeliveryDate,
       deliveryPlace: deliveryPlace,
     });
 
-    Alert.alert("Cadastro de prazos",
-    "Informações cadastradas com sucesso",
+    Alert.alert("Prazos",
+    "Informações atualizadas com sucesso",
     [    
-      { text: "OK", onPress: () => navigate('ProductManagement') }
+      { text: "OK", onPress: () => navigate('OrdersManagement') }
     ]
     );
   };
@@ -98,7 +95,7 @@ export default function GeneralInformation({ navigation: { navigate } }) {
     <>
     <Logo/>
       <SafeAreaView style={styles.container}>
-        <Text style={styles.addProduct}>Informações gerais</Text>
+        <Text style={styles.addProduct}>Prazos dos pedidos</Text>
       </SafeAreaView>
       <WhiteArea>
 
@@ -155,10 +152,10 @@ export default function GeneralInformation({ navigation: { navigate } }) {
         />
 
         <View style={{ marginTop: 32 }} />
-        <ButtonPrimary onPress={() => addGeneralInformation()}>CADASTRAR</ButtonPrimary>
+        <ButtonPrimary onPress={() => addGeneralInformation()}>ATUALIZAR</ButtonPrimary>
         <ButtonSecondary
           onPress={() => {
-            navigate('ProductManagement');
+            navigate('OrdersManagement');
           }}>
           CANCELAR
         </ButtonSecondary>

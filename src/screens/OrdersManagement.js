@@ -9,7 +9,7 @@ import WhiteArea from '../components/WhiteArea';
 import { theme } from '../global/styles/theme';
 import Logo from '../components/Logo';
 
-export default function ProductManagement({ navigation: { navigate }, route }) {
+export default function OrdersManagement({ navigation: {navigate} }) {
   return (
     <SafeAreaView>
       <Logo/>
@@ -33,7 +33,7 @@ export default function ProductManagement({ navigation: { navigate }, route }) {
           onPress={() => {
             navigate('OrdersApproved');
           }}>
-          <TextCard>Pedidos aprovados</TextCard>
+          <TextCard>Exibir pedidos aprovados</TextCard>
           <IconMedium name="chevron-right" color={theme.pallete. primary002} />
         </CardContainer>
 
@@ -42,8 +42,17 @@ export default function ProductManagement({ navigation: { navigate }, route }) {
           onPress={() => {
             navigate('OrdersDisapproved');
           }}>
-          <TextCard>Pedidos reprovados</TextCard>
+          <TextCard>Exibir pedidos reprovados</TextCard>
           <IconMedium name="chevron-right" color={theme.pallete.primary002} />
+        </CardContainer>
+
+        <SafeAreaView style={{ marginTop: 8 }} />
+        <CardContainer
+          onPress={() => {
+            navigate('GeneralInformationListManagement');
+          }}>
+          <TextCard>Prazos</TextCard>
+          <IconMedium name="chevron-right" color={theme.pallete. primary002} />
         </CardContainer>
        
       </WhiteArea>

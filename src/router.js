@@ -27,7 +27,11 @@ import Orders from './screens/Orders';
 import RequestConfirmed from './screens/RequestConfirmed';
 import EditUsers from './screens/EditUsers';
 import EditUser from './screens/EditUser';
-import MethodPix from './screens/MethodPix'
+import MethodPix from './screens/MethodPix';
+import GeneralInformationListManagement from './screens/GeneralInformationListManagement';
+import GeneralInformationList from './screens/GeneralInformationList';
+
+
  
 const {Navigator, Screen} = createNativeStackNavigator();
 
@@ -73,6 +77,10 @@ const Router = () => {
         <Screen name="Orders" component={Orders} />
         <Screen name="EditUsers" component={EditUsers} />
         <Screen name="EditUser" component={EditUser} />
+        <Screen name="GeneralInformationListManagement" component={GeneralInformationListManagement} />
+        <Screen name="GeneralInformationList" component={GeneralInformationList} />
+
+
 
       </Navigator>
     </NavigationContainer>
