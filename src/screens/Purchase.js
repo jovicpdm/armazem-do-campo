@@ -29,6 +29,9 @@ import ButtonPurchase from '../components/ButtonPurchase'
 import GrayText from '../components/GrayText';
 import { useIsFocused } from '@react-navigation/native';
 import ButtonPrimary from '../components/ButtonPrimary';
+import GrayTextCenter from '../components/GrayTextCenter';
+
+
 LogBox.ignoreLogs(['Warning: ...']);
 LogBox.ignoreAllLogs();
 
@@ -114,7 +117,7 @@ export default function Purchase({navigation, route}) {
 
   const listGeneralInformation = async () => {
     let data = {};
-    const dbRef = ref(db, 'generalInformation/' + '2c53944b-af29-489c-8fd0-f1dbea3479a1');
+    const dbRef = ref(db, 'generalInformation/' + '218ef621-692f-41bb-83a1-fe83a7abdf40');
     await new Promise(resolve => {
       onValue(dbRef, snapshot => {
         const {closingDate, deliveryDate, deliveryPlace} = snapshot.val();
@@ -128,7 +131,7 @@ export default function Purchase({navigation, route}) {
         setInformation(data);
       });
     });
-  };
+  }; 
  
   
   useEffect(() => {
@@ -146,8 +149,6 @@ export default function Purchase({navigation, route}) {
       setInformation ([]);
     };
   }, [])
-
-  console.log(route)
 
   return (
     <>
@@ -169,6 +170,7 @@ export default function Purchase({navigation, route}) {
                       color: theme.pallete.primary007,
                     },
                   ]}>    
+                  
                     {information.closingDate}
                 </Text>
               </View>
@@ -195,7 +197,7 @@ export default function Purchase({navigation, route}) {
         {/* <SmallButton name="ir para cesta"/> */}
       </TopScreen>
       <WhiteAreaWithoutScrollView>
-        <HighlightedText>Categorias</HighlightedText>
+        <GrayTextCenter>Categorias</GrayTextCenter>
         <View style={{marginBottom: 10}}>
           <FlatList
             showsHorizontalScrollIndicator={false}
@@ -209,7 +211,7 @@ export default function Purchase({navigation, route}) {
                     setSelected(item.description.toLowerCase());
                   }}
                   color={
-                    item.description === selected
+                    item.description == selected
                       ? theme.pallete.primary004
                       : theme.pallete.black
                   }
@@ -235,7 +237,7 @@ export default function Purchase({navigation, route}) {
               renderItem={({item}) => {
                 return (
                   <>
-                    {selected === item.category || selected === 'todos' ? (
+                    {selected == item.category || selected == 'todos' ? (
                       
                       <Text>
                         {' '}  
