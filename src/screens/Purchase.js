@@ -148,7 +148,7 @@ export default function Purchase({navigation, route}) {
       setTotalRequests (totalRequests);
       setInformation ([]);
     };
-  }, [])
+  }, [isFocused])
 
   return (
     <>
