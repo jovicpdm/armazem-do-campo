@@ -1,16 +1,7 @@
 import React, {useState, useEffect} from 'react';
 import {StyleSheet, View, Text, FlatList, Alert} from 'react-native';
 
-import {
-  getDatabase,
-  ref,
-  onValue,
-  update,
-  set,
-  remove,
-  push,
-  child
-} from 'firebase/database';
+import { getDatabase, ref, onValue, update, set, remove, push, child } from 'firebase/database';
 import uuid from 'react-native-uuid';
 
 import TitleScreen from '../components/TitleScreen';
@@ -27,6 +18,8 @@ import FormTitle from '../components/FormTitle';
 import RowHorizontal from '../components/Rowhorizontal';
 import { CheckBox } from 'react-native-elements';
 import WhiteArea from '../components/WhiteArea';
+
+
 export default function Basket({navigation,  route}) {
   const [products, setProducts] = useState([]);
   const [refresh, setRefresh] = useState(false);
@@ -53,8 +46,7 @@ export default function Basket({navigation,  route}) {
     let counts = ''
     onValue(dbRef,(snapshot)=>{
         let datasPhone = snapshot.val().phone
-        counts = datasPhone
-        
+        counts = datasPhone        
     })
     setPhone(counts.substring(counts.length - 4))
   }
@@ -73,10 +65,10 @@ export default function Basket({navigation,  route}) {
 	
 	  return dia+"/"+mes+"/"+ano;
 }
+
   const buy =  () => {
     const id = uuid.v4();
     const dbRef = ref(db, 'order/' + id);
-
       set(dbRef, {
       id: id,
       date: dateFormat(),
@@ -85,7 +77,6 @@ export default function Basket({navigation,  route}) {
       formPay: nameMethod,
       status: 'aguardando',
       codeNumber:phone
-
     }); 
     products.map(item => {
       if (item.amountBuy != 0) {  
@@ -120,10 +111,15 @@ export default function Basket({navigation,  route}) {
     setControl(amounts)
     
   };
+
   useEffect(() => {
     listProducts();
-    getNumber()  
-  }, []);
+    getNumber() 
+    return () => {
+      setPhone([]); 
+      setProducts ([]);
+    };
+  }, [])
  
   return (
     <>
@@ -198,7 +194,7 @@ export default function Basket({navigation,  route}) {
               navigation.goBack()
             }
             else if(isCheckedPix === false && isCheckedMoney === false){
-              Alert.alert('Atenção','Selecione um Método de pagamento')
+              Alert.alert('Atenção','Selecione um método de pagamento')
             }
             
           }}>
@@ -215,6 +211,7 @@ export default function Basket({navigation,  route}) {
        <View style={styles.ContainerCheckbox}>
          <FormTitle>Formas de Pagamento</FormTitle>
          <View style={styles.checkBoxs}>
+          
          <CheckBox
             title='Dinheiro'
             checkedIcon='check'

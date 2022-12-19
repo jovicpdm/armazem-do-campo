@@ -35,7 +35,8 @@ export default function GeneralInformation({ navigation: { navigate } }) {
     setClosingDate(currentDate)
 
     let tempDate = new Date(currentDate)
-    let cDate = tempDate.getDate() + '/' + (tempDate.getMonth() + 1) + '/' + tempDate.getFullYear()
+    let cDate = tempDate.getDate() + '/' + (tempDate.getUTCMonth() + 1) + '/' + 
+    tempDate.getFullYear()
     setTextClosingDate(cDate)
   }
 
@@ -45,7 +46,8 @@ export default function GeneralInformation({ navigation: { navigate } }) {
     setDeliveryDate(currentDate)
 
     let tempDate = new Date(currentDate)
-    let fDate = tempDate.getDate() + '/' + (tempDate.getMonth() + 1) + '/' + tempDate.getFullYear()
+    let fDate = tempDate.getDate() + '/' + (tempDate.getUTCMonth() + 1) + '/' + 
+    tempDate.getFullYear()
     setTextDeliveryDate(fDate)
   }
 

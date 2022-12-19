@@ -1,34 +1,20 @@
 import React, {useEffect, useState} from 'react';
-import { KeyboardAvoidingView, LogBox } from 'react-native';
-import {
-  View,
-  Text,
-  StyleSheet,
-  FlatList,
-  ActivityIndicator,
-  Alert,
-} from 'react-native';
+import { LogBox } from 'react-native';
+import { View, Text, StyleSheet, FlatList, ActivityIndicator, Alert} from 'react-native';
 
-import Icon from 'react-native-vector-icons/FontAwesome';
-import {getDatabase, ref, onValue, set} from 'firebase/database';
-import {SpeedDial} from 'react-native-elements';
+import {getDatabase, ref, onValue} from 'firebase/database';
 
 import {theme} from '../global/styles/theme';
 import firebase from '../config/firebase';
-import MySearchBar from '../components/MySearchBar';
 import WhiteAreaWithoutScrollView from '../components/WhiteAreaWithoutScrollView';
-import HighlightedText from '../components/HighlightedText';
 import CategoryLabel from '../components/CategoryLabel';
 import ProductCard from '../components/ProductCard';
 import TitleScreen from '../components/TitleScreen';
 import TopScreen from '../components/TopScreen';
 import ProfilePhoto from '../components/ProfilePhoto';
-import SmallButton from '../components/SmallButton';
-import TextGray from '../components/GrayText';
 import ButtonPurchase from '../components/ButtonPurchase'
 import GrayText from '../components/GrayText';
 import { useIsFocused } from '@react-navigation/native';
-import ButtonPrimary from '../components/ButtonPrimary';
 import GrayTextCenter from '../components/GrayTextCenter';
 
 
@@ -54,15 +40,11 @@ export default function Purchase({navigation, route}) {
     const dbRef = ref(db, 'users/' + route.params.id);
     await new Promise(resolve => {
       onValue(dbRef, snapshot => {
-        const {photo, name, email, address, phone, presentation} = snapshot.val();
+        const {photo, name} = snapshot.val();
         data = {
           id: snapshot.key,
           photo: photo,
           name: name,
-          email: email,
-          address: address,
-          phone: phone,
-          presentation: presentation,
         };
         resolve();
         setUser(data);
@@ -160,7 +142,7 @@ export default function Purchase({navigation, route}) {
 
               <View style={styles.dateArea}>
                 <Text style={styles.welcomeSubtitle}>
-                  Fechamento da compra: 
+                  Fechamento da compra: {''}
                 </Text>
                 <Text
                   style={[
@@ -194,15 +176,16 @@ export default function Purchase({navigation, route}) {
           <ProfilePhoto photo={`data:image/gif;base64,${user.photo}`} 
             onPress={() => { navigation.navigate('EditUser', { id: route.params.id });}}/>
           </View>
-        {/* <SmallButton name="ir para cesta"/> */}
       </TopScreen>
+      
       <WhiteAreaWithoutScrollView>
-        <GrayTextCenter>Categorias</GrayTextCenter>
+        <GrayTextCenter>Categorias de produtos</GrayTextCenter>
         <View style={{marginBottom: 10}}>
           <FlatList
             showsHorizontalScrollIndicator={false}
-            horizontal
+            horizontal={true}
             data={categories}
+            refreshing={true}
             renderItem={({item}) => {
               return (
                 <CategoryLabel
@@ -223,7 +206,7 @@ export default function Purchase({navigation, route}) {
             }}
           />
         </View>
-       {/*  <HighlightedText>Produtos: {"\n"} ({selected})</HighlightedText> */} 
+
         <View style={{flex: 1, alignItems: 'center',marginBottom:15}}>
           {!loading ? (
             <FlatList
@@ -237,10 +220,13 @@ export default function Purchase({navigation, route}) {
               renderItem={({item}) => {
                 return (
                   <>
-                    {selected == item.category || selected == 'todos' ? (
+                    {selected === item.category || selected === 'todos' ? (                     
                       
                       <Text>
                         {' '}  
+
+                        {console.log(selected)}
+
                         <ProductCard
                           name={item.name}
                           price={item.price}
@@ -261,7 +247,6 @@ export default function Purchase({navigation, route}) {
                 );
                 
               }}
-/*               keyExtractor={item  => {item.id}}  */
             />
           ) : (
             <ActivityIndicator size={48} />

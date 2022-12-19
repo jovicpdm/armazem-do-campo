@@ -1,30 +1,12 @@
 import React, {useEffect, useState} from 'react';
-import {
-  StyleSheet,
-  Image,
-  View,
-  Text,
-  TouchableOpacity,
-  Alert,
-} from 'react-native';
+import {StyleSheet, Image, View, Text, TouchableOpacity, Alert, } from 'react-native';
 import {getDatabase, ref, set} from 'firebase/database';
-
 import {theme} from '../global/styles/theme';
 import {TextInput} from 'react-native-paper';
 import IconMedium from './IconMedium';
 import SmallButton from './SmallButton';
 
-const ProductCard = ({
-  id,
-  name,
-  price,
-  image,
-  description,
-  formOfSale,
-  placeOfSale,
-  amount,
-  userId,
-}) => {
+const ProductCard = ({ id, name, price, image, description, formOfSale, amount, userId,}) => {
   const [expand, setExpand] = useState(false);
   const [showInput, setShowInput] = useState(false);
   const [amountBuy, setAmountBuy] = useState(0);
@@ -46,8 +28,12 @@ const ProductCard = ({
     });
   };
 
-useEffect(()=>{
-},[countRequest])
+  useEffect(() => {
+    addBasket();
+    return () => {
+    };
+  }, [countRequest])
+
   return (
     <View style={styles.card}>
       {showRequest &&  <Text style={styles.notificatioRequest}>{countRequest}:PEDIDO</Text>}
@@ -82,7 +68,7 @@ useEffect(()=>{
                 style={styles.textInput}
               />
               <SmallButton
-                name="ADICIONAR À CESTA"
+                name="ADICIONAR A CESTA"
                 type="primary"
                 onPress={() => {
                   try {

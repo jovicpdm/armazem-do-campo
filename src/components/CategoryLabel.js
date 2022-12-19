@@ -3,7 +3,7 @@ import {Text, StyleSheet, TouchableOpacity} from 'react-native';
 
 // const [state, setstate] = useState(initialState);
 
-const CategoryLabel = ({description, id, onPress, color}) => {
+const CategoryLabel = ({description, onPress, color}) => {
   return (
     <TouchableOpacity onPress={onPress}>
       <Text style={[styles.category, {color: color}]}>{description}</Text>
