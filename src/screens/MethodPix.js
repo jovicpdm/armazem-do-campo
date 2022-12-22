@@ -1,4 +1,4 @@
-import {View, Text, StyleSheet, Platform} from 'react-native';
+import {View, Text, StyleSheet, Platform, Alert} from 'react-native';
 import React, { useEffect, useState } from 'react';
 import WhiteAreaWithoutScrollView from '../components/WhiteAreaWithoutScrollView';
 import TopScreen from '../components/TopScreen';
@@ -14,7 +14,9 @@ import storage from '@react-native-firebase/storage'
 
 import { getDatabase } from 'firebase/database';
 import ButtonRequests from '../components/ButtonRequests';
+
 export default function MethodPix({navigation,route}){
+
 const {codePhone,id} = route.params
 const [uri,setUri] = useState('')
   const chooseFile = async () => { 
@@ -30,7 +32,7 @@ const [uri,setUri] = useState('')
        }
        catch(e){
           if(DocumentPicker.isCancel(e)){
-             //caso o usuario cancele a seleção
+            Alert.alert('Upload','Adicione o comprovante de pagamento');
           }
           else{
             throw e
@@ -38,6 +40,7 @@ const [uri,setUri] = useState('')
           }
        }
   }
+
 const normalizePath = async (path) => {
     if(Platform.OS === 'ios' || Platform.OS === 'android'){
        const prefix = 'file://'
@@ -52,15 +55,19 @@ const normalizePath = async (path) => {
     return path
 }
 const uploadFileToFirebaseStorage = async (result,file) => {
+
           file.forEach(item => {
-            const uploadTask = storage().ref(`paymentProof/${item.name}`).putString(result,'base64',{contentType:item.type})
+            const uploadTask = storage().ref(`paymentProof/${item.name}`).
+            putString(result,'base64',{contentType:item.type})
 
             uploadTask.on('state_changed', 
             (snapshot) => {
               // Observe state change events such as progress, pause, and resume
               // Get task progress, including the number of bytes uploaded and the total number of bytes to be uploaded
               const progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+
               console.log('Upload is ' + progress + '% done');
+
               switch (snapshot.state) {
                 case 'paused':
                   console.log('Upload is paused');
@@ -79,6 +86,9 @@ const uploadFileToFirebaseStorage = async (result,file) => {
               // For instance, get the download URL: https://firebasestorage.googleapis.com/...
               uploadTask.snapshot.ref.getDownloadURL().then(function (downloadURL)  {
                 console.log('File available at', downloadURL);
+                Alert.alert('Upload','Upload concluído com sucesso');
+                navigation.navigate('Purchase',  {id:route.params.id});
+
               });
             }
           );

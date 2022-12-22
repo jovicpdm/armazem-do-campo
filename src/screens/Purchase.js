@@ -225,7 +225,7 @@ export default function Purchase({navigation, route}) {
                       <Text>
                         {' '}  
 
-                        {console.log(selected)}
+                        {/* {console.log(selected)} */}
 
                         <ProductCard
                           name={item.name}
