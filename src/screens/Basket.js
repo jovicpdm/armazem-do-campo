@@ -3,7 +3,7 @@ import {StyleSheet, View, Text, FlatList, Alert} from 'react-native';
 
 import { getDatabase, ref, onValue, update, set, remove, push, child } from 'firebase/database';
 import uuid from 'react-native-uuid';
-
+import  BackHandler from 'react-native'
 import TitleScreen from '../components/TitleScreen';
 import TopScreen from '../components/TopScreen';
 import WhiteAreaWithoutScrollView from '../components/WhiteAreaWithoutScrollView';
@@ -18,6 +18,7 @@ import FormTitle from '../components/FormTitle';
 import RowHorizontal from '../components/Rowhorizontal';
 import { CheckBox } from 'react-native-elements';
 import WhiteArea from '../components/WhiteArea';
+import { useIsFocused } from '@react-navigation/core';
 
 
 export default function Basket({navigation,  route}) {
@@ -30,9 +31,10 @@ export default function Basket({navigation,  route}) {
   const [isCheckedMoney,setisCheckedMoney] = useState(false)
   const [isCheckedPix,setisCheckedPix] = useState(false)
   const [nameMethod,setNameMethod] = useState('')
+  const isFocused = useIsFocused();
   let storageName = []
-  
- 
+  const idOrder = uuid.v4();
+
   const db = getDatabase();
   const updateProduct = (id, amount) => { // erro 
      update(ref(db, 'products/' + id), {
@@ -40,7 +42,7 @@ export default function Basket({navigation,  route}) {
     }); 
     
   };
-  
+ 
   const getNumber = () => {
     const dbRef = ref(db, 'users/' + route.params.id); 
     let counts = ''
@@ -65,23 +67,23 @@ export default function Basket({navigation,  route}) {
 	
 	  return dia+"/"+mes+"/"+ano;
 }
-
   const buy =  () => {
-    const id = uuid.v4();
-    const dbRef = ref(db, 'order/' + id);
+   
+    const dbRef = ref(db, 'order/' + idOrder);
       set(dbRef, {
-      id: id,
+      id: idOrder,
       date: dateFormat(),
       total: total,
       idUser: route.params.id,
       formPay: nameMethod,
       status: 'aguardando',
-      codeNumber:phone
+      codeNumber:phone,
+      paymentProofUrl : ''
     }); 
     products.map(item => {
       if (item.amountBuy != 0) {  
         storageName.push(`${item.amountBuy} ${item.name}\n`)
-        set(ref(db, 'order/' + id  + `/requests`), {
+        set(ref(db, 'order/' + idOrder  + `/requests`), {
            products:storageName.join("")
         });
         updateProduct(item.id, item.amount - item.amountBuy);
@@ -89,7 +91,6 @@ export default function Basket({navigation,  route}) {
     });
     remove(ref(db, 'purchase/' + route.params.id));
   };
-
   const listProducts = async () => {
     setRefresh(true);
     const dbRef = ref(db, 'purchase/' + route.params.id);
@@ -112,14 +113,15 @@ export default function Basket({navigation,  route}) {
     
   };
 
+  
   useEffect(() => {
     listProducts();
     getNumber() 
     return () => {
-      setPhone([]); 
-      setProducts ([]);
-    };
-  }, [])
+       setPhone([]); 
+      setProducts ([]); 
+    }; 
+  }, [isFocused])
  
   return (
     <>
@@ -185,8 +187,10 @@ export default function Basket({navigation,  route}) {
                
                buy()
                navigation.navigate('MethodPix',{
-                id:route.params.id,
-                codePhone:phone
+                id:idOrder,
+                idUser:route.params.id,
+                codePhone:phone,
+                
               })
             }
             else if(control === 0) {

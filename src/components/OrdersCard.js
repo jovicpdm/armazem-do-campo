@@ -1,12 +1,13 @@
 import React, {useEffect, useState} from 'react';
-import {StyleSheet, View, SafeAreaView, Text, TouchableOpacity, Alert} from 'react-native';
+import {StyleSheet, View, SafeAreaView, Text, TouchableOpacity, Alert,Linking} from 'react-native';
 import {Icon} from 'react-native-elements';
 import {theme} from '../global/styles/theme';
 import {getDatabase, ref, update, onValue} from 'firebase/database';
 import ProfilePhoto from '../components/ProfilePhoto';
+import { Item } from 'react-native-paper/lib/typescript/components/List/List';
 
 
-const OrdersCard = ({date, codeNumber, formPay, id, requests, total, idUser}) => {
+const OrdersCard = ({date, codeNumber, formPay, id, requests, total, idUser,paymentProof}) => {
 
   const [user, setUser] = useState({});
   const db = getDatabase();
@@ -116,7 +117,12 @@ const OrdersCard = ({date, codeNumber, formPay, id, requests, total, idUser}) =>
             <Text style={[styles.text, {color: theme.pallete.primary005}]}>
               Comprovante: {' '}
             </Text>
-            <Text style={styles.text}> { }</Text>
+            <Text style={styles.url}
+             onPress={() => { 
+                Linking.openURL(paymentProof); 
+               }}> 
+                 Baixar PDF
+            </Text> 
           </View>
 
         
@@ -209,4 +215,8 @@ const styles = StyleSheet.create({
   textButton: {
     fontFamily: 'Roboto-Mediun',
   },
+  url:{
+    fontSize: 16,
+    color: theme.pallete.primary007,
+  }
 });
