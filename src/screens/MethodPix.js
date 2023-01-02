@@ -1,4 +1,4 @@
-import {View, Text, StyleSheet, Platform, Alert} from 'react-native';
+import {View, Text, StyleSheet, Platform, Alert,Linking} from 'react-native';
 import React, { useEffect, useState } from 'react';
 import WhiteAreaWithoutScrollView from '../components/WhiteAreaWithoutScrollView';
 import TopScreen from '../components/TopScreen';
@@ -12,13 +12,20 @@ import FormTitle from '../components/FormTitle';
 import RNFetchBlob from 'rn-fetch-blob'
 import storage from '@react-native-firebase/storage'
 
-import { getDatabase } from 'firebase/database';
+import { getDatabase ,update,ref} from 'firebase/database';
 import ButtonRequests from '../components/ButtonRequests';
 
 export default function MethodPix({navigation,route}){
-
+const db =  getDatabase()
 const {codePhone,id} = route.params
-const [uri,setUri] = useState('')
+const [urlDowload,setUrlDowload] = useState('')
+
+const sendPaymentProf = async (id, urlDowload) => {
+  await update(ref(db, 'order/' + id), {
+    paymentProofUrl: urlDowload,
+ }); 
+ 
+};
   const chooseFile = async () => { 
        try{
           const file = await DocumentPicker.pick({
@@ -86,9 +93,10 @@ const uploadFileToFirebaseStorage = async (result,file) => {
               // For instance, get the download URL: https://firebasestorage.googleapis.com/...
               uploadTask.snapshot.ref.getDownloadURL().then(function (downloadURL)  {
                 console.log('File available at', downloadURL);
-                Alert.alert('Upload','Upload concluído com sucesso');
-                navigation.navigate('Purchase',  {id:route.params.id});
-
+               
+                /* Alert.alert('Upload','Upload concluído com sucesso');
+                navigation.navigate('Purchase',  {id:route.params.id}); */
+                sendPaymentProf(id,downloadURL)
               });
             }
           );
@@ -112,6 +120,7 @@ const uploadFileToFirebaseStorage = async (result,file) => {
           <View style={styles.buttonChoose}>
          
           <Button title='ENVIAR COMPROVANTE' onPress={chooseFile}></Button>
+        
           </View>
         </View>
       </WhiteAreaWithoutScrollView>     
@@ -122,7 +131,7 @@ const uploadFileToFirebaseStorage = async (result,file) => {
 const styles = StyleSheet.create({
    boxSubmit:{
     flex: 1,
-    justifyContent: "center", // ignore this - we'll come back to it
+    justifyContent: "center", 
     flexDirection: "column"
    },
    buttonChoose:{

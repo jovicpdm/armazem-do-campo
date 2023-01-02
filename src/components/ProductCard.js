@@ -29,7 +29,7 @@ const ProductCard = ({ id, name, price, image, description, formOfSale, amount, 
   };
 
   useEffect(() => {
-    addBasket();
+   /*  addBasket();   */
     return () => {
     };
   }, [countRequest])

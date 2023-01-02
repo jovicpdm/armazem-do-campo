@@ -131,7 +131,6 @@ export default function Purchase({navigation, route}) {
       setInformation ([]);
     };
   }, [isFocused])
-
   return (
     <>
       <TopScreen>
