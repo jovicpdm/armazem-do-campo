@@ -1,4 +1,5 @@
-import {View, Text, StyleSheet, Platform, Alert,Linking} from 'react-native';
+import {View, Text, StyleSheet, Platform, Alert,Linking, TouchableOpacity} from 'react-native';
+import Clipboard from '@react-native-clipboard/clipboard';
 import React, { useEffect, useState } from 'react';
 import WhiteAreaWithoutScrollView from '../components/WhiteAreaWithoutScrollView';
 import TopScreen from '../components/TopScreen';
@@ -17,8 +18,9 @@ import ButtonRequests from '../components/ButtonRequests';
 
 export default function MethodPix({navigation,route}){
 const db =  getDatabase()
-const {codePhone,id} = route.params
+const {codePhone,id,idRequest} = route.params
 const [urlDowload,setUrlDowload] = useState('')
+const [textCopied,setCopiedText] = useState('')
 
 const sendPaymentProf = async (id, urlDowload) => {
   await update(ref(db, 'order/' + id), {
@@ -94,16 +96,28 @@ const uploadFileToFirebaseStorage = async (result,file) => {
               uploadTask.snapshot.ref.getDownloadURL().then(function (downloadURL)  {
                 console.log('File available at', downloadURL);
                
-                /* Alert.alert('Upload','Upload concluído com sucesso');
-                navigation.navigate('Purchase',  {id:route.params.id}); */
-                sendPaymentProf(id,downloadURL)
+                Alert.alert('Envio','Comprovante enviado com sucesso');
+                /* navigation.navigate('RequestConfirmed',  {idUser:route.params.id,
+                  codePhone:phone}) */
+                navigation.navigate('RequestConfirmed',  {id:route.params.id,codePhone})
+                sendPaymentProf(idRequest,downloadURL)
               });
             }
           );
         })
-      
+
+ 
+
      
 }
+const copyToClipboad = () => {
+  Clipboard.setString('94992443989')
+  Alert.alert('Código copiado')
+}
+const fetchCopiedText = async () => {
+  const text = await Clipboard.getString();
+  setCopiedText(text)
+};
    return (
     <> 
        <TopScreen>
@@ -114,16 +128,22 @@ const uploadFileToFirebaseStorage = async (result,file) => {
          </View>
        </TopScreen>
        <WhiteAreaWithoutScrollView> 
-       <FormTitle>PIX:992443989</FormTitle>
-        <Text></Text>
-        <View style={styles.boxSubmit}>
-          <View style={styles.buttonChoose}>
+       <TitleSection>Clique no código e copie para usar na transferência Pix em seu banco.</TitleSection>
+            <View style={{flex:1,justifyContent:'center',alignContent:'center'}}>
+               <TitleSection>
+                <TouchableOpacity onPress={copyToClipboad}>
+                  <Text style={{fontSize:35}}>94992443989</Text>
+                </TouchableOpacity>
+               </TitleSection>
+            </View>
+
+            {/* <Button title='ENVIAR COMPROVANTE' onPress={chooseFile}></Button> */}
+            <View style={{flex:1,justifyContent:'flex-end'}}>
+               <ButtonPrimary style={{marginTop:5}} onPress={chooseFile}>ENVIAR COMPROVANTE</ButtonPrimary>
+            </View>
+      </WhiteAreaWithoutScrollView>    
+
          
-          <Button title='ENVIAR COMPROVANTE' onPress={chooseFile}></Button>
-        
-          </View>
-        </View>
-      </WhiteAreaWithoutScrollView>     
     </>
    )
 }
