@@ -22,7 +22,7 @@ const {codePhone} = route.params
          </View>
        </TopScreen>
        <WhiteAreaWithoutScrollView> 
-       <TitleSection>Informe o codigo abaixo para retirada do produto na loja.</TitleSection>
+       <TitleSection>Informe o código abaixo para retirada do produto na loja.</TitleSection>
             <View style={{flex:1,justifyContent:'center',alignContent:'center'}}>
                <TitleSection><Text style={{fontSize:40}}>{codePhone}</Text></TitleSection>
             </View>

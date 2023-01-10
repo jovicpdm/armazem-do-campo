@@ -187,8 +187,8 @@ export default function Basket({navigation,  route}) {
                
                buy()
                navigation.navigate('MethodPix',{
-                id:idOrder,
-                idUser:route.params.id,
+                id:route.params.id,
+                idRequest:idOrder,
                 codePhone:phone,
                 
               })
@@ -232,7 +232,7 @@ export default function Basket({navigation,  route}) {
             }}
          />
           <CheckBox
-            title='Pix'
+            title='Transferência Pix'
             checkedIcon='check'
             uncheckedIcon='square-o'
             checkedColor='green'

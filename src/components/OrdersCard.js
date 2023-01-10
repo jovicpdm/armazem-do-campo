@@ -7,6 +7,7 @@ import ProfilePhoto from '../components/ProfilePhoto';
 import { Item } from 'react-native-paper/lib/typescript/components/List/List';
 
 
+
 const OrdersCard = ({date, codeNumber, formPay, id, requests, total, idUser,paymentProof}) => {
 
   const [user, setUser] = useState({});
@@ -112,18 +113,20 @@ const OrdersCard = ({date, codeNumber, formPay, id, requests, total, idUser,paym
             </Text>
             <Text style={styles.text}>R$ {total}</Text>
           </View>
-
+          
           <View style={{flexDirection: 'row'}}>
-            <Text style={[styles.text, {color: theme.pallete.primary005}]}>
-              Comprovante: {' '}
-            </Text>
-            <Text style={styles.url}
-             onPress={() => { 
-                Linking.openURL(paymentProof); 
-               }}> 
-                 Baixar PDF
-            </Text> 
+           <Text style={[styles.text, {color: theme.pallete.primary005}]}>
+             Comprovante: {' '}
+           </Text>
+           <Text style={styles.url}
+            onPress={() => { 
+               Linking.openURL(paymentProof); 
+              }}> 
+                Baixar PDF
+           </Text>    
           </View>
+             
+         
 
         
 
