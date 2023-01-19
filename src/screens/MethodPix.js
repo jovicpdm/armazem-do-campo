@@ -111,8 +111,8 @@ const uploadFileToFirebaseStorage = async (result,file) => {
      
 }
 const copyToClipboad = () => {
-  Clipboard.setString('94992443989')
-  Alert.alert('Código copiado')
+  Clipboard.setString('f.f.conduru@gmail.com')
+  Alert.alert('Chave copiada')
 }
 const fetchCopiedText = async () => {
   const text = await Clipboard.getString();
@@ -128,11 +128,11 @@ const fetchCopiedText = async () => {
          </View>
        </TopScreen>
        <WhiteAreaWithoutScrollView> 
-       <TitleSection>Clique no código e copie para usar na transferência Pix em seu banco.</TitleSection>
+       <TitleSection>Clique na chave e copie para usar na transferência Pix em seu banco.</TitleSection>
             <View style={{flex:1,justifyContent:'center',alignContent:'center'}}>
                <TitleSection>
                 <TouchableOpacity onPress={copyToClipboad}>
-                  <Text style={{fontSize:35}}>94992443989</Text>
+                  <Text style={{fontSize:30}}>f.f.conduru@gmail.com</Text>
                 </TouchableOpacity>
                </TitleSection>
             </View>

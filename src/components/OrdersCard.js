@@ -114,17 +114,21 @@ const OrdersCard = ({date, codeNumber, formPay, id, requests, total, idUser,paym
             <Text style={styles.text}>R$ {total}</Text>
           </View>
           
-          <View style={{flexDirection: 'row'}}>
+          {paymentProof ? ( <View style={{flexDirection: 'row'}}>
            <Text style={[styles.text, {color: theme.pallete.primary005}]}>
              Comprovante: {' '}
            </Text>
-           <Text style={styles.url}
-            onPress={() => { 
-               Linking.openURL(paymentProof); 
-              }}> 
-                Baixar PDF
-           </Text>    
-          </View>
+        
+             <Text style={styles.url}
+             onPress={() => { 
+                Linking.openURL(paymentProof); 
+               }}> 
+                 Baixar PDF
+            </Text>    
+      
+          
+          </View>):<Text></Text>}
+         
              
          
 
