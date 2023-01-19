@@ -53,7 +53,7 @@ export default function EditUsers({ navigation }) {
         <>
         <Logo/>
             <TopScreen>
-                <TitleScreen>Atualizar colaboradores</TitleScreen>
+                <TitleScreen>Atualizar consumidores</TitleScreen>
             </TopScreen>
             <WhiteAreaWithoutScrollView>
 

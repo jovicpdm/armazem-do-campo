@@ -50,7 +50,7 @@ useEffect(()=>{
   return (    
     <SafeAreaView>
       <Logo />
-        <SafeAreaView style={{flexDirection: 'row', justifyContent: 'center'}}>
+        <SafeAreaView style={{flexDirection: 'column', justifyContent: 'center',alignItems:'center'}}>
           <TitleScreen>Olá, {user.name}</TitleScreen>
            <ProfilePhoto photo={`data:image/gif;base64,${user.photo}`} 
             onPress={() => { navigate('EditUser', { id: route.params.id });}}/>
@@ -79,7 +79,7 @@ useEffect(()=>{
           <CardContainer
             background={theme.pallete.primary004}
             onPress={() => navigate('ParticipantManagement')}>
-            <TextCard>Colaboradores</TextCard>
+            <TextCard>Consumidores</TextCard>
             <IconMedium
               name="account-group-outline"
               color={theme.pallete.primary002}
