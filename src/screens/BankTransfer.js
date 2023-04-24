@@ -1,5 +1,4 @@
-import {View, Text, StyleSheet, Platform, Alert,Linking, TouchableOpacity} from 'react-native';
-import Clipboard from '@react-native-clipboard/clipboard';
+import {View, Text, Platform, Alert} from 'react-native';
 import React, { useEffect, useState } from 'react';
 import WhiteAreaWithoutScrollView from '../components/WhiteAreaWithoutScrollView';
 import TopScreen from '../components/TopScreen';
@@ -16,8 +15,6 @@ import { getDatabase ,update,ref} from 'firebase/database';
 export default function MethodPix({navigation,route}){
 const db =  getDatabase()
 const {codePhone,id,idRequest} = route.params
-const [textCopied,setCopiedText] = useState('')
-
 const sendPaymentProf = async (id, urlDowload) => {
   await update(ref(db, 'order/' + id), {
     paymentProofUrl: urlDowload,
@@ -41,7 +38,6 @@ const sendPaymentProf = async (id, urlDowload) => {
           }
           else{
             throw e
-            //caso ocorra um erro
           }
        }
   }
@@ -67,8 +63,6 @@ const uploadFileToFirebaseStorage = async (result,file) => {
 
             uploadTask.on('state_changed', 
             (snapshot) => {
-              // Observe state change events such as progress, pause, and resume
-              // Get task progress, including the number of bytes uploaded and the total number of bytes to be uploaded
               const progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
 
               console.log('Upload is ' + progress + '% done');
@@ -83,18 +77,13 @@ const uploadFileToFirebaseStorage = async (result,file) => {
               }
             }, 
             (error) => {
-              // Handle unsuccessful uploads
               console.log(error)
             }, 
             () => {
-              // Handle successful uploads on complete
-              // For instance, get the download URL: https://firebasestorage.googleapis.com/...
               uploadTask.snapshot.ref.getDownloadURL().then(function (downloadURL)  {
                 console.log('File available at', downloadURL);
                
                 Alert.alert('Envio','Comprovante enviado com sucesso');
-                /* navigation.navigate('RequestConfirmed',  {idUser:route.params.id,
-                  codePhone:phone}) */
                 navigation.navigate('RequestConfirmed',  {id:route.params.id,codePhone})
                 sendPaymentProf(idRequest,downloadURL)
               });
@@ -106,31 +95,23 @@ const uploadFileToFirebaseStorage = async (result,file) => {
 
      
 }
-const copyToClipboad = () => {
-  Clipboard.setString('f.f.conduru@gmail.com')
-  Alert.alert('Chave copiada')
-}
-const fetchCopiedText = async () => {
-  const text = await Clipboard.getString();
-  setCopiedText(text)
-};
    return (
     <> 
        <TopScreen>
          <View style={{flexDirection:'row',justifyContent:'center',alignItems:'center'}}>
            <View>
-             <TitleScreen textAlign="center">Método Pix</TitleScreen>
+             <TitleScreen textAlign="center">Transferência Bancaria</TitleScreen>
            </View>
          </View>
        </TopScreen>
        <WhiteAreaWithoutScrollView> 
-       <TitleSection>Clique na chave e copie para usar na transferência Pix em seu banco.</TitleSection>
+       <TitleSection>Utilize os dados para efetuar transferência bancaria </TitleSection>
             <View style={{flex:1,justifyContent:'center',alignContent:'center'}}>
-               <TitleSection>
-                <TouchableOpacity onPress={copyToClipboad}>
-                  <Text style={{fontSize:30}}>f.f.conduru@gmail.com</Text>
-                </TouchableOpacity>
-               </TitleSection>
+                  <Text style={{fontSize:20,textAlign:'center'}}>Centro de Formação Produção e Artes da Amazônia</Text>
+                  <Text style={{fontSize:20,textAlign:'center',marginTop:10}}>CNPJ: 25.464.886/0001-55</Text>
+                  <Text style={{fontSize:20,textAlign:'center',marginTop:10}}>Banco: 350 - Crehnor Laranjeiras</Text>
+                  <Text style={{fontSize:20,textAlign:'center',marginTop:10}}>Agência:3001</Text>
+                  <Text style={{fontSize:20,textAlign:'center',marginTop:10}}>Conta Corrente: 30926-5</Text>
             </View>
             <View style={{flex:1,justifyContent:'flex-end'}}>
                <ButtonPrimary style={{marginTop:5}} onPress={chooseFile}>ENVIAR COMPROVANTE</ButtonPrimary>
@@ -141,14 +122,3 @@ const fetchCopiedText = async () => {
     </>
    )
 }
-
-const styles = StyleSheet.create({
-   boxSubmit:{
-    flex: 1,
-    justifyContent: "center", 
-    flexDirection: "column"
-   },
-   buttonChoose:{
-     marginBottom:7,
-   }
-})

@@ -67,7 +67,7 @@ const OrdersCard = ({date, codeNumber, formPay, id, requests, total, idUser,paym
 
           <View style={{flexDirection: 'row'}}>
             <Text style={[styles.text, {color: theme.pallete.primary005}]}>
-              Colaborador:{' '}
+              Consumidor:{' '}
             </Text>
             <Text style={styles.text}>{user.name}</Text>
           </View>

@@ -32,7 +32,6 @@ export default function RegisterProduct({ navigation: { navigate } }) {
   const dbRef = ref(db, 'categories');
 
   const listCategories = async () => {
-
     const dataArray = [];
     await new Promise(resolve => {
 
@@ -47,6 +46,7 @@ export default function RegisterProduct({ navigation: { navigate } }) {
     setCategories(dataArray);
   };
 
+  
   const listFormsOfSale = async () => {
 
     const dataArray = [];

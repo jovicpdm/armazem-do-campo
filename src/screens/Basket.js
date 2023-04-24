@@ -175,15 +175,17 @@ export default function Basket({navigation,  route}) {
         <View style={{marginTop: 45}} />    
         <ButtonPrimary
           onPress={() => {
+            
             if(control !== 0 && isCheckedMoney === true){
               
             buy();
-              navigation.navigate('RequestConfirmed',{
+              navigation.navigate('BankTransfer',{
                id:route.params.id,
+               idRequest:idOrder,
                codePhone:phone
              })
             }
-            else if(control !== 0 && isCheckedPix === true){
+             if(control !== 0 && isCheckedPix === true){
                
                buy()
                navigation.navigate('MethodPix',{
@@ -217,7 +219,7 @@ export default function Basket({navigation,  route}) {
          <View style={styles.checkBoxs}>
           
          <CheckBox
-            title='Dinheiro'
+            title='Transferência Bancaria'
             checkedIcon='check'
             uncheckedIcon='square-o'
             checkedColor='green'
