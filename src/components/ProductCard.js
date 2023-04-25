@@ -72,7 +72,7 @@ const ProductCard = ({ id, name, price, image, description, formOfSale, amount, 
                 type="primary"
                 onPress={() => {
                   try {
-                    if(amountBuy != 0){
+                    if(amountBuy > 0 && amountBuy <= amount){
                       Alert.alert(
                         'Mensagem de confirmação',
                         'Produto adicionado',
@@ -89,6 +89,15 @@ const ProductCard = ({ id, name, price, image, description, formOfSale, amount, 
                         'Informe uma quantidade',
                       );
                   
+                    }
+                    else if(amountBuy > amount){
+                      Alert.alert(
+                        'Quantidade informada acima do estoque',
+                        'Informe uma quantidade dentro do estoque',
+                      );
+                    }
+                    else if (amount < 0 || amount == 0){
+                      Alert.alert('Produto fora de estoque')
                     }
                   } catch (error) {
                     console.log(error);

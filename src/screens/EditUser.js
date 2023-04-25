@@ -53,7 +53,7 @@ export default function EditUser({ navigation, route }) {
         <>
         <Logo/>
             <TopScreen>
-                <TitleScreen>Editar colaborador</TitleScreen>
+                <TitleScreen>Editar Consumidor</TitleScreen>
             </TopScreen>
             <WhiteArea>
 

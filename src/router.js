@@ -28,6 +28,7 @@ import RequestConfirmed from './screens/RequestConfirmed';
 import EditUsers from './screens/EditUsers';
 import EditUser from './screens/EditUser';
 import MethodPix from './screens/MethodPix';
+import BankTransfer from './screens/BankTransfer'
 import GeneralInformationListManagement from './screens/GeneralInformationListManagement';
 import GeneralInformationList from './screens/GeneralInformationList';
 
@@ -70,6 +71,7 @@ const Router = () => {
         <Screen name="Profile" component={Profile} />
         <Screen name="Basket" component={Basket} />
         <Screen name="MethodPix" component={MethodPix} />
+        <Screen name='BankTransfer' component={BankTransfer}/>
         <Screen name="RequestConfirmed" component={RequestConfirmed}></Screen>
         <Screen name="OrdersManagement" component={OrdersManagement} />
         <Screen name="OrdersApproved" component={OrdersApproved} />
