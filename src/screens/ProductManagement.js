@@ -53,6 +53,15 @@ export default function ProductManagement({ navigation: { navigate } }) {
           <TextCard>Remover produtos</TextCard>
           <IconMedium name="chevron-right" color={theme.pallete.primary002} />
         </CardContainer>  
+
+        <SafeAreaView style={{ marginTop: 8 }} />
+        <CardContainer
+          onPress={() => {
+            navigate('RegisterCategory');
+          }}>
+          <TextCard>Cadastrar categorias</TextCard>
+          <IconMedium name="chevron-right" color={theme.pallete.primary002} />
+        </CardContainer> 
       
       </WhiteArea>
     </SafeAreaView>

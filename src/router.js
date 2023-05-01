@@ -31,6 +31,7 @@ import MethodPix from './screens/MethodPix';
 import BankTransfer from './screens/BankTransfer'
 import GeneralInformationListManagement from './screens/GeneralInformationListManagement';
 import GeneralInformationList from './screens/GeneralInformationList';
+import RegisterCategory from './screens/RegisterCategory';
 
 
  
@@ -81,6 +82,7 @@ const Router = () => {
         <Screen name="EditUser" component={EditUser} />
         <Screen name="GeneralInformationListManagement" component={GeneralInformationListManagement} />
         <Screen name="GeneralInformationList" component={GeneralInformationList} />
+        <Screen name="RegisterCategory" component={RegisterCategory} />
 
 
 
