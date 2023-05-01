@@ -6,7 +6,6 @@ import TitleScreen from '../components/TitleScreen';
 import TitleSection from '../components/TitleSection';
 import ButtonPrimary from '../components/ButtonPrimary';
 import DocumentPicker from 'react-native-document-picker'
-
 import RNFetchBlob from 'rn-fetch-blob'
 import storage from '@react-native-firebase/storage'
 

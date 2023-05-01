@@ -1,8 +1,7 @@
-import React, {useState} from 'react';
-import {SafeAreaView, ActivityIndicator, Text, LogBox} from 'react-native';
+import React, {useState,useEffect} from 'react';
+import {SafeAreaView, ActivityIndicator, Text, LogBox,Alert} from 'react-native';
 import {getAuth, signInWithEmailAndPassword} from 'firebase/auth/react-native';
 import {getDatabase, onValue, ref} from '@firebase/database';
-import { SocialIcon } from 'react-native-elements';
 import Logo from '../components/Logo';
 import Input from '../components/Input';
 import InputPassword from '../components/InputPassword';
@@ -12,7 +11,7 @@ import ButtonSecondary from '../components/ButtonSecondary';
 import WhiteArea from '../components/WhiteArea';
 import TitleSection from '../components/TitleSection';
 import ErrorMessage from '../components/ErrorMessage';
-import RowHorizontal from '../components/Rowhorizontal';
+import messaging from '@react-native-firebase/messaging';
 LogBox.ignoreLogs(['Warning: ...']);
 LogBox.ignoreAllLogs();
 export default function Login({navigation}) {
@@ -33,7 +32,7 @@ export default function Login({navigation}) {
       .then(userCredential => {
         const userRef = ref(db, 'users/' + userCredential.user.uid);
 
-        onValue(userRef, snapshot => {
+          onValue(userRef, snapshot => {
           const data = snapshot.val();
           setLoading(false);
 
@@ -63,6 +62,53 @@ export default function Login({navigation}) {
         }
         setShowError(true);
       });
+      const requestPermission = async () => {
+        const authStatus = await messaging().requestPermission();
+        const enabled =
+          authStatus === messaging.AuthorizationStatus.AUTHORIZED ||
+          authStatus === messaging.AuthorizationStatus.PROVISIONAL;
+      
+        if (enabled) {
+          console.log('Authorization status:', authStatus);
+        }
+      }
+      useEffect(()=>{
+        if(requestPermission()){
+          messaging().getToken().then(token => {
+            console.log(token)
+         })
+        }
+        else{
+          console.log('Failed token status',authStatus)
+        }
+     
+      messaging()
+      .getInitialNotification()
+      .then(async (remoteMessage) => {
+        if (remoteMessage) {
+          console.log(
+            'Notification caused app to open from quit state:',
+            remoteMessage.notification,
+          );  
+        }     
+      });
+
+      messaging().onNotificationOpenedApp( async (remoteMessage) => {
+        console.log(
+          'Notification caused app to open from background state:',
+          remoteMessage.notification,
+        );
+      });
+      messaging().setBackgroundMessageHandler(async remoteMessage => {
+        console.log('Message handled in the background!', remoteMessage);
+      });
+
+      const unsubscribe = messaging().onMessage(async remoteMessage => {
+        Alert.alert('A new FCM message arrived!', JSON.stringify(remoteMessage));
+      });
+  
+      return unsubscribe;
+      },[])
 
   return (
 
