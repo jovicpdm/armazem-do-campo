@@ -23,7 +23,7 @@ export default function Requests() {
         snapshot.forEach(snap => {
           let {status} = snap.val();
           if (status == 'aguardando') {
-            const {photo, name, email, address, phone, presentation} = snap.val();
+            const {photo, name, email, address, phone, presentation,token} = snap.val();
             let user = {
               id: snap.key,
               photo,
@@ -32,6 +32,7 @@ export default function Requests() {
               address,
               phone,
               presentation,
+              token
             };
             dataArray.push(user);
           }
@@ -72,6 +73,7 @@ export default function Requests() {
                 presentation={item.presentation}
                 address={item.address}
                 id={item.id}
+                token={item.token}
               />
             );
           }}
