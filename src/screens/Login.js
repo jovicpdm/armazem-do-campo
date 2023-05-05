@@ -16,7 +16,6 @@ LogBox.ignoreLogs(['Warning: ...']);
 LogBox.ignoreAllLogs();
 export default function Login({navigation}) {
 
-
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [showError, setShowError] = useState(false);
@@ -62,26 +61,7 @@ export default function Login({navigation}) {
         }
         setShowError(true);
       });
-      const requestPermission = async () => {
-        const authStatus = await messaging().requestPermission();
-        const enabled =
-          authStatus === messaging.AuthorizationStatus.AUTHORIZED ||
-          authStatus === messaging.AuthorizationStatus.PROVISIONAL;
-      
-        if (enabled) {
-          console.log('Authorization status:', authStatus);
-        }
-      }
       useEffect(()=>{
-        if(requestPermission()){
-          messaging().getToken().then(token => {
-            console.log(token)
-         })
-        }
-        else{
-          console.log('Failed token status',authStatus)
-        }
-     
       messaging()
       .getInitialNotification()
       .then(async (remoteMessage) => {
@@ -104,7 +84,7 @@ export default function Login({navigation}) {
       });
 
       const unsubscribe = messaging().onMessage(async remoteMessage => {
-        Alert.alert('A new FCM message arrived!', JSON.stringify(remoteMessage));
+     // Alert.alert('A new FCM message arrived!', JSON.stringify(remoteMessage));
       });
   
       return unsubscribe;

@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {ScrollView, Text, StyleSheet, View, Alert} from 'react-native';
 import {getDatabase, ref, set} from 'firebase/database';
 import {getAuth, createUserWithEmailAndPassword} from 'firebase/auth/react-native';
@@ -12,7 +12,7 @@ import ButtonPrimary from '../components/ButtonPrimary';
 import InputPhotoArea from '../components/InputPhotoArea';
 import ErrorMessage from '../components/ErrorMessage';
 import Logo from '../components/Logo';
-
+import messaging from '@react-native-firebase/messaging';
 
 // import storage from '@react-native-firebase/storage';
 
@@ -29,7 +29,7 @@ export default function Register({navigation}) {
   const [profilePhoto, setProfilePhoto] = useState();
   const [showError, setShowError] = useState(false);
   const [error, setError] = useState('');
-
+  const [token,setToken] = useState()
   function writeUserData () {
 
     const db = getDatabase();
@@ -51,6 +51,7 @@ export default function Register({navigation}) {
               photo: profilePhoto,
               status: 'aguardando',
               type: 'comprador',
+              token:token
             });
           })
 
@@ -144,8 +145,26 @@ export default function Register({navigation}) {
           { text: "OK", onPress: () => navigation.navigate('Login') }
         ]
         );
-  }};
+  }
 
+};
+const requestPermission = async () => {
+  const authStatus = await messaging().requestPermission();
+  const enabled =
+    authStatus === messaging.AuthorizationStatus.AUTHORIZED ||
+    authStatus === messaging.AuthorizationStatus.PROVISIONAL;
+
+  if (enabled) {
+    console.log('Authorization status:', authStatus);
+  }
+}
+useEffect(()=>{
+  if(requestPermission()){
+    messaging().getToken().then(token => {
+      setToken(token)
+   })
+  }
+},[])
   return (
 
     <ScrollView contentContainerStyle={{maxHeight: '100%'}}>
