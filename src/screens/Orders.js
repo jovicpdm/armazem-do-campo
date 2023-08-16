@@ -26,7 +26,7 @@ export default function Orders () {
           
           if (status == 'aguardando') {
 
-          const {date, codeNumber, formPay, requests, total, idUser,paymentProofUrl} = snap.val();
+          const {date, codeNumber, formPay, requests, total, idUser,paymentProofUrl,token} = snap.val();
             let orders = {
               id: snap.key,
               idUser: idUser,
@@ -35,7 +35,8 @@ export default function Orders () {
               formPay,
               requests,
               total,
-              paymentProofUrl
+              paymentProofUrl,
+              token
             };
             dataArray.push(orders);
           }
@@ -80,6 +81,7 @@ export default function Orders () {
                 total={item.total}
                 idUser={item.idUser}
                 paymentProof={item.paymentProofUrl}
+                token={item.token}
               />
             );
           }}

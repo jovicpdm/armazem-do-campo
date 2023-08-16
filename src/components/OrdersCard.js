@@ -4,11 +4,12 @@ import {Icon} from 'react-native-elements';
 import {theme} from '../global/styles/theme';
 import {getDatabase, ref, update, onValue} from 'firebase/database';
 import ProfilePhoto from '../components/ProfilePhoto';
+import NotificationService from '../../NotificationService';
 import { Item } from 'react-native-paper/lib/typescript/components/List/List';
 
 
 
-const OrdersCard = ({date, codeNumber, formPay, id, requests, total, idUser,paymentProof}) => {
+const OrdersCard = ({date, codeNumber, formPay, id, requests, total, idUser,paymentProof,token}) => {
 
   const [user, setUser] = useState({});
   const db = getDatabase();
@@ -20,12 +21,22 @@ const OrdersCard = ({date, codeNumber, formPay, id, requests, total, idUser,paym
     });
     if (response === 'y'){
     Alert.alert('Atenção', 'Pedido aprovado com sucesso');
+    sendPushNotification(token,'Armazém do Campo','Seu pedido foi aprovado com sucesso')
+
     }
     else {
       Alert.alert('Atenção', 'Pedido reprovado com sucesso');
+      sendPushNotification(token,'Armazém do Campo','Infelizmente,Seu pedido foi negado')
     }
   };
-
+  const sendPushNotification = async (registrationToken,titleNotification,bodyNotification) => {
+    let notificationData = {
+       title:titleNotification,
+       body:bodyNotification,
+       token:registrationToken
+    }
+    await NotificationService.sendSingleDeviceNotification(notificationData)
+  };
   const searchUser = async () => {
     let data = {};
     const dbRef = ref(db, 'users/' + idUser);
