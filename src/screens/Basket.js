@@ -3,6 +3,7 @@ import {StyleSheet, View, Text, FlatList, Alert} from 'react-native';
 
 import { getDatabase, ref, onValue, update, set, remove, push, child } from 'firebase/database';
 import uuid from 'react-native-uuid';
+import messaging from '@react-native-firebase/messaging';
 import  BackHandler from 'react-native'
 import TitleScreen from '../components/TitleScreen';
 import TopScreen from '../components/TopScreen';
@@ -32,6 +33,7 @@ export default function Basket({navigation,  route}) {
   const [isCheckedPix,setisCheckedPix] = useState(false)
   const [nameMethod,setNameMethod] = useState('')
   const isFocused = useIsFocused();
+  const [token,setToken] = useState()
   let storageName = []
   const idOrder = uuid.v4();
 
@@ -78,7 +80,8 @@ export default function Basket({navigation,  route}) {
       formPay: nameMethod,
       status: 'aguardando',
       codeNumber:phone,
-      paymentProofUrl : ''
+      paymentProofUrl : '',
+      token:token
     }); 
     products.map(item => {
       if (item.amountBuy != 0) {  
@@ -112,11 +115,25 @@ export default function Basket({navigation,  route}) {
     setControl(amounts)
     
   };
-
+  const requestPermission = async () => {
+    const authStatus = await messaging().requestPermission();
+    const enabled =
+      authStatus === messaging.AuthorizationStatus.AUTHORIZED ||
+      authStatus === messaging.AuthorizationStatus.PROVISIONAL;
+  
+    if (enabled) {
+      console.log('Authorization status:', authStatus);
+    }
+  }
   
   useEffect(() => {
     listProducts();
     getNumber() 
+    if(requestPermission()){
+      messaging().getToken().then(token => {
+        setToken(token)
+     })
+    }
     return () => {
        setPhone([]); 
       setProducts ([]); 

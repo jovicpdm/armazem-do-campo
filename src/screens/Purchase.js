@@ -31,7 +31,6 @@ export default function Purchase({navigation, route}) {
   const [loading, setLoading] = useState(false);
   const [open, setOpen] = useState(false);
   const [totalRequests,setTotalRequests] = useState(0)
-  const containerStyle = {backgroundColor: 'white', padding: 20};
   const isFocused = useIsFocused();
   const db = getDatabase();
 
@@ -254,12 +253,20 @@ export default function Purchase({navigation, route}) {
         </View>
      
       <View style={styles.Final}>
+      <ButtonPurchase onPress={()=> 
+              navigation.navigate('MyRequests', {
+               id: route.params.id,
+             })} background={theme.pallete.primary}>
+         <View style={styles.contentButton}>
+         <Text style={styles.fontButton}>PEDIDOS</Text>
+        </View>
+       </ButtonPurchase>
          <ButtonPurchase onPress={()=> 
               navigation.navigate('Basket', {
                id: route.params.id,
-             })}>
+             })} background={theme.pallete.red}>
          <View style={styles.contentButton}>
-         <Text style={styles.fontButton}>IR PARA A CESTA</Text>
+         <Text style={styles.fontButton}>CESTA</Text>
         </View>
        </ButtonPurchase>
      </View>
@@ -287,6 +294,9 @@ const styles = StyleSheet.create({
   },
   Final:{
    width:'100%',
+   display:'flex',
+   justifyContent:'space-around',
+   flexDirection:'row',
   },
   contentButton:{
     display:'flex',flexDirection:'row',justifyContent:'space-between'

@@ -1,12 +1,12 @@
 import React from 'react';
-import {StyleSheet} from 'react-native';
+import { StyleSheet } from 'react-native';
 import Button from '../components/Button';
-import {theme} from './../global/styles/theme';
+import { theme } from './../global/styles/theme';
 
-const ButtonPrimary = ({style, onPress, onFocus, children}) => {
+const ButtonPrimary = ({ style, onPress, onFocus, children, background }) => {
   return (
     <Button
-      style={[styles.button, style]}
+      style={[styles.button, { backgroundColor: background }, style]}
       onPress={onPress}
       onFocus={onFocus}
       textColor={theme.pallete.white}>
@@ -19,11 +19,10 @@ export default ButtonPrimary;
 
 const styles = StyleSheet.create({
   button: {
-    backgroundColor: theme.pallete.red,
-    width:'100%',
-    display:'flex',
-    justifyContent:'space-between',
-    borderRadius:0
+    width: '48%',
+    display: 'flex',
+    justifyContent: 'space-between',
+    borderRadius: 0,
+    textAlign: 'center',
   },
-
 });

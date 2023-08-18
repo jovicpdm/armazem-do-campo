@@ -32,7 +32,7 @@ import BankTransfer from './screens/BankTransfer'
 import GeneralInformationListManagement from './screens/GeneralInformationListManagement';
 import GeneralInformationList from './screens/GeneralInformationList';
 import RegisterCategory from './screens/RegisterCategory';
-
+import MyRequest from './screens/MyRequests'
 
  
 const {Navigator, Screen} = createNativeStackNavigator();
@@ -68,6 +68,7 @@ const Router = () => {
         <Screen name="ProductListDelete" component={ProductListDelete} />
         <Screen name="GeneralInformation" component={GeneralInformation} />
         <Screen name="Requests" component={Requests} />
+        <Screen name = "MyRequests" component={MyRequest}/>
         <Screen name="ProductInfo" component={ProductInfo} />
         <Screen name="Profile" component={Profile} />
         <Screen name="Basket" component={Basket} />
