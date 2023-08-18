@@ -9,7 +9,7 @@ import {getDatabase, ref, update, onValue,remove} from 'firebase/database';
 
 const MyOrdersCard = ({date, codeNumber, formPay,requests, total,status,id}) => {
     const db = getDatabase();
-    const deleteRequest = (id) => { // erro 
+    const deleteRequest = (id) => {
         remove(ref(db, 'order/' + id));
      };
     

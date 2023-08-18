@@ -15,10 +15,9 @@ import GrayTextCenter from '../components/GrayTextCenter';
 export default function MyRequest ({navigation,route}) {
     const db = getDatabase();
     const [orders, setOrders] = useState([]);
-    const [loading, setLoading] = useState(false);
     const dbRef = ref(db, 'order'); 
     const listOrders = async () => {
-        setLoading(true)
+        
         const dataArray = [];
         await new Promise(resolve => {
           onValue(dbRef, snapshot => {
@@ -42,7 +41,7 @@ export default function MyRequest ({navigation,route}) {
           });
         });
         setOrders(dataArray); 
-        setLoading(false)   
+       
       };
       
       useEffect(() => {
