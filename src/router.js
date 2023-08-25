@@ -16,6 +16,7 @@ import EditItem from './screens/EditItem';
 import ProductListDelete from './screens/ProductListDelete';
 import GeneralInformation from './screens/GeneralInformation';
 import Requests from './screens/Requests';
+import TermsOfUse from './screens/TermsOfUse';
 import Payment from './screens/Payment';
 import ProductInfo from './screens/ProductInfo';
 import Profile from './screens/Profile';
@@ -54,6 +55,7 @@ const Router = () => {
         }}
         >
         <Screen name="Login" component={Login} />
+        <Screen name='TermsOfUse' component={TermsOfUse}/>
         <Screen name="Register" component={Register} />
         <Screen name="Purchase" component={Purchase} />
         <Screen name="RegisterProduct" component={RegisterProduct} />

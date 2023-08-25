@@ -5,6 +5,7 @@ import {getDatabase, onValue, ref} from '@firebase/database';
 import Logo from '../components/Logo';
 import Input from '../components/Input';
 import InputPassword from '../components/InputPassword';
+import ButtonTermsAndDevs from '../components/ButtonTermsAndDevs';
 import ButtonPrimary from '../components/ButtonPrimary';
 import {theme} from '../global/styles/theme';
 import ButtonSecondary from '../components/ButtonSecondary';
@@ -12,6 +13,7 @@ import WhiteArea from '../components/WhiteArea';
 import TitleSection from '../components/TitleSection';
 import ErrorMessage from '../components/ErrorMessage';
 import messaging from '@react-native-firebase/messaging';
+
 LogBox.ignoreLogs(['Warning: ...']);
 LogBox.ignoreAllLogs();
 export default function Login({navigation}) {
@@ -137,24 +139,10 @@ export default function Login({navigation}) {
         )}
 
 
-        <SafeAreaView style ={{ flexDirection:'row',marginHorizontal:14,alignItems:'center'}} >
-        {/* <RowHorizontal></RowHorizontal>
-        <Text style={{fontSize:11,paddingHorizontal:6}}>OU</Text>
-        <RowHorizontal></RowHorizontal> */}
+        <SafeAreaView style ={{ flexDirection:'row',marginHorizontal:14,alignItems:'center',justifyContent:'center',flexDirection:'column',marginTop:12}} >
+        <ButtonTermsAndDevs onPress={()=>{navigation.navigate('TermsOfUse')}}>Termos de uso</ButtonTermsAndDevs>
+        <ButtonTermsAndDevs>Devs</ButtonTermsAndDevs>
       </SafeAreaView>
-
-      {/* <Text style={{marginTop:10,marginBottom:5,fontSize:16,textAlign:'center'}}>Entrar com:</Text>
-      <SocialIcon
-        title='Google'
-        button
-        type='google'
-        
-        />
-      <SocialIcon
-        title='Facebook'
-        button
-        type='facebook'
-        /> */}
       </WhiteArea>
     </SafeAreaView>
   );

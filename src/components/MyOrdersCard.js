@@ -61,27 +61,50 @@ const MyOrdersCard = ({date, codeNumber, formPay,requests, total,status,id}) => 
 
         </View>
       </View>
-      <View style={{marginTop: 5}}>      
-        {status === 'aprovado' || status ===  'aguardando' ? null :  
-        <View style={styles.buttonArea}>
-            <TouchableOpacity
-                style={styles.button}
-                onPress={() => {
-                    deleteRequest(id);
-                }}>
-                <Icon
-                    name="close"
-                    type="material-community"
-                    size={24}
-                    color={theme.pallete.yellow}
-                />
-                <Text style={[styles.textButton, {color: theme.pallete.yellow, fontSize: 16}]}>
-                    APAGAR
-                </Text>
-            </TouchableOpacity>
-        </View>}
-
+      <View style={{ marginTop: 5 }}>
+  {status === 'aprovado' ? (
+    <View style={styles.buttonArea}>
+      <TouchableOpacity
+        style={styles.button}
+        onPress={() => {
+          deleteRequest(id);
+          Alert.alert('Confirmação','Pedido retirado com sucesso')
+        }}
+      >
+        <Icon
+          name="check"
+          type="material-community"
+          size={24}
+          color={theme.pallete.primary007}
+        />
+         <Text style={[styles.textButton, { color: theme.pallete.primary007, fontSize: 16 ,fontWeight:'bold'}]}>
+          RETIRADO
+        </Text>
+      </TouchableOpacity>
+    </View>
+  ) : status === 'reprovado' ? (
+    <View style={styles.buttonArea}>
+      <TouchableOpacity
+        style={styles.button}
+        onPress={() => {
+          deleteRequest(id);
+          Alert.alert('Confirmação','Pedido apagado com sucesso')
+        }}
+      >
+        <Icon
+          name="close"
+          type="material-community"
+          size={24}
+          color={theme.pallete.primary007}
+        />
+        <Text style={[styles.textButton, { color: theme.pallete.primary007, fontSize: 16 , fontWeight:'bold' }]}>
+          APAGAR
+        </Text>
+      </TouchableOpacity>
+    </View>
+  ) : null}
 </View>
+
     </SafeAreaView>
   );
 };
