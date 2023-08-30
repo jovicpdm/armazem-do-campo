@@ -34,7 +34,7 @@ import GeneralInformationListManagement from './screens/GeneralInformationListMa
 import GeneralInformationList from './screens/GeneralInformationList';
 import RegisterCategory from './screens/RegisterCategory';
 import MyRequest from './screens/MyRequests'
-
+import devs from './screens/Devs';
  
 const {Navigator, Screen} = createNativeStackNavigator();
 
@@ -60,6 +60,7 @@ const Router = () => {
         <Screen name="Purchase" component={Purchase} />
         <Screen name="RegisterProduct" component={RegisterProduct} />
         <Screen name="Feedback" component={Feedback} />
+        <Screen name='Devs' component={devs}/>
         <Screen name="Admin" component={Admin} />
         {/* <Screen name="Payment" component={Payment} /> */}
         <Screen name="ParticipantManagement" component={ParticipantManagement}/>

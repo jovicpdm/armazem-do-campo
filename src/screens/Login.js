@@ -141,7 +141,7 @@ export default function Login({navigation}) {
 
         <SafeAreaView style ={{ flexDirection:'row',marginHorizontal:14,alignItems:'center',justifyContent:'center',flexDirection:'column',marginTop:12}} >
         <ButtonTermsAndDevs onPress={()=>{navigation.navigate('TermsOfUse')}}>Termos de uso</ButtonTermsAndDevs>
-        <ButtonTermsAndDevs>Devs</ButtonTermsAndDevs>
+        <ButtonTermsAndDevs onPress={()=>{navigation.navigate('Devs')}}>Devs</ButtonTermsAndDevs>
       </SafeAreaView>
       </WhiteArea>
     </SafeAreaView>
