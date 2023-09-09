@@ -41,8 +41,8 @@ export default function Devs() {
 
         <View style={styles.devContainer}>
           <Image source={require('../../src/assets/imgsDevs/ralf.jpg')} style={styles.devImage} />
-           <Text h4 style={styles.text}>Ralf Alan</Text>
-          <Text style={styles.text}>Desenvolvedor mobile Flutter</Text>
+           <Text h4 style={styles.text}>Ralfh Alan</Text>
+          <Text style={styles.text}>Desenvolvedor mobile, desktop e Web </Text>
           <Text  style={styles.link} onPress={() => Linking.openURL('https://github.com/ralfhalan')}>https://github.com/ralfhalan</Text>
         </View>
 
